@@ -1,0 +1,8 @@
+{
+  "_comment": "Codex CLI hooks snippet — substitute the real plugin install path; Codex has no ${CLAUDE_PLUGIN_ROOT} expansion. The gate fails CLOSED by design.",
+  "stop": [
+    {
+      "command": "python3 /path/to/friday/tools/codex-adapter/state_stop_gate.py"
+    }
+  ]
+}

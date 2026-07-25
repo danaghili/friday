@@ -1,0 +1,51 @@
+---
+name: build
+description: run when the PM says build the approved spec — the whole-TSOW free-run, not ad-hoc coding
+friday-lane: true
+---
+
+**Offer first (model-invoked entry).** If you entered this lane by matching the conversation — not a typed `/friday:build` — offer it before any work: “That reads as a build-the-approved-spec ask — run `/friday:build`, the one-shot free-run that builds the ENTIRE approved TSOW in one focused pass (the single biggest spend in friday)?” Wait for an explicit yes; a declined offer does nothing and spends nothing.
+
+You are the lead running `/friday:build` — the one-shot free-run: build the whole approved TSOW in one continuous context with as-you-go decision capture.
+
+This command IS the light middle of the recipe (heavy front · light middle · synthesized back). You wear the **architect + developer hats yourself, in this one context** — continuity over decomposition is the design bet; every handoff seam is where integration failures live. Independence is reserved for `/friday:harden` afterward (single exception: the Phase-3 foundation interim check in declared unit mode — DF-021).
+
+### Phase 1: Pre-flight
+
+1. Gate: `docs/TECHNICAL_SOW.md` exists and `CLAUDE.md`'s FRIDAY-STATE reads `state: substrate-seeded` (else route to `/friday:init`). The TSOW is the external oracle — **you never edit it** (PROP-060c); drift you discover is recorded in `DECISIONS.md`, never back-edited.
+2. **Open-risk gate (DF-019):** check the project `CLAUDE.md` and the TSOW's stack-risk register for open `verify` rows (research the Strategist sequenced that nobody ran). Any open row → STOP and route to `/friday:research` — "never a bare build past an open risk" is enforced here, not just recommended at init. The PM may override, but only through an explicit `[FRIDAY-DECISION]` ask so the risk acceptance lands in `DECISIONS.md` on the record — never by you rationalizing a row closed.
+3. **Worktree consent** (skip if the PM declared a standing preference): offer to run the build in a linked worktree. If accepted: `git worktree add ../<name>-build`. The `.friday/` substrate is SHARED with the main repo automatically (every writer resolves it via `git rev-parse --git-common-dir`) — worktrees isolate code, they share substrate. Never point any tool's `--root` at a hand-computed path.
+4. Architecture pass (architect hat, single upfront pass): read the TSOW in full; sketch module boundaries, data model, trust boundaries into `docs/architecture/README.md` (short — the synthesized set comes post-build via `/friday:reference`). Security criteria `S-n` are yours to own.
+5. **Scope check (one-shot vs units — DF-020):** one-shot is the TARGET; never presume the fallback. But "verifiably exceeds" takes a measurement, not vibes — from the architecture pass you just did, estimate the build cost per unit of the TSOW's Dependency / Foundation Ordering section (§8 in the template; rule of thumb: an FR with its AC costs ~3–5k tokens of build context including tests and re-runs; each known-hard pin adds its spike). Record the worked estimate AND the call via `decisions_append.py` either way. If the honest total exceeds the ~120k-token smart zone, declare **foundation-ordered units now, at pre-flight** (this is **declared unit mode**): that same TSOW ordering IS the unit plan — name the units and their boundaries in the same `DECISIONS.md` entry so every seam lands at a designed joint (Phase 3's backstop stays reserved for surprises). Unit mode changes cadence, not ceremony: each unit is a one-shot within its own scope; harden still runs ONCE (Phase 4), with the single foundation exception in Phase 3.
+6. Transition state: edit the FRIDAY-STATE block → `state: build-in-progress` (+ fresh `since:`). The state sentinel verifies this write.
+
+### Phase 2: Build (the free run)
+
+Build the whole TSOW. Rules that are NOT optional:
+
+- **As-you-go capture, two channels, same schema:**
+  - When a choice clears the three-part test (hard-to-reverse ∘ surprising-without-context ∘ genuine trade-off) **and warrants a PM gate**, surface it via `AskUserQuestion` in the **decision-ask shape**: first line `[FRIDAY-DECISION] <title>`, then typed `decision:` / `why:` / `rejected:` / `floor:` / `weight:` lines, options = the real alternatives with your recommendation first. The `decision_capture` hook then writes `DECISIONS.md` **for that shape only** (channel `pm-ratified`) — the harness guarantees the write. If the PM isn't watching, the build **waits** — the question STALLS the build until answered; it never parks the ask and continues (PM decision 2026-07-13: park-and-continue is dead). The ask-mirror hook keeps the pending question on disk so a crashed session's `/friday:resume` re-surfaces it first.
+  - Choices that clear the three-part bar but don't need a PM gate: record them yourself, at decision time, never batched at the end: `python3 "${CLAUDE_PLUGIN_ROOT}/tools/decisions_append.py" --title … --decision … --why … --rejected … [--floor …] [--weight …]`. The **Rejected line is the most important one** — finished code can never show the roads not taken. Log empirically-failed attempts too.
+  - **Floor override (PROP-044):** anything touching `schema-data` / `auth-security` / `external-api` / `friday-claims` / `spend` is surfaced + one-way REGARDLESS of the three-part conclusion. Never rationalize away a schema change's "surprise".
+  - **Fire capture on verification findings too:** a decision revised by testing is written back like any other entry.
+- **Selective TDD (scoped Iron Law):** for every unit the TSOW's criticality marking flags as logic-core — TSOW-flagged, not your discretion — NO LOGIC-CORE CODE WITHOUT A FAILING TEST FIRST, and delete-and-restart anything written implementation-first. You write those tests yourself, here (a TDD handoff would reintroduce the seam this command removes). Everything else: manual verification, hands-on — drive the real surface (a first-class mode, not an excuse).
+- **Known-hard pins:** requirements the TSOW pins with mandated verification get REAL verification (run it, quote the output), never "should work".
+- **Ad-hoc dispatch rule:** the free run itself spawns nobody (continuity is the point), but ANY ad-hoc dispatch you do make (a research lane, a consult) emits telemetry via `spawn_telemetry.py` --emit spawn/accept/done and names its model explicitly.
+- **Doc-access discipline:** use friday-docs `get_section` over Reading any doc >~25 KB; anything a spawned checker must know goes in its spawn message or Read list — project `CLAUDE.md` reaches ZERO subagents.
+
+### Phase 3: In-flight backstop (seam-handoff)
+
+If context approaches the ~120k smart zone, force a seam at a clean foundation boundary rather than push past. Run `python3 "${CLAUDE_PLUGIN_ROOT}/tools/seam_handoff.py" --root .` to assemble the carry-forward brief (`DECISIONS.md` + arc42/architecture notes + generated code-map) into `.friday/seam-handoff.md`, journal a `state-transition` event, and tell the PM to start the next unit from that brief. `seam-handoff` is an internal build-model primitive — NOT the client-facing `/friday:handoff`. Fold resolved, already-logged decisions OUT of the brief; a dispatch describes one unit of work, not the session's history.
+
+In **declared unit mode** (the Phase-1 scope call), seams are planned, not emergencies: close each unit at its declared boundary with the same `seam_handoff.py` brief. **Foundation exception (DF-021):** when the unit just sealed is the TSOW's make-or-break foundation (Criticality, §2 in the template), spawn a scoped interim check BEFORE any downstream unit consumes it — tester + reviewer over that unit's diff only (fresh context, their usual envelope formats written to interim paths: `docs/reviews/interim-<unit>-gate.md` + `docs/reviews/interim-<unit>-review.md`, NEVER the K-gated `release-gate.md`/`coverage.md`/`post-build-review.md`; the interim tester skips the coverage ledger — a unit diff has no whole-TSOW dispositions to give), not the full harden ceremony. A foundation defect that survives to the final harden costs every unit built on top of it; the in-build destruction-testing (the known-hard pins, §7 in the template) is real but it is the builder verifying the builder. The full harden still runs exactly once, in Phase 4, over the whole build — per-unit harden is the retired ceremony and stays retired.
+
+### Phase 4: Wrap
+
+1. Re-run the logic-core suite + the TSOW's mandated verifications; quote real output.
+2. **Invoke `/friday:harden` yourself, now, in this same pass** (the one surviving ceremony — post-build, independent). Independence lives in harden's own fresh-context spawns, NOT in making the PM re-type a command; the build→harden seam is automatic. After its verdict is recorded, the closer flips state through `post-build-review-recorded` → `closed` (K-gated; the stop gate blocks a close the artifacts don't back).
+3. Run `/friday:reference` **after the harden verdict and any Step-3b fixes land** — synthesis must capture the HARDENED tree, never a pre-harden snapshot (DF-018: stale generated docs actively misrepresent the shipped code). If hardening changed nothing, this is a cheap no-op regen.
+4. **Finish menu** (after review): offer **merge / push+PR / keep worktree / discard**. `discard` requires the PM to literally type `discard`; it removes the worktree's CODE but never the shared `.friday/` trail — journal `state-transition` with `data: {"outcome": "discarded"}` instead (the decision/telemetry trail of a discarded attempt is still audit-relevant).
+
+### What you DON'T do
+
+No per-feature checkpoint files, no wave/phase trees, no approval queue per feature, no parallel developer lanes (fragmenting cross-cutting coherence is the failure mode this design removes), no editing the TSOW, no `git push` (commit only; pushing is the PM's).

@@ -1,0 +1,14 @@
+{
+  "name": "friday",
+  "version": "0.5.0",
+  "description": "friday vnext — heavy-front discovery (grilling protocol + TSOW), light-middle one-shot build with as-you-go two-channel DECISIONS.md capture, post-build independent hardening, and synthesized-back documentation (deterministic extractor + DECISIONS-grounded arc42, with the extractor-vs-synthesis diff as the QA oracle). Mid-build K1-K8 state model enforced by detector/sentinel/stop-gate hooks; crash-resume + worktree-shared .friday substrate; Codex enforcement-gate adapter.",
+  "author": {
+    "name": "Dan Aghili"
+  },
+  "mcpServers": {
+    "friday-docs": {
+      "command": "python3",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/tools/doc-index/server.py"]
+    }
+  }
+}

@@ -1,0 +1,2511 @@
+{
+ "modules": [
+  {
+   "id": "hooks._guard",
+   "path": "hooks/_guard.py",
+   "loc": 192
+  },
+  {
+   "id": "hooks._hookutil",
+   "path": "hooks/_hookutil.py",
+   "loc": 42
+  },
+  {
+   "id": "hooks.blast_radius_backstop",
+   "path": "hooks/blast_radius_backstop.py",
+   "loc": 68
+  },
+  {
+   "id": "hooks.blast_radius_guard",
+   "path": "hooks/blast_radius_guard.py",
+   "loc": 80
+  },
+  {
+   "id": "hooks.bug_close_gate",
+   "path": "hooks/bug_close_gate.py",
+   "loc": 89
+  },
+  {
+   "id": "hooks.committed_test_guard",
+   "path": "hooks/committed_test_guard.py",
+   "loc": 76
+  },
+  {
+   "id": "hooks.compaction_filing",
+   "path": "hooks/compaction_filing.py",
+   "loc": 46
+  },
+  {
+   "id": "hooks.compaction_reorient",
+   "path": "hooks/compaction_reorient.py",
+   "loc": 79
+  },
+  {
+   "id": "hooks.compaction_steering",
+   "path": "hooks/compaction_steering.py",
+   "loc": 63
+  },
+  {
+   "id": "hooks.config_change_journal",
+   "path": "hooks/config_change_journal.py",
+   "loc": 50
+  },
+  {
+   "id": "hooks.decision_capture",
+   "path": "hooks/decision_capture.py",
+   "loc": 103
+  },
+  {
+   "id": "hooks.design_contract_guard",
+   "path": "hooks/design_contract_guard.py",
+   "loc": 72
+  },
+  {
+   "id": "hooks.doc_consumption_guard",
+   "path": "hooks/doc_consumption_guard.py",
+   "loc": 99
+  },
+  {
+   "id": "hooks.elicitation_journal",
+   "path": "hooks/elicitation_journal.py",
+   "loc": 63
+  },
+  {
+   "id": "hooks.foundation_gate",
+   "path": "hooks/foundation_gate.py",
+   "loc": 68
+  },
+  {
+   "id": "hooks.graph_freshness_guard",
+   "path": "hooks/graph_freshness_guard.py",
+   "loc": 52
+  },
+  {
+   "id": "hooks.lane_close_gate",
+   "path": "hooks/lane_close_gate.py",
+   "loc": 111
+  },
+  {
+   "id": "hooks.open_risks_guard",
+   "path": "hooks/open_risks_guard.py",
+   "loc": 70
+  },
+  {
+   "id": "hooks.oracle_edit_guard",
+   "path": "hooks/oracle_edit_guard.py",
+   "loc": 74
+  },
+  {
+   "id": "hooks.profile_guard",
+   "path": "hooks/profile_guard.py",
+   "loc": 70
+  },
+  {
+   "id": "hooks.research_orphan_warn",
+   "path": "hooks/research_orphan_warn.py",
+   "loc": 53
+  },
+  {
+   "id": "hooks.review_format_sentinel",
+   "path": "hooks/review_format_sentinel.py",
+   "loc": 144
+  },
+  {
+   "id": "hooks.review_format_stop_gate",
+   "path": "hooks/review_format_stop_gate.py",
+   "loc": 104
+  },
+  {
+   "id": "hooks.session_lifecycle",
+   "path": "hooks/session_lifecycle.py",
+   "loc": 172
+  },
+  {
+   "id": "hooks.setup_selfcheck",
+   "path": "hooks/setup_selfcheck.py",
+   "loc": 73
+  },
+  {
+   "id": "hooks.spec_write_guard",
+   "path": "hooks/spec_write_guard.py",
+   "loc": 87
+  },
+  {
+   "id": "hooks.state_sentinel",
+   "path": "hooks/state_sentinel.py",
+   "loc": 93
+  },
+  {
+   "id": "hooks.state_stop_gate",
+   "path": "hooks/state_stop_gate.py",
+   "loc": 101
+  },
+  {
+   "id": "hooks.substrate_ask_cleanup",
+   "path": "hooks/substrate_ask_cleanup.py",
+   "loc": 98
+  },
+  {
+   "id": "hooks.substrate_ask_mirror",
+   "path": "hooks/substrate_ask_mirror.py",
+   "loc": 168
+  },
+  {
+   "id": "hooks.teammate_idle_nudge",
+   "path": "hooks/teammate_idle_nudge.py",
+   "loc": 54
+  },
+  {
+   "id": "hooks.thrash_detector",
+   "path": "hooks/thrash_detector.py",
+   "loc": 85
+  },
+  {
+   "id": "hooks.usage_telemetry",
+   "path": "hooks/usage_telemetry.py",
+   "loc": 144
+  },
+  {
+   "id": "hooks.worktree_create_guard",
+   "path": "hooks/worktree_create_guard.py",
+   "loc": 104
+  },
+  {
+   "id": "hooks.worktree_remove_warn",
+   "path": "hooks/worktree_remove_warn.py",
+   "loc": 63
+  },
+  {
+   "id": "hooks.worktree_substrate_warn",
+   "path": "hooks/worktree_substrate_warn.py",
+   "loc": 59
+  },
+  {
+   "id": "tests.conftest",
+   "path": "tests/conftest.py",
+   "loc": 15
+  },
+  {
+   "id": "tests.guardkit",
+   "path": "tests/guardkit.py",
+   "loc": 60
+  },
+  {
+   "id": "tests.test_batch_edit",
+   "path": "tests/test_batch_edit.py",
+   "loc": 122
+  },
+  {
+   "id": "tests.test_bug_001_verify_claims_stack",
+   "path": "tests/test_bug_001_verify_claims_stack.py",
+   "loc": 197
+  },
+  {
+   "id": "tests.test_bug_002_bug_close_gate_pause",
+   "path": "tests/test_bug_002_bug_close_gate_pause.py",
+   "loc": 98
+  },
+  {
+   "id": "tests.test_bug_003_check_readme_sync",
+   "path": "tests/test_bug_003_check_readme_sync.py",
+   "loc": 83
+  },
+  {
+   "id": "tests.test_committed_test_check",
+   "path": "tests/test_committed_test_check.py",
+   "loc": 187
+  },
+  {
+   "id": "tests.test_compaction_capture",
+   "path": "tests/test_compaction_capture.py",
+   "loc": 97
+  },
+  {
+   "id": "tests.test_companion_offer",
+   "path": "tests/test_companion_offer.py",
+   "loc": 71
+  },
+  {
+   "id": "tests.test_companion_server",
+   "path": "tests/test_companion_server.py",
+   "loc": 107
+  },
+  {
+   "id": "tests.test_decisions",
+   "path": "tests/test_decisions.py",
+   "loc": 174
+  },
+  {
+   "id": "tests.test_doc_gate",
+   "path": "tests/test_doc_gate.py",
+   "loc": 426
+  },
+  {
+   "id": "tests.test_doc_synthesis",
+   "path": "tests/test_doc_synthesis.py",
+   "loc": 250
+  },
+  {
+   "id": "tests.test_findings_brief_check",
+   "path": "tests/test_findings_brief_check.py",
+   "loc": 205
+  },
+  {
+   "id": "tests.test_gen_command_index_skills",
+   "path": "tests/test_gen_command_index_skills.py",
+   "loc": 193
+  },
+  {
+   "id": "tests.test_graph_query",
+   "path": "tests/test_graph_query.py",
+   "loc": 72
+  },
+  {
+   "id": "tests.test_graph_refresh",
+   "path": "tests/test_graph_refresh.py",
+   "loc": 95
+  },
+  {
+   "id": "tests.test_graph_stamp",
+   "path": "tests/test_graph_stamp.py",
+   "loc": 83
+  },
+  {
+   "id": "tests.test_guard_blast_radius",
+   "path": "tests/test_guard_blast_radius.py",
+   "loc": 121
+  },
+  {
+   "id": "tests.test_guard_blast_radius_backstop",
+   "path": "tests/test_guard_blast_radius_backstop.py",
+   "loc": 86
+  },
+  {
+   "id": "tests.test_guard_bug_close",
+   "path": "tests/test_guard_bug_close.py",
+   "loc": 165
+  },
+  {
+   "id": "tests.test_guard_committed_test",
+   "path": "tests/test_guard_committed_test.py",
+   "loc": 102
+  },
+  {
+   "id": "tests.test_guard_config_change",
+   "path": "tests/test_guard_config_change.py",
+   "loc": 47
+  },
+  {
+   "id": "tests.test_guard_design_contract",
+   "path": "tests/test_guard_design_contract.py",
+   "loc": 129
+  },
+  {
+   "id": "tests.test_guard_doc_consumption",
+   "path": "tests/test_guard_doc_consumption.py",
+   "loc": 173
+  },
+  {
+   "id": "tests.test_guard_elicitation_journal",
+   "path": "tests/test_guard_elicitation_journal.py",
+   "loc": 53
+  },
+  {
+   "id": "tests.test_guard_foundation",
+   "path": "tests/test_guard_foundation.py",
+   "loc": 119
+  },
+  {
+   "id": "tests.test_guard_graph_freshness",
+   "path": "tests/test_guard_graph_freshness.py",
+   "loc": 114
+  },
+  {
+   "id": "tests.test_guard_lane_close",
+   "path": "tests/test_guard_lane_close.py",
+   "loc": 109
+  },
+  {
+   "id": "tests.test_guard_open_risks",
+   "path": "tests/test_guard_open_risks.py",
+   "loc": 134
+  },
+  {
+   "id": "tests.test_guard_oracle_edit",
+   "path": "tests/test_guard_oracle_edit.py",
+   "loc": 130
+  },
+  {
+   "id": "tests.test_guard_profile",
+   "path": "tests/test_guard_profile.py",
+   "loc": 172
+  },
+  {
+   "id": "tests.test_guard_research_orphan",
+   "path": "tests/test_guard_research_orphan.py",
+   "loc": 101
+  },
+  {
+   "id": "tests.test_guard_setup_selfcheck",
+   "path": "tests/test_guard_setup_selfcheck.py",
+   "loc": 75
+  },
+  {
+   "id": "tests.test_guard_skeleton",
+   "path": "tests/test_guard_skeleton.py",
+   "loc": 254
+  },
+  {
+   "id": "tests.test_guard_spec_write",
+   "path": "tests/test_guard_spec_write.py",
+   "loc": 115
+  },
+  {
+   "id": "tests.test_guard_teammate_idle",
+   "path": "tests/test_guard_teammate_idle.py",
+   "loc": 48
+  },
+  {
+   "id": "tests.test_guard_thrash",
+   "path": "tests/test_guard_thrash.py",
+   "loc": 86
+  },
+  {
+   "id": "tests.test_guard_worktree_create",
+   "path": "tests/test_guard_worktree_create.py",
+   "loc": 118
+  },
+  {
+   "id": "tests.test_guard_worktree_remove",
+   "path": "tests/test_guard_worktree_remove.py",
+   "loc": 48
+  },
+  {
+   "id": "tests.test_guard_worktree_substrate",
+   "path": "tests/test_guard_worktree_substrate.py",
+   "loc": 74
+  },
+  {
+   "id": "tests.test_handoff_attest",
+   "path": "tests/test_handoff_attest.py",
+   "loc": 58
+  },
+  {
+   "id": "tests.test_handoff_gate",
+   "path": "tests/test_handoff_gate.py",
+   "loc": 110
+  },
+  {
+   "id": "tests.test_handoff_package_check",
+   "path": "tests/test_handoff_package_check.py",
+   "loc": 91
+  },
+  {
+   "id": "tests.test_harden_fixes",
+   "path": "tests/test_harden_fixes.py",
+   "loc": 186
+  },
+  {
+   "id": "tests.test_hooks",
+   "path": "tests/test_hooks.py",
+   "loc": 368
+  },
+  {
+   "id": "tests.test_hooks_compaction",
+   "path": "tests/test_hooks_compaction.py",
+   "loc": 108
+  },
+  {
+   "id": "tests.test_lane_cli",
+   "path": "tests/test_lane_cli.py",
+   "loc": 75
+  },
+  {
+   "id": "tests.test_lane_open_helper",
+   "path": "tests/test_lane_open_helper.py",
+   "loc": 142
+  },
+  {
+   "id": "tests.test_mdparse",
+   "path": "tests/test_mdparse.py",
+   "loc": 39
+  },
+  {
+   "id": "tests.test_registry",
+   "path": "tests/test_registry.py",
+   "loc": 68
+  },
+  {
+   "id": "tests.test_review_format_interim",
+   "path": "tests/test_review_format_interim.py",
+   "loc": 83
+  },
+  {
+   "id": "tests.test_sanitized_mirror",
+   "path": "tests/test_sanitized_mirror.py",
+   "loc": 123
+  },
+  {
+   "id": "tests.test_secret_names",
+   "path": "tests/test_secret_names.py",
+   "loc": 93
+  },
+  {
+   "id": "tests.test_server",
+   "path": "tests/test_server.py",
+   "loc": 106
+  },
+  {
+   "id": "tests.test_session_lifecycle",
+   "path": "tests/test_session_lifecycle.py",
+   "loc": 65
+  },
+  {
+   "id": "tests.test_skill_standard_check",
+   "path": "tests/test_skill_standard_check.py",
+   "loc": 205
+  },
+  {
+   "id": "tests.test_spec_id_strip_bundled",
+   "path": "tests/test_spec_id_strip_bundled.py",
+   "loc": 84
+  },
+  {
+   "id": "tests.test_stop_gate_failopen",
+   "path": "tests/test_stop_gate_failopen.py",
+   "loc": 101
+  },
+  {
+   "id": "tests.test_substrate",
+   "path": "tests/test_substrate.py",
+   "loc": 181
+  },
+  {
+   "id": "tests.test_substrate_compaction",
+   "path": "tests/test_substrate_compaction.py",
+   "loc": 220
+  },
+  {
+   "id": "tests.test_taglines",
+   "path": "tests/test_taglines.py",
+   "loc": 43
+  },
+  {
+   "id": "tests.test_trail_check",
+   "path": "tests/test_trail_check.py",
+   "loc": 240
+  },
+  {
+   "id": "tests.test_verify_claims",
+   "path": "tests/test_verify_claims.py",
+   "loc": 82
+  },
+  {
+   "id": "tests.test_verify_coverage",
+   "path": "tests/test_verify_coverage.py",
+   "loc": 204
+  },
+  {
+   "id": "tests.test_verify_generated",
+   "path": "tests/test_verify_generated.py",
+   "loc": 153
+  },
+  {
+   "id": "tests.test_verify_state",
+   "path": "tests/test_verify_state.py",
+   "loc": 169
+  },
+  {
+   "id": "tools.batch_edit",
+   "path": "tools/batch_edit.py",
+   "loc": 123
+  },
+  {
+   "id": "tools.blast_radius_check",
+   "path": "tools/blast_radius_check.py",
+   "loc": 144
+  },
+  {
+   "id": "tools.bug_close_check",
+   "path": "tools/bug_close_check.py",
+   "loc": 103
+  },
+  {
+   "id": "tools.capture_integrity",
+   "path": "tools/capture_integrity.py",
+   "loc": 84
+  },
+  {
+   "id": "tools.codex-adapter.state_stop_gate",
+   "path": "tools/codex-adapter/state_stop_gate.py",
+   "loc": 70
+  },
+  {
+   "id": "tools.committed_test_check",
+   "path": "tools/committed_test_check.py",
+   "loc": 194
+  },
+  {
+   "id": "tools.compaction_note",
+   "path": "tools/compaction_note.py",
+   "loc": 74
+  },
+  {
+   "id": "tools.decisions",
+   "path": "tools/decisions.py",
+   "loc": 363
+  },
+  {
+   "id": "tools.decisions_append",
+   "path": "tools/decisions_append.py",
+   "loc": 136
+  },
+  {
+   "id": "tools.design_contract_check",
+   "path": "tools/design_contract_check.py",
+   "loc": 75
+  },
+  {
+   "id": "tools.doc-index.mdparse",
+   "path": "tools/doc-index/mdparse.py",
+   "loc": 208
+  },
+  {
+   "id": "tools.doc-index.registry",
+   "path": "tools/doc-index/registry.py",
+   "loc": 198
+  },
+  {
+   "id": "tools.doc-index.server",
+   "path": "tools/doc-index/server.py",
+   "loc": 326
+  },
+  {
+   "id": "tools.doc-synthesis.extract_architecture",
+   "path": "tools/doc-synthesis/extract_architecture.py",
+   "loc": 452
+  },
+  {
+   "id": "tools.doc-synthesis.synthesis_diff",
+   "path": "tools/doc-synthesis/synthesis_diff.py",
+   "loc": 160
+  },
+  {
+   "id": "tools.doc_gate",
+   "path": "tools/doc_gate.py",
+   "loc": 350
+  },
+  {
+   "id": "tools.findings_brief_check",
+   "path": "tools/findings_brief_check.py",
+   "loc": 193
+  },
+  {
+   "id": "tools.foundation_check",
+   "path": "tools/foundation_check.py",
+   "loc": 74
+  },
+  {
+   "id": "tools.friday_substrate",
+   "path": "tools/friday_substrate.py",
+   "loc": 523
+  },
+  {
+   "id": "tools.gen_command_index",
+   "path": "tools/gen_command_index.py",
+   "loc": 191
+  },
+  {
+   "id": "tools.graph_freshness_check",
+   "path": "tools/graph_freshness_check.py",
+   "loc": 77
+  },
+  {
+   "id": "tools.graph_query",
+   "path": "tools/graph_query.py",
+   "loc": 104
+  },
+  {
+   "id": "tools.graph_refresh",
+   "path": "tools/graph_refresh.py",
+   "loc": 89
+  },
+  {
+   "id": "tools.handoff_attest",
+   "path": "tools/handoff_attest.py",
+   "loc": 90
+  },
+  {
+   "id": "tools.handoff_gate",
+   "path": "tools/handoff_gate.py",
+   "loc": 125
+  },
+  {
+   "id": "tools.handoff_package_check",
+   "path": "tools/handoff_package_check.py",
+   "loc": 138
+  },
+  {
+   "id": "tools.lane",
+   "path": "tools/lane.py",
+   "loc": 83
+  },
+  {
+   "id": "tools.open_risks_check",
+   "path": "tools/open_risks_check.py",
+   "loc": 137
+  },
+  {
+   "id": "tools.oracle_edit_check",
+   "path": "tools/oracle_edit_check.py",
+   "loc": 95
+  },
+  {
+   "id": "tools.profile_check",
+   "path": "tools/profile_check.py",
+   "loc": 114
+  },
+  {
+   "id": "tools.receipt",
+   "path": "tools/receipt.py",
+   "loc": 169
+  },
+  {
+   "id": "tools.research_orphan_check",
+   "path": "tools/research_orphan_check.py",
+   "loc": 109
+  },
+  {
+   "id": "tools.sanitized_mirror",
+   "path": "tools/sanitized_mirror.py",
+   "loc": 129
+  },
+  {
+   "id": "tools.seam_handoff",
+   "path": "tools/seam_handoff.py",
+   "loc": 100
+  },
+  {
+   "id": "tools.secret_names",
+   "path": "tools/secret_names.py",
+   "loc": 145
+  },
+  {
+   "id": "tools.session_heartbeat",
+   "path": "tools/session_heartbeat.py",
+   "loc": 95
+  },
+  {
+   "id": "tools.skill_standard_check",
+   "path": "tools/skill_standard_check.py",
+   "loc": 156
+  },
+  {
+   "id": "tools.spawn_telemetry",
+   "path": "tools/spawn_telemetry.py",
+   "loc": 117
+  },
+  {
+   "id": "tools.spec_id_strip_check",
+   "path": "tools/spec_id_strip_check.py",
+   "loc": 115
+  },
+  {
+   "id": "tools.taglines",
+   "path": "tools/taglines.py",
+   "loc": 117
+  },
+  {
+   "id": "tools.trail_check",
+   "path": "tools/trail_check.py",
+   "loc": 224
+  },
+  {
+   "id": "tools.usage_report",
+   "path": "tools/usage_report.py",
+   "loc": 68
+  },
+  {
+   "id": "tools.verify_claims",
+   "path": "tools/verify_claims.py",
+   "loc": 341
+  },
+  {
+   "id": "tools.verify_coverage",
+   "path": "tools/verify_coverage.py",
+   "loc": 174
+  },
+  {
+   "id": "tools.verify_generated",
+   "path": "tools/verify_generated.py",
+   "loc": 137
+  },
+  {
+   "id": "tools.verify_review_format",
+   "path": "tools/verify_review_format.py",
+   "loc": 309
+  },
+  {
+   "id": "tools.verify_spawn_coverage",
+   "path": "tools/verify_spawn_coverage.py",
+   "loc": 145
+  },
+  {
+   "id": "tools.verify_state",
+   "path": "tools/verify_state.py",
+   "loc": 216
+  },
+  {
+   "id": "tools.visual-companion.companion_server",
+   "path": "tools/visual-companion/companion_server.py",
+   "loc": 248
+  },
+  {
+   "id": "tools.visual-companion.offer",
+   "path": "tools/visual-companion/offer.py",
+   "loc": 56
+  },
+  {
+   "id": "tools.worktree_create_check",
+   "path": "tools/worktree_create_check.py",
+   "loc": 100
+  }
+ ],
+ "edges": [
+  {
+   "from": "hooks._hookutil",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 30,
+   "deferred": true
+  },
+  {
+   "from": "hooks.blast_radius_backstop",
+   "to": "hooks._guard",
+   "kind": "import",
+   "line": 20,
+   "deferred": false
+  },
+  {
+   "from": "hooks.blast_radius_backstop",
+   "to": "hooks._hookutil",
+   "kind": "import",
+   "line": 21,
+   "deferred": false
+  },
+  {
+   "from": "hooks.blast_radius_guard",
+   "to": "hooks._guard",
+   "kind": "import",
+   "line": 20,
+   "deferred": false
+  },
+  {
+   "from": "hooks.blast_radius_guard",
+   "to": "hooks._hookutil",
+   "kind": "import",
+   "line": 21,
+   "deferred": false
+  },
+  {
+   "from": "hooks.bug_close_gate",
+   "to": "hooks._guard",
+   "kind": "import",
+   "line": 28,
+   "deferred": false
+  },
+  {
+   "from": "hooks.bug_close_gate",
+   "to": "hooks._hookutil",
+   "kind": "import",
+   "line": 29,
+   "deferred": false
+  },
+  {
+   "from": "hooks.committed_test_guard",
+   "to": "hooks._guard",
+   "kind": "import",
+   "line": 24,
+   "deferred": false
+  },
+  {
+   "from": "hooks.committed_test_guard",
+   "to": "hooks._hookutil",
+   "kind": "import",
+   "line": 25,
+   "deferred": false
+  },
+  {
+   "from": "hooks.compaction_filing",
+   "to": "hooks._hookutil",
+   "kind": "import",
+   "line": 21,
+   "deferred": false
+  },
+  {
+   "from": "hooks.compaction_reorient",
+   "to": "hooks._hookutil",
+   "kind": "import",
+   "line": 23,
+   "deferred": false
+  },
+  {
+   "from": "hooks.compaction_steering",
+   "to": "hooks._hookutil",
+   "kind": "import",
+   "line": 24,
+   "deferred": false
+  },
+  {
+   "from": "hooks.config_change_journal",
+   "to": "hooks._hookutil",
+   "kind": "import",
+   "line": 20,
+   "deferred": false
+  },
+  {
+   "from": "hooks.decision_capture",
+   "to": "hooks._hookutil",
+   "kind": "import",
+   "line": 29,
+   "deferred": false
+  },
+  {
+   "from": "hooks.decision_capture",
+   "to": "tools.decisions",
+   "kind": "import",
+   "line": 73,
+   "deferred": true
+  },
+  {
+   "from": "hooks.design_contract_guard",
+   "to": "hooks._guard",
+   "kind": "import",
+   "line": 19,
+   "deferred": false
+  },
+  {
+   "from": "hooks.design_contract_guard",
+   "to": "hooks._hookutil",
+   "kind": "import",
+   "line": 20,
+   "deferred": false
+  },
+  {
+   "from": "hooks.doc_consumption_guard",
+   "to": "hooks._guard",
+   "kind": "import",
+   "line": 26,
+   "deferred": false
+  },
+  {
+   "from": "hooks.doc_consumption_guard",
+   "to": "hooks._hookutil",
+   "kind": "import",
+   "line": 27,
+   "deferred": false
+  },
+  {
+   "from": "hooks.elicitation_journal",
+   "to": "hooks._hookutil",
+   "kind": "import",
+   "line": 20,
+   "deferred": false
+  },
+  {
+   "from": "hooks.foundation_gate",
+   "to": "hooks._guard",
+   "kind": "import",
+   "line": 18,
+   "deferred": false
+  },
+  {
+   "from": "hooks.foundation_gate",
+   "to": "hooks._hookutil",
+   "kind": "import",
+   "line": 19,
+   "deferred": false
+  },
+  {
+   "from": "hooks.graph_freshness_guard",
+   "to": "hooks._guard",
+   "kind": "import",
+   "line": 18,
+   "deferred": false
+  },
+  {
+   "from": "hooks.graph_freshness_guard",
+   "to": "hooks._hookutil",
+   "kind": "import",
+   "line": 19,
+   "deferred": false
+  },
+  {
+   "from": "hooks.lane_close_gate",
+   "to": "hooks._guard",
+   "kind": "import",
+   "line": 42,
+   "deferred": false
+  },
+  {
+   "from": "hooks.lane_close_gate",
+   "to": "hooks._hookutil",
+   "kind": "import",
+   "line": 43,
+   "deferred": false
+  },
+  {
+   "from": "hooks.open_risks_guard",
+   "to": "hooks._guard",
+   "kind": "import",
+   "line": 18,
+   "deferred": false
+  },
+  {
+   "from": "hooks.open_risks_guard",
+   "to": "hooks._hookutil",
+   "kind": "import",
+   "line": 19,
+   "deferred": false
+  },
+  {
+   "from": "hooks.oracle_edit_guard",
+   "to": "hooks._guard",
+   "kind": "import",
+   "line": 20,
+   "deferred": false
+  },
+  {
+   "from": "hooks.oracle_edit_guard",
+   "to": "hooks._hookutil",
+   "kind": "import",
+   "line": 21,
+   "deferred": false
+  },
+  {
+   "from": "hooks.profile_guard",
+   "to": "hooks._guard",
+   "kind": "import",
+   "line": 20,
+   "deferred": false
+  },
+  {
+   "from": "hooks.profile_guard",
+   "to": "hooks._hookutil",
+   "kind": "import",
+   "line": 21,
+   "deferred": false
+  },
+  {
+   "from": "hooks.research_orphan_warn",
+   "to": "hooks._guard",
+   "kind": "import",
+   "line": 17,
+   "deferred": false
+  },
+  {
+   "from": "hooks.research_orphan_warn",
+   "to": "hooks._hookutil",
+   "kind": "import",
+   "line": 18,
+   "deferred": false
+  },
+  {
+   "from": "hooks.review_format_sentinel",
+   "to": "hooks._hookutil",
+   "kind": "import",
+   "line": 31,
+   "deferred": false
+  },
+  {
+   "from": "hooks.review_format_stop_gate",
+   "to": "hooks._hookutil",
+   "kind": "import",
+   "line": 17,
+   "deferred": false
+  },
+  {
+   "from": "hooks.session_lifecycle",
+   "to": "hooks._hookutil",
+   "kind": "import",
+   "line": 31,
+   "deferred": false
+  },
+  {
+   "from": "hooks.setup_selfcheck",
+   "to": "hooks._hookutil",
+   "kind": "import",
+   "line": 21,
+   "deferred": false
+  },
+  {
+   "from": "hooks.spec_write_guard",
+   "to": "hooks._guard",
+   "kind": "import",
+   "line": 25,
+   "deferred": false
+  },
+  {
+   "from": "hooks.spec_write_guard",
+   "to": "hooks._hookutil",
+   "kind": "import",
+   "line": 26,
+   "deferred": false
+  },
+  {
+   "from": "hooks.state_sentinel",
+   "to": "hooks._hookutil",
+   "kind": "import",
+   "line": 32,
+   "deferred": false
+  },
+  {
+   "from": "hooks.state_stop_gate",
+   "to": "hooks._hookutil",
+   "kind": "import",
+   "line": 22,
+   "deferred": false
+  },
+  {
+   "from": "hooks.substrate_ask_cleanup",
+   "to": "hooks._hookutil",
+   "kind": "import",
+   "line": 25,
+   "deferred": false
+  },
+  {
+   "from": "hooks.substrate_ask_mirror",
+   "to": "hooks._hookutil",
+   "kind": "import",
+   "line": 29,
+   "deferred": false
+  },
+  {
+   "from": "hooks.teammate_idle_nudge",
+   "to": "hooks._guard",
+   "kind": "import",
+   "line": 19,
+   "deferred": false
+  },
+  {
+   "from": "hooks.teammate_idle_nudge",
+   "to": "hooks._hookutil",
+   "kind": "import",
+   "line": 20,
+   "deferred": false
+  },
+  {
+   "from": "hooks.thrash_detector",
+   "to": "hooks._guard",
+   "kind": "import",
+   "line": 22,
+   "deferred": false
+  },
+  {
+   "from": "hooks.thrash_detector",
+   "to": "hooks._hookutil",
+   "kind": "import",
+   "line": 23,
+   "deferred": false
+  },
+  {
+   "from": "hooks.usage_telemetry",
+   "to": "hooks._hookutil",
+   "kind": "import",
+   "line": 22,
+   "deferred": false
+  },
+  {
+   "from": "hooks.worktree_create_guard",
+   "to": "hooks._guard",
+   "kind": "import",
+   "line": 39,
+   "deferred": false
+  },
+  {
+   "from": "hooks.worktree_create_guard",
+   "to": "hooks._hookutil",
+   "kind": "import",
+   "line": 40,
+   "deferred": false
+  },
+  {
+   "from": "hooks.worktree_remove_warn",
+   "to": "hooks._guard",
+   "kind": "import",
+   "line": 30,
+   "deferred": false
+  },
+  {
+   "from": "hooks.worktree_remove_warn",
+   "to": "hooks._hookutil",
+   "kind": "import",
+   "line": 31,
+   "deferred": false
+  },
+  {
+   "from": "hooks.worktree_substrate_warn",
+   "to": "hooks._guard",
+   "kind": "import",
+   "line": 25,
+   "deferred": false
+  },
+  {
+   "from": "hooks.worktree_substrate_warn",
+   "to": "hooks._hookutil",
+   "kind": "import",
+   "line": 26,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_batch_edit",
+   "to": "tools.batch_edit",
+   "kind": "import",
+   "line": 15,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_bug_001_verify_claims_stack",
+   "to": "tools.verify_claims",
+   "kind": "import",
+   "line": 15,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_bug_002_bug_close_gate_pause",
+   "to": "tools.bug_close_check",
+   "kind": "import",
+   "line": 19,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_bug_003_check_readme_sync",
+   "to": "tools.gen_command_index",
+   "kind": "import",
+   "line": 11,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_committed_test_check",
+   "to": "tools.committed_test_check",
+   "kind": "import",
+   "line": 23,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_compaction_capture",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 14,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_companion_offer",
+   "to": "tests.guardkit",
+   "kind": "import",
+   "line": 11,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_companion_offer",
+   "to": "tools.visual-companion.offer",
+   "kind": "import",
+   "line": 14,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_companion_server",
+   "to": "tests.guardkit",
+   "kind": "import",
+   "line": 14,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_companion_server",
+   "to": "tools.visual-companion.companion_server",
+   "kind": "import",
+   "line": 17,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_decisions",
+   "to": "tools.decisions",
+   "kind": "import",
+   "line": 13,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_doc_gate",
+   "to": "hooks._guard",
+   "kind": "import",
+   "line": 30,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_doc_gate",
+   "to": "tools.doc_gate",
+   "kind": "import",
+   "line": 29,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_doc_synthesis",
+   "to": "tools.doc-synthesis.extract_architecture",
+   "kind": "import",
+   "line": 6,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_doc_synthesis",
+   "to": "tools.doc-synthesis.synthesis_diff",
+   "kind": "import",
+   "line": 7,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_findings_brief_check",
+   "to": "hooks._guard",
+   "kind": "import",
+   "line": 27,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_findings_brief_check",
+   "to": "tools.findings_brief_check",
+   "kind": "import",
+   "line": 26,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_gen_command_index_skills",
+   "to": "tools.gen_command_index",
+   "kind": "import",
+   "line": 14,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_graph_query",
+   "to": "tests.guardkit",
+   "kind": "import",
+   "line": 10,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_graph_query",
+   "to": "tools.graph_query",
+   "kind": "import",
+   "line": 13,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_graph_refresh",
+   "to": "tests.guardkit",
+   "kind": "import",
+   "line": 11,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_graph_refresh",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 14,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_graph_refresh",
+   "to": "tools.graph_freshness_check",
+   "kind": "import",
+   "line": 15,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_graph_refresh",
+   "to": "tools.graph_refresh",
+   "kind": "import",
+   "line": 16,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_graph_stamp",
+   "to": "tests.guardkit",
+   "kind": "import",
+   "line": 13,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_graph_stamp",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 16,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_graph_stamp",
+   "to": "tools.graph_freshness_check",
+   "kind": "import",
+   "line": 17,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_guard_blast_radius",
+   "to": "tests.guardkit",
+   "kind": "import",
+   "line": 11,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_guard_blast_radius",
+   "to": "tools.blast_radius_check",
+   "kind": "import",
+   "line": 14,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_guard_blast_radius_backstop",
+   "to": "tests.guardkit",
+   "kind": "import",
+   "line": 10,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_guard_bug_close",
+   "to": "tests.guardkit",
+   "kind": "import",
+   "line": 16,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_guard_bug_close",
+   "to": "tools.bug_close_check",
+   "kind": "import",
+   "line": 19,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_guard_committed_test",
+   "to": "tests.guardkit",
+   "kind": "import",
+   "line": 15,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_guard_config_change",
+   "to": "tests.guardkit",
+   "kind": "import",
+   "line": 5,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_guard_design_contract",
+   "to": "tests.guardkit",
+   "kind": "import",
+   "line": 16,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_guard_design_contract",
+   "to": "tools.design_contract_check",
+   "kind": "import",
+   "line": 19,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_guard_doc_consumption",
+   "to": "tests.guardkit",
+   "kind": "import",
+   "line": 13,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_guard_elicitation_journal",
+   "to": "tests.guardkit",
+   "kind": "import",
+   "line": 7,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_guard_foundation",
+   "to": "tests.guardkit",
+   "kind": "import",
+   "line": 15,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_guard_foundation",
+   "to": "tools.foundation_check",
+   "kind": "import",
+   "line": 18,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_guard_graph_freshness",
+   "to": "tests.guardkit",
+   "kind": "import",
+   "line": 12,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_guard_graph_freshness",
+   "to": "tools.graph_freshness_check",
+   "kind": "import",
+   "line": 15,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_guard_lane_close",
+   "to": "tests.guardkit",
+   "kind": "import",
+   "line": 14,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_guard_open_risks",
+   "to": "tests.guardkit",
+   "kind": "import",
+   "line": 16,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_guard_open_risks",
+   "to": "tools.open_risks_check",
+   "kind": "import",
+   "line": 19,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_guard_oracle_edit",
+   "to": "tests.guardkit",
+   "kind": "import",
+   "line": 15,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_guard_oracle_edit",
+   "to": "tools.oracle_edit_check",
+   "kind": "import",
+   "line": 18,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_guard_profile",
+   "to": "tests.guardkit",
+   "kind": "import",
+   "line": 15,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_guard_profile",
+   "to": "tools.profile_check",
+   "kind": "import",
+   "line": 18,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_guard_research_orphan",
+   "to": "tests.guardkit",
+   "kind": "import",
+   "line": 8,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_guard_research_orphan",
+   "to": "tools.research_orphan_check",
+   "kind": "import",
+   "line": 26,
+   "deferred": true
+  },
+  {
+   "from": "tests.test_guard_setup_selfcheck",
+   "to": "tests.guardkit",
+   "kind": "import",
+   "line": 10,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_guard_skeleton",
+   "to": "hooks._guard",
+   "kind": "import",
+   "line": 32,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_guard_spec_write",
+   "to": "tests.guardkit",
+   "kind": "import",
+   "line": 14,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_guard_teammate_idle",
+   "to": "tests.guardkit",
+   "kind": "import",
+   "line": 10,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_guard_thrash",
+   "to": "tests.guardkit",
+   "kind": "import",
+   "line": 9,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_guard_worktree_create",
+   "to": "tests.guardkit",
+   "kind": "import",
+   "line": 14,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_guard_worktree_create",
+   "to": "tools.worktree_create_check",
+   "kind": "import",
+   "line": 17,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_guard_worktree_remove",
+   "to": "tests.guardkit",
+   "kind": "import",
+   "line": 8,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_guard_worktree_substrate",
+   "to": "tests.guardkit",
+   "kind": "import",
+   "line": 15,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_handoff_attest",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 5,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_handoff_attest",
+   "to": "tools.handoff_attest",
+   "kind": "import",
+   "line": 6,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_handoff_attest",
+   "to": "tools.handoff_gate",
+   "kind": "import",
+   "line": 7,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_handoff_gate",
+   "to": "tools.handoff_gate",
+   "kind": "import",
+   "line": 7,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_handoff_package_check",
+   "to": "tools.handoff_package_check",
+   "kind": "import",
+   "line": 5,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_harden_fixes",
+   "to": "tools.blast_radius_check",
+   "kind": "import",
+   "line": 17,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_harden_fixes",
+   "to": "tools.findings_brief_check",
+   "kind": "import",
+   "line": 11,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_harden_fixes",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 14,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_harden_fixes",
+   "to": "tools.gen_command_index",
+   "kind": "import",
+   "line": 13,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_harden_fixes",
+   "to": "tools.handoff_attest",
+   "kind": "import",
+   "line": 15,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_harden_fixes",
+   "to": "tools.handoff_gate",
+   "kind": "import",
+   "line": 16,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_harden_fixes",
+   "to": "tools.sanitized_mirror",
+   "kind": "import",
+   "line": 12,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_harden_fixes",
+   "to": "tools.spec_id_strip_check",
+   "kind": "import",
+   "line": 18,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_harden_fixes",
+   "to": "tools.verify_state",
+   "kind": "import",
+   "line": 89,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_hooks",
+   "to": "tools.decisions",
+   "kind": "import",
+   "line": 10,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_hooks",
+   "to": "tools.verify_review_format",
+   "kind": "import",
+   "line": 11,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_hooks_compaction",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 14,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_lane_open_helper",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 16,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_mdparse",
+   "to": "tools.doc-index.mdparse",
+   "kind": "import",
+   "line": 4,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_registry",
+   "to": "tools.doc-index.registry",
+   "kind": "import",
+   "line": 11,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_sanitized_mirror",
+   "to": "tools.sanitized_mirror",
+   "kind": "import",
+   "line": 17,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_secret_names",
+   "to": "tools.secret_names",
+   "kind": "import",
+   "line": 6,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_server",
+   "to": "tools.doc-index.server",
+   "kind": "import",
+   "line": 8,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_skill_standard_check",
+   "to": "tests.guardkit",
+   "kind": "import",
+   "line": 12,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_skill_standard_check",
+   "to": "tools.skill_standard_check",
+   "kind": "import",
+   "line": 15,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_spec_id_strip_bundled",
+   "to": "tools.spec_id_strip_check",
+   "kind": "import",
+   "line": 13,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_substrate",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 13,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_substrate",
+   "to": "tools.verify_spawn_coverage",
+   "kind": "import",
+   "line": 129,
+   "deferred": true
+  },
+  {
+   "from": "tests.test_substrate_compaction",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 14,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_taglines",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 3,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_trail_check",
+   "to": "hooks._guard",
+   "kind": "import",
+   "line": 25,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_trail_check",
+   "to": "tools.trail_check",
+   "kind": "import",
+   "line": 24,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_verify_claims",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 14,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_verify_claims",
+   "to": "tools.verify_claims",
+   "kind": "import",
+   "line": 15,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_verify_coverage",
+   "to": "tools.verify_coverage",
+   "kind": "import",
+   "line": 13,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_verify_generated",
+   "to": "tools.verify_generated",
+   "kind": "import",
+   "line": 11,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_verify_state",
+   "to": "tools.decisions",
+   "kind": "import",
+   "line": 7,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_verify_state",
+   "to": "tools.verify_state",
+   "kind": "import",
+   "line": 8,
+   "deferred": false
+  },
+  {
+   "from": "tools.bug_close_check",
+   "to": "tools.trail_check",
+   "kind": "import",
+   "line": 35,
+   "deferred": false
+  },
+  {
+   "from": "tools.capture_integrity",
+   "to": "tools.decisions",
+   "kind": "import",
+   "line": 27,
+   "deferred": false
+  },
+  {
+   "from": "tools.capture_integrity",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 28,
+   "deferred": false
+  },
+  {
+   "from": "tools.committed_test_check",
+   "to": "tools.decisions",
+   "kind": "import",
+   "line": 166,
+   "deferred": true
+  },
+  {
+   "from": "tools.committed_test_check",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 89,
+   "deferred": true
+  },
+  {
+   "from": "tools.committed_test_check",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 52,
+   "deferred": false
+  },
+  {
+   "from": "tools.compaction_note",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 25,
+   "deferred": false
+  },
+  {
+   "from": "tools.decisions",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 49,
+   "deferred": false
+  },
+  {
+   "from": "tools.decisions",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 50,
+   "deferred": false
+  },
+  {
+   "from": "tools.decisions_append",
+   "to": "tools.decisions",
+   "kind": "import",
+   "line": 38,
+   "deferred": false
+  },
+  {
+   "from": "tools.decisions_append",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 39,
+   "deferred": false
+  },
+  {
+   "from": "tools.design_contract_check",
+   "to": "tools.decisions",
+   "kind": "import",
+   "line": 52,
+   "deferred": true
+  },
+  {
+   "from": "tools.doc-index.registry",
+   "to": "tools.decisions",
+   "kind": "import",
+   "line": 29,
+   "deferred": false
+  },
+  {
+   "from": "tools.doc-index.registry",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 30,
+   "deferred": false
+  },
+  {
+   "from": "tools.doc-index.registry",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 31,
+   "deferred": false
+  },
+  {
+   "from": "tools.doc-index.server",
+   "to": "tools.doc-index.mdparse",
+   "kind": "import",
+   "line": 39,
+   "deferred": false
+  },
+  {
+   "from": "tools.doc-index.server",
+   "to": "tools.doc-index.registry",
+   "kind": "import",
+   "line": 40,
+   "deferred": false
+  },
+  {
+   "from": "tools.doc-index.server",
+   "to": "tools.receipt",
+   "kind": "import",
+   "line": 243,
+   "deferred": true
+  },
+  {
+   "from": "tools.doc-index.server",
+   "to": "tools.verify_claims",
+   "kind": "import",
+   "line": 240,
+   "deferred": true
+  },
+  {
+   "from": "tools.doc-index.server",
+   "to": "tools.verify_state",
+   "kind": "import",
+   "line": 233,
+   "deferred": true
+  },
+  {
+   "from": "tools.doc-synthesis.synthesis_diff",
+   "to": "tools.decisions",
+   "kind": "import",
+   "line": 145,
+   "deferred": true
+  },
+  {
+   "from": "tools.doc-synthesis.synthesis_diff",
+   "to": "tools.doc-index.mdparse",
+   "kind": "import",
+   "line": 56,
+   "deferred": true
+  },
+  {
+   "from": "tools.doc_gate",
+   "to": "tools.findings_brief_check",
+   "kind": "import",
+   "line": 45,
+   "deferred": false
+  },
+  {
+   "from": "tools.doc_gate",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 46,
+   "deferred": false
+  },
+  {
+   "from": "tools.findings_brief_check",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 40,
+   "deferred": false
+  },
+  {
+   "from": "tools.foundation_check",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 28,
+   "deferred": false
+  },
+  {
+   "from": "tools.foundation_check",
+   "to": "tools.verify_claims",
+   "kind": "import",
+   "line": 29,
+   "deferred": false
+  },
+  {
+   "from": "tools.graph_freshness_check",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 30,
+   "deferred": false
+  },
+  {
+   "from": "tools.graph_refresh",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 34,
+   "deferred": false
+  },
+  {
+   "from": "tools.handoff_attest",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 22,
+   "deferred": false
+  },
+  {
+   "from": "tools.handoff_attest",
+   "to": "tools.handoff_gate",
+   "kind": "import",
+   "line": 23,
+   "deferred": false
+  },
+  {
+   "from": "tools.handoff_gate",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 33,
+   "deferred": false
+  },
+  {
+   "from": "tools.lane",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 29,
+   "deferred": false
+  },
+  {
+   "from": "tools.open_risks_check",
+   "to": "tools.decisions",
+   "kind": "import",
+   "line": 35,
+   "deferred": false
+  },
+  {
+   "from": "tools.open_risks_check",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 34,
+   "deferred": false
+  },
+  {
+   "from": "tools.oracle_edit_check",
+   "to": "tools.decisions",
+   "kind": "import",
+   "line": 32,
+   "deferred": false
+  },
+  {
+   "from": "tools.oracle_edit_check",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 31,
+   "deferred": false
+  },
+  {
+   "from": "tools.receipt",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 37,
+   "deferred": false
+  },
+  {
+   "from": "tools.receipt",
+   "to": "tools.verify_claims",
+   "kind": "import",
+   "line": 95,
+   "deferred": true
+  },
+  {
+   "from": "tools.receipt",
+   "to": "tools.verify_coverage",
+   "kind": "import",
+   "line": 98,
+   "deferred": true
+  },
+  {
+   "from": "tools.receipt",
+   "to": "tools.verify_spawn_coverage",
+   "kind": "import",
+   "line": 101,
+   "deferred": true
+  },
+  {
+   "from": "tools.receipt",
+   "to": "tools.verify_state",
+   "kind": "import",
+   "line": 92,
+   "deferred": true
+  },
+  {
+   "from": "tools.research_orphan_check",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 30,
+   "deferred": false
+  },
+  {
+   "from": "tools.seam_handoff",
+   "to": "tools.decisions",
+   "kind": "import",
+   "line": 26,
+   "deferred": false
+  },
+  {
+   "from": "tools.seam_handoff",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 27,
+   "deferred": false
+  },
+  {
+   "from": "tools.session_heartbeat",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 34,
+   "deferred": false
+  },
+  {
+   "from": "tools.spawn_telemetry",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 37,
+   "deferred": false
+  },
+  {
+   "from": "tools.trail_check",
+   "to": "tools.decisions",
+   "kind": "import",
+   "line": 46,
+   "deferred": false
+  },
+  {
+   "from": "tools.trail_check",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 47,
+   "deferred": false
+  },
+  {
+   "from": "tools.usage_report",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 16,
+   "deferred": false
+  },
+  {
+   "from": "tools.verify_claims",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 52,
+   "deferred": false
+  },
+  {
+   "from": "tools.verify_coverage",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 35,
+   "deferred": false
+  },
+  {
+   "from": "tools.verify_review_format",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 77,
+   "deferred": false
+  },
+  {
+   "from": "tools.verify_state",
+   "to": "tools.decisions",
+   "kind": "import",
+   "line": 49,
+   "deferred": false
+  },
+  {
+   "from": "tools.verify_state",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 50,
+   "deferred": false
+  },
+  {
+   "from": "tools.verify_state",
+   "to": "tools.receipt",
+   "kind": "import",
+   "line": 194,
+   "deferred": true
+  },
+  {
+   "from": "tools.verify_state",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 51,
+   "deferred": false
+  },
+  {
+   "from": "tools.verify_state",
+   "to": "tools.verify_claims",
+   "kind": "import",
+   "line": 52,
+   "deferred": false
+  },
+  {
+   "from": "tools.verify_state",
+   "to": "tools.verify_coverage",
+   "kind": "import",
+   "line": 53,
+   "deferred": false
+  },
+  {
+   "from": "tools.visual-companion.companion_server",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 99,
+   "deferred": true
+  },
+  {
+   "from": "tools.worktree_create_check",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 35,
+   "deferred": false
+  }
+ ],
+ "routes": [],
+ "config_surface": [
+  {
+   "name": "CLAUDE_PLUGIN_ROOT",
+   "kind": "env",
+   "module": "hooks._hookutil",
+   "line": 20
+  },
+  {
+   "name": "FRIDAY_GUARD_TIMEOUT_S",
+   "kind": "env",
+   "module": "hooks.blast_radius_backstop",
+   "line": 47
+  },
+  {
+   "name": "FRIDAY_GUARD_TIMEOUT_S",
+   "kind": "env",
+   "module": "hooks.blast_radius_guard",
+   "line": 52
+  },
+  {
+   "name": "FRIDAY_GUARD_TIMEOUT_S",
+   "kind": "env",
+   "module": "hooks.bug_close_gate",
+   "line": 55
+  },
+  {
+   "name": "FRIDAY_GUARD_TIMEOUT_S",
+   "kind": "env",
+   "module": "hooks.committed_test_guard",
+   "line": 47
+  },
+  {
+   "name": "FRIDAY_GUARD_TIMEOUT_S",
+   "kind": "env",
+   "module": "hooks.design_contract_guard",
+   "line": 43
+  },
+  {
+   "name": "FRIDAY_GUARD_TIMEOUT_S",
+   "kind": "env",
+   "module": "hooks.doc_consumption_guard",
+   "line": 74
+  },
+  {
+   "name": "FRIDAY_GUARD_TIMEOUT_S",
+   "kind": "env",
+   "module": "hooks.foundation_gate",
+   "line": 40
+  },
+  {
+   "name": "FRIDAY_GUARD_TIMEOUT_S",
+   "kind": "env",
+   "module": "hooks.graph_freshness_guard",
+   "line": 33
+  },
+  {
+   "name": "FRIDAY_GUARD_TIMEOUT_S",
+   "kind": "env",
+   "module": "hooks.lane_close_gate",
+   "line": 73
+  },
+  {
+   "name": "FRIDAY_GUARD_TIMEOUT_S",
+   "kind": "env",
+   "module": "hooks.open_risks_guard",
+   "line": 39
+  },
+  {
+   "name": "FRIDAY_GUARD_TIMEOUT_S",
+   "kind": "env",
+   "module": "hooks.oracle_edit_guard",
+   "line": 44
+  },
+  {
+   "name": "FRIDAY_GUARD_TIMEOUT_S",
+   "kind": "env",
+   "module": "hooks.profile_guard",
+   "line": 44
+  },
+  {
+   "name": "FRIDAY_GUARD_TIMEOUT_S",
+   "kind": "env",
+   "module": "hooks.research_orphan_warn",
+   "line": 33
+  },
+  {
+   "name": "FRIDAY_GUARD_TIMEOUT_S",
+   "kind": "env",
+   "module": "hooks.spec_write_guard",
+   "line": 51
+  },
+  {
+   "name": "FRIDAY_GUARD_TIMEOUT_S",
+   "kind": "env",
+   "module": "hooks.worktree_create_guard",
+   "line": 76
+  },
+  {
+   "name": "CODEX_PROJECT_DIR",
+   "kind": "env",
+   "module": "tools.codex-adapter.state_stop_gate",
+   "line": 37
+  },
+  {
+   "name": "CLAUDE_PROJECT_DIR",
+   "kind": "env",
+   "module": "tools.doc-index.registry",
+   "line": 47
+  }
+ ],
+ "data_models": [
+  {
+   "name": "Action",
+   "kind": "dataclass",
+   "module": "hooks._guard",
+   "fields": [
+    "kind",
+    "reason",
+    "detail"
+   ],
+   "line": 102
+  },
+  {
+   "name": "Heading",
+   "kind": "dataclass",
+   "module": "tools.doc-index.mdparse",
+   "fields": [
+    "level",
+    "text",
+    "norm",
+    "line",
+    "end_line",
+    "byte_start",
+    "byte_end",
+    "ordinal"
+   ],
+   "line": 37
+  },
+  {
+   "name": "Document",
+   "kind": "dataclass",
+   "module": "tools.doc-index.mdparse",
+   "fields": [
+    "raw",
+    "lines",
+    "line_byte_offsets",
+    "headings"
+   ],
+   "line": 53
+  }
+ ],
+ "deploy_topology": [
+  {
+   "kind": "mcp-server",
+   "name": "friday-docs",
+   "detail": "python3 ${CLAUDE_PLUGIN_ROOT}/tools/doc-index/server.py"
+  },
+  {
+   "kind": "hook-binding",
+   "name": "SubagentStop",
+   "detail": "3 hook(s)"
+  },
+  {
+   "kind": "hook-binding",
+   "name": "PostToolUse",
+   "detail": "9 hook(s)"
+  },
+  {
+   "kind": "hook-binding",
+   "name": "PostToolUseFailure",
+   "detail": "1 hook(s)"
+  },
+  {
+   "kind": "hook-binding",
+   "name": "PermissionRequest",
+   "detail": "1 hook(s)"
+  },
+  {
+   "kind": "hook-binding",
+   "name": "PreToolUse",
+   "detail": "6 hook(s)"
+  },
+  {
+   "kind": "hook-binding",
+   "name": "Elicitation",
+   "detail": "1 hook(s)"
+  },
+  {
+   "kind": "hook-binding",
+   "name": "PermissionDenied",
+   "detail": "1 hook(s)"
+  },
+  {
+   "kind": "hook-binding",
+   "name": "TeammateIdle",
+   "detail": "1 hook(s)"
+  },
+  {
+   "kind": "hook-binding",
+   "name": "ConfigChange",
+   "detail": "1 hook(s)"
+  },
+  {
+   "kind": "hook-binding",
+   "name": "Setup",
+   "detail": "1 hook(s)"
+  },
+  {
+   "kind": "hook-binding",
+   "name": "SessionStart",
+   "detail": "3 hook(s)"
+  },
+  {
+   "kind": "hook-binding",
+   "name": "SessionEnd",
+   "detail": "1 hook(s)"
+  },
+  {
+   "kind": "hook-binding",
+   "name": "Stop",
+   "detail": "9 hook(s)"
+  },
+  {
+   "kind": "hook-binding",
+   "name": "PreCompact",
+   "detail": "1 hook(s)"
+  },
+  {
+   "kind": "hook-binding",
+   "name": "PostCompact",
+   "detail": "1 hook(s)"
+  }
+ ],
+ "unparseable": [],
+ "generated-by": "/friday:reference (tools/doc-synthesis/extract_architecture.py)",
+ "generated-at": "2026-07-25T17:06:21+00:00"
+}

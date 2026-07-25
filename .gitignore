@@ -1,0 +1,29 @@
+# macOS
+.DS_Store
+
+# Python bytecode (tools/doc-index server + tests)
+__pycache__/
+
+# Plugin runtime lock — transient PID marker written while the plugin is in use
+.in_use/
+
+# friday-docs doc-index database (PROP-024) — derived per-project state, rebuilt by sync-on-query.
+# Must stay ignored: the Closer's `git add -A` would otherwise commit it on every feature close.
+.friday/
+
+# Derived study data (PROP-024 evidence base) — regenerable: extract.py rebuilds episodes.jsonl
+# from the katy session transcripts; phase2/batches/ are samples drawn from it (seeded, manifest committed).
+analysis/doc-usage/episodes.jsonl
+analysis/doc-usage/phase2/batches/
+
+# Personal per-developer Claude Code config (permissions etc.). The SHARED project
+# config — the dev-automation hooks — lives in .claude/settings.json (committed).
+.claude/settings.local.json
+
+# Generated Codex agent TOMLs (PROP-041) — per-consumer artifacts; regenerate
+# with tools/codex-adapter/generate_codex_agents.py rather than committing.
+.codex/
+
+# Adopted code-graph (US-14, graphifyy soft integration) — per-project derived
+# state, regenerated from code by the graphify pipeline; never a committed source.
+graphify-out/

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "friday",
+  "description": "Marketplace for friday \u2014 a team of expert assistants for building software with Claude Code. Version deliberately omitted here \u2014 plugin.json is the single version source of truth.",
+  "owner": {
+    "name": "Dan Aghili"
+  },
+  "plugins": [
+    {
+      "name": "friday",
+      "description": "friday vnext \u2014 one-shot build recipe with harness-guaranteed decision capture, K-gated state model, and doc synthesis whose extractor-vs-LLM diff is the QA oracle.",
+      "author": {
+        "name": "Dan Aghili"
+      },
+      "source": {
+        "source": "github",
+        "repo": "danaghili/friday"
+      },
+      "category": "development"
+    }
+  ]
+}
