@@ -70,16 +70,23 @@ _DECISION_FAMILIES = ("Stop", "SubagentStop", "PostToolUse")
 DEFAULT_TIMEOUT_S = 10
 
 
-def run_checker(argv: list[str], timeout_s: float = DEFAULT_TIMEOUT_S) -> dict:
+def run_checker(argv: list[str], timeout_s: float = DEFAULT_TIMEOUT_S,
+                stdin_text: str | None = None) -> dict:
     """Run a checker subprocess and return its TYPED verdict.
 
     Returns the checker's own JSON object when it is a well-formed verdict;
     otherwise {"verdict": "no-verdict", "detail": <why>} covering every
     AC-14 fail-open condition (deleted / crashing / timeout / invalid or
     empty verdict). Never raises.
+
+    `stdin_text` feeds a checker that must see CONTENT rather than just a path
+    — a PreToolUse guard judging the change about to be written, which cannot
+    read it from disk because it has not landed yet. Default None preserves the
+    previous behaviour exactly for every other caller.
     """
     try:
-        proc = subprocess.run(argv, capture_output=True, text=True, timeout=timeout_s)
+        proc = subprocess.run(argv, capture_output=True, text=True, timeout=timeout_s,
+                              input=stdin_text)
     except subprocess.TimeoutExpired:
         return {"verdict": "no-verdict", "detail": f"checker timed out after {timeout_s}s"}
     except Exception as exc:  # missing interpreter/script, OSError, ...

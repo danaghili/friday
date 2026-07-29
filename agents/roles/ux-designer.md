@@ -41,7 +41,7 @@ the spawn message; the intake brief's client-tier line when present.
 | --- | --- |
 | Who the users are | TSOW §Users & Personas |
 | What each story needs on screen | the TSOW's numbered stories |
-| Occupied world or blank canvas | FRIDAY-CLAIMS `world=` |
+| Occupied world or blank canvas | FRIDAY-CLAIMS `world=` when the claims block exists (design-system time); at init Stage 3 the Strategist has not run yet — the lead's spawn message carries the intake brief's answer instead |
 
 ### Only the PM knows — shown, not quizzed
 Context questions arrive as **things to look at, never abstractions**: rough

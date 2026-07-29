@@ -34,4 +34,4 @@ The moment the "text tweak" turns out to feed the entitlement check — or touch
 
 ### Close
 
-The lane's guards disarm on a passing close (the trail present and valid); a blocked close names what's missing. Commit on the PM's word; never push unless they say so.
+The lane's guards disarm on a passing close (the trail present and valid); a blocked close names what's missing. Then flip the record dirty — the change landed on a project whose record still claims it was verified: `python3 "${CLAUDE_PLUGIN_ROOT}/tools/state_record.py" --mark stale --root .` (quiet no-op unless the project is closed; `last-verified:` untouched by design, and only a clean `/friday:reconcile` clears it — D-0106, contract: `docs/contracts/state-record.md`). Commit on the PM's word; never push unless they say so.

@@ -7,6 +7,9 @@ tool diffs the two and classifies every disagreement:
   omitted-module / omitted-edge          (blocking) the synthesis dropped a
                                          fact the code proves — RUN-2's "LLM
                                          omitted the config node" class.
+  ambiguous-edge                         (info)     a doc edge the IR lacks,
+    matching an extractor-recorded bare-import ambiguity (2+ same-named
+    candidates — the extractor refused to guess; the doc may know better)
   hallucinated-module / hallucinated-edge (blocking) the synthesis asserts
                                          structure the code does not contain.
   missing-inventory                      (blocking) the synthesized doc lacks
@@ -61,6 +64,45 @@ def _inventory_section(doc_text: str) -> list[str] | None:
     return mdparse.section_text(doc, heading).splitlines()
 
 
+def _edge_findings(ir: dict, ir_edges: set, synth_text: str, add) -> None:
+    """The mermaid half of the oracle: compare the diagram's edges against the
+    IR's. A doc edge the IR lacks is a hallucination — UNLESS the extractor
+    recorded that it REFUSED to resolve exactly this bare import (2+ same-named
+    candidates, task #41). The doc may carry knowledge the static pass provably
+    cannot (a sys.path insert, a conftest); punishing that as a hallucination is
+    what deleted a TRUE edge from the docs on 2026-07-29. Surfaced as
+    informational, never silently accepted."""
+    m = _MERMAID_RE.search(synth_text)
+    if m is None:
+        if ir_edges:
+            add("no-diagram", "warn",
+                "no mermaid block found — edge-level diff skipped")
+        return
+    body = m.group(1)
+    label_by_node = {nid: label for nid, label in _NODE_DECL_RE.findall(body)}
+
+    def real(nid: str) -> str:
+        return label_by_node.get(nid, nid)
+
+    doc_edges = {(real(a), real(b)) for a, b in _EDGE_RE.findall(body)}
+    for a, b in sorted(ir_edges - doc_edges):
+        add("omitted-edge", "blocking",
+            f"code has import edge `{a}` → `{b}` but the diagram omits it")
+    amb = ir.get("ambiguous_imports", [])
+    for a, b in sorted(doc_edges - ir_edges):
+        rec = next((r for r in amb if r.get("from") == a
+                    and b in r.get("candidates", [])), None)
+        if rec is not None:
+            add("ambiguous-edge", "info",
+                f"diagram asserts `{a}` → `{b}`: the extractor saw the bare "
+                f"`import {rec['name']}` but {len(rec['candidates'])} "
+                "same-named modules exist and it refuses to guess — kept on "
+                "the doc's authority; re-verify by hand if either side moves")
+        else:
+            add("hallucinated-edge", "blocking",
+                f"diagram asserts `{a}` → `{b}` which the code does not contain")
+
+
 def diff(ir: dict, synth_text: str, decisions_entries: list | None = None) -> dict:
     findings: list[dict] = []
 
@@ -89,25 +131,7 @@ def diff(ir: dict, synth_text: str, decisions_entries: list | None = None) -> di
             add("hallucinated-module", "blocking",
                 f"synthesis inventory names `{extra}` which the code does not contain")
 
-    m = _MERMAID_RE.search(synth_text)
-    if m is None:
-        if ir_edges:
-            add("no-diagram", "warn",
-                "no mermaid block found — edge-level diff skipped")
-    else:
-        body = m.group(1)
-        label_by_node = {nid: label for nid, label in _NODE_DECL_RE.findall(body)}
-
-        def real(nid: str) -> str:
-            return label_by_node.get(nid, nid)
-
-        doc_edges = {(real(a), real(b)) for a, b in _EDGE_RE.findall(body)}
-        for a, b in sorted(ir_edges - doc_edges):
-            add("omitted-edge", "blocking",
-                f"code has import edge `{a}` → `{b}` but the diagram omits it")
-        for a, b in sorted(doc_edges - ir_edges):
-            add("hallucinated-edge", "blocking",
-                f"diagram asserts `{a}` → `{b}` which the code does not contain")
+    _edge_findings(ir, ir_edges, synth_text, add)
 
     if decisions_entries is not None and not decisions_entries and ir_modules:
         add("uncaptured-why", "info",

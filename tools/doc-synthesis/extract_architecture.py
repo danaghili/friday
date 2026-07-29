@@ -75,11 +75,18 @@ def _module_id(root: str, path: str) -> str:
 # --- import edges ------------------------------------------------------------------
 
 def _edge_targets(node: ast.AST, importer: str, known: set[str],
-                  by_basename: dict[str, list[str]]) -> list[tuple[str, int]]:
+                  by_basename: dict[str, list[str]],
+                  ambiguities: list[dict] | None = None) -> list[tuple[str, int]]:
     """Intra-tree modules an import references. Resolves: package-relative
     (`from .x import y`), dotted-absolute matching a known id, and flat
     sys.path-style (`import friday_substrate`) via a UNIQUE basename match —
-    ambiguous basenames are skipped rather than guessed (accuracy > recall).
+    ambiguous basenames are skipped rather than guessed (accuracy > recall),
+    but the refusal is RECORDED into `ambiguities` (task #41): a bare name
+    matching 2+ same-named modules used to vanish silently, so the day a
+    second `server.py` was born a REAL edge dropped out of the IR and the
+    doc oracle started calling the doc's accurate edge a hallucination.
+    Only the undotted bare-import shape records — a dotted miss is the
+    ordinary plain-symbol case and would flood the list with noise.
 
     For `from PKG import a, b, c` the imported NAMES are candidate submodules:
     each name is an edge iff PKG/<name>.py or PKG/<name>/ exists in the tree
@@ -96,6 +103,9 @@ def _edge_targets(node: ast.AST, importer: str, known: set[str],
         cands = by_basename.get(head, [])
         if len(cands) == 1:
             return cands[0], line
+        if len(cands) > 1 and "." not in name and ambiguities is not None:
+            ambiguities.append({"name": name, "candidates": sorted(cands),
+                                "line": line})
         return None
 
     targets: list[tuple[str, int]] = []
@@ -133,7 +143,8 @@ def _edge_targets(node: ast.AST, importer: str, known: set[str],
 
 
 def _collect_edges(module: str, tree: ast.AST, known: set[str],
-                   by_basename: dict[str, list[str]]) -> list[dict]:
+                   by_basename: dict[str, list[str]],
+                   ambiguities: list[dict] | None = None) -> list[dict]:
     seen: set[tuple[str, str]] = set()
     edges: list[dict] = []
 
@@ -142,7 +153,8 @@ def _collect_edges(module: str, tree: ast.AST, known: set[str],
             inside_fn = deferred or isinstance(
                 node, (ast.FunctionDef, ast.AsyncFunctionDef))
             if isinstance(child, (ast.Import, ast.ImportFrom)):
-                for dst, line in _edge_targets(child, module, known, by_basename):
+                for dst, line in _edge_targets(child, module, known, by_basename,
+                                               ambiguities):
                     if dst == module or (module, dst) in seen:
                         continue
                     seen.add((module, dst))
@@ -302,7 +314,7 @@ def extract(root: str, src_dirs: list[str] | None = None) -> dict:
 
     ir: dict = {"modules": [], "edges": [], "routes": [], "config_surface": [],
                 "data_models": [], "deploy_topology": _collect_deploy(root),
-                "unparseable": []}
+                "ambiguous_imports": [], "unparseable": []}
     for path in files:
         mid = _module_id(root, path)
         try:
@@ -314,7 +326,15 @@ def extract(root: str, src_dirs: list[str] | None = None) -> dict:
             continue
         ir["modules"].append({"id": mid, "path": os.path.relpath(path, root),
                               "loc": source.count("\n") + 1})
-        ir["edges"].extend(_collect_edges(mid, tree, known, by_basename))
+        ambiguities: list[dict] = []
+        ir["edges"].extend(_collect_edges(mid, tree, known, by_basename,
+                                          ambiguities))
+        seen_amb: set[str] = set()
+        for rec in ambiguities:
+            if rec["name"] in seen_amb:
+                continue  # one record per (module, name) — the first line wins
+            seen_amb.add(rec["name"])
+            ir["ambiguous_imports"].append({"from": mid, **rec})
         ir["routes"].extend(_collect_routes(mid, tree))
         ir["config_surface"].extend(_collect_config(mid, tree))
         ir["data_models"].extend(_collect_models(mid, tree))

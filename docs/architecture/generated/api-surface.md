@@ -16,40 +16,45 @@
 - `FRIDAY_GUARD_TIMEOUT_S` — read in `hooks.committed_test_guard:47`
 - `FRIDAY_GUARD_TIMEOUT_S` — read in `hooks.design_contract_guard:43`
 - `FRIDAY_GUARD_TIMEOUT_S` — read in `hooks.doc_consumption_guard:74`
+- `FRIDAY_GUARD_TIMEOUT_S` — read in `hooks.due_signal:47`
 - `FRIDAY_GUARD_TIMEOUT_S` — read in `hooks.foundation_gate:40`
 - `FRIDAY_GUARD_TIMEOUT_S` — read in `hooks.graph_freshness_guard:33`
 - `FRIDAY_GUARD_TIMEOUT_S` — read in `hooks.lane_close_gate:73`
+- `FRIDAY_GUARD_TIMEOUT_S` — read in `hooks.maintainability_gate:227`
 - `FRIDAY_GUARD_TIMEOUT_S` — read in `hooks.open_risks_guard:39`
 - `FRIDAY_GUARD_TIMEOUT_S` — read in `hooks.oracle_edit_guard:44`
 - `FRIDAY_GUARD_TIMEOUT_S` — read in `hooks.profile_guard:44`
 - `FRIDAY_GUARD_TIMEOUT_S` — read in `hooks.research_orphan_warn:33`
-- `FRIDAY_GUARD_TIMEOUT_S` — read in `hooks.spec_write_guard:51`
+- `FRIDAY_GUARD_TIMEOUT_S` — read in `hooks.spec_write_guard:60`
+- `FRIDAY_GUARD_TIMEOUT_S` — read in `hooks.state_advisory:78`
 - `FRIDAY_GUARD_TIMEOUT_S` — read in `hooks.worktree_create_guard:76`
-- `CODEX_PROJECT_DIR` — read in `tools.codex-adapter.state_stop_gate:37`
+- `CODEX_PROJECT_DIR` — read in `tools.codex-adapter.state_stop_gate:39`
 - `CLAUDE_PROJECT_DIR` — read in `tools.doc-index.registry:47`
+- `CLAUDE_PROJECT_DIR` — read in `tools.experiments.server:97`
 
 ## Data models
 
-- `Action` (dataclass, `hooks._guard:102`): `kind`, `reason`, `detail`
+- `Action` (dataclass, `hooks._guard:109`): `kind`, `reason`, `detail`
 - `Heading` (dataclass, `tools.doc-index.mdparse:37`): `level`, `text`, `norm`, `line`, `end_line`, `byte_start`, `byte_end`, `ordinal`
 - `Document` (dataclass, `tools.doc-index.mdparse:53`): `raw`, `lines`, `line_byte_offsets`, `headings`
 
 ## Deploy topology
 
 - mcp-server: `friday-docs` — python3 ${CLAUDE_PLUGIN_ROOT}/tools/doc-index/server.py
+- mcp-server: `friday-experiments` — python3 ${CLAUDE_PLUGIN_ROOT}/tools/experiments/server.py
 - hook-binding: `SubagentStop` — 3 hook(s)
 - hook-binding: `PostToolUse` — 9 hook(s)
 - hook-binding: `PostToolUseFailure` — 1 hook(s)
 - hook-binding: `PermissionRequest` — 1 hook(s)
-- hook-binding: `PreToolUse` — 6 hook(s)
+- hook-binding: `PreToolUse` — 7 hook(s)
 - hook-binding: `Elicitation` — 1 hook(s)
 - hook-binding: `PermissionDenied` — 1 hook(s)
 - hook-binding: `TeammateIdle` — 1 hook(s)
 - hook-binding: `ConfigChange` — 1 hook(s)
 - hook-binding: `Setup` — 1 hook(s)
-- hook-binding: `SessionStart` — 3 hook(s)
+- hook-binding: `SessionStart` — 4 hook(s)
 - hook-binding: `SessionEnd` — 1 hook(s)
-- hook-binding: `Stop` — 9 hook(s)
+- hook-binding: `Stop` — 11 hook(s)
 - hook-binding: `PreCompact` — 1 hook(s)
 - hook-binding: `PostCompact` — 1 hook(s)
 

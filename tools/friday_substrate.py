@@ -117,6 +117,16 @@ def friday_dir(cwd: str = ".") -> str:
     return os.path.join(resolve_project_root(cwd), ".friday")
 
 
+def envelope_path(cwd: str = ".") -> str:
+    """The ONE authority for where the maintainability envelope lives (task #9,
+    D-0148). Producer (`maintainability_envelope_check.py --write`, which the
+    judge writes through) and consumer (`hooks/maintainability_gate.py`) both
+    resolve HERE — the judge writing where it was told while the gate read
+    where it guessed is exactly the silent split this verb closes. Shared
+    across worktrees like the rest of the substrate (git common dir)."""
+    return os.path.join(friday_dir(cwd), "maintainability-envelope.md")
+
+
 # --- engagement guard -----------------------------------------------------------
 
 def is_friday_project(cwd: str = ".") -> bool:
@@ -212,7 +222,13 @@ def lane_open(cwd: str, *, lane: str, id: str, trail: str,
     if regression_test:
         data["regression-test"] = regression_test
     if blast_radius:
-        data["blast-radius"] = list(blast_radius)
+        # The lane's own mandated trail write must be inside the radius by
+        # construction — a compliant patch must never self-block on writing
+        # its own required record (journey audit NF12).
+        radius = list(blast_radius)
+        if trail not in radius:
+            radius.append(trail)
+        data["blast-radius"] = radius
     # A9: claim the single-lane sentinel ATOMICALLY (O_CREAT|O_EXCL) — the old
     # isfile()-then-os.replace() was a TOCTOU two shared-substrate worktrees both
     # passed, silently clobbering each other's open lane.
@@ -259,6 +275,7 @@ def lane_clear(cwd: str, *, by: str = "pm") -> bool:
     except Exception:
         pass
     return True
+
 
 
 # --- code-graph freshness stamp (FR-71; guard #8 reads it) -------------------------

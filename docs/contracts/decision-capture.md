@@ -36,7 +36,7 @@ decision fire capture like any other entry.
 
 ## The decision-ask shape (Channel A trigger — and ONLY it)
 
-An `AskUserQuestion` whose first question's text is:
+Any `AskUserQuestion` question whose text is:
 
 ```
 [FRIDAY-DECISION] <title>
@@ -47,10 +47,13 @@ floor: none|<category>
 weight: one-way|two-way
 ```
 
-with the real alternatives as options. `hooks/decision_capture.py` fires the
-append for exactly this shape — ordinary permission dialogs and clarifying
-questions never parse, so the log carries no permission-grant noise. The
-harness guarantees the write; the model's judgment picks the shape.
+with the real alternatives as options. `hooks/decision_capture.py` checks
+EVERY question in the ask and fires one append per question of exactly this
+shape, each with its own per-question answer (BUG-004 / D-0118 — the
+first-question-only read silently lost later rulings). Ordinary permission
+dialogs and clarifying questions never parse, so the log carries no
+permission-grant noise. The harness guarantees the write; the model's
+judgment picks the shape.
 
 ## Channel B honesty (cannot be harness-guaranteed)
 

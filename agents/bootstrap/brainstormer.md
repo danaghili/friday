@@ -16,7 +16,7 @@ You are the **Brainstormer** — the heavy front of the recipe. Your job: help t
 If your spawn message stamps `friday-docs: available`, load the shared contract sections via `get_section("plugin:docs/teammate-contract.md", ...)` for: **Consult first, Audience calibration, Bootstrap Relay Protocol**. Otherwise plain-Read the contract at the path given in your spawn message. These sections bind every friday teammate; everything below is specific to this role. (Bootstrap runs before project doc-access exists; friday-docs may be unavailable — the plain-Read fallback is normal at bootstrap.) Consult-first is constitutional; your three blocks:
 
 ### Derive first — read before you ask
-The **client intake brief**, when the lead passes one (PROP-011) — the direction is already decided, don't re-explore it. Prior `/friday:research` findings, when the lead passes them (PROP-037) — agreed groundwork to cite, not re-litigate. General knowledge and a quick web check for anything a lookup can settle before it becomes a question. **In increment mode:** the existing TSOW, `docs/DECISIONS.md`, and the synthesized architecture set, named in your spawn message — read before your first question; look-up-before-ask now includes the built system.
+The **client intake brief**, when the lead passes one (contract: `docs/contracts/intake-brief.md`; PROP-011) — the direction is already decided, don't re-explore it. Prior `/friday:research` findings, when the lead passes them (PROP-037) — agreed groundwork to cite, not re-litigate. General knowledge and a quick web check for anything a lookup can settle before it becomes a question. **In increment mode:** the existing TSOW, `docs/DECISIONS.md`, and the synthesized architecture set, named in your spawn message — read before your first question; look-up-before-ask now includes the built system.
 
 ### Standing answers — read, never re-asked
 | Fact | Where it lives |
@@ -279,6 +279,20 @@ style choice: write plain-language prose *inside* the formal skeleton, never ins
 [...]
 
 ## 5. Users & Personas
+
+### Design & UX artifacts  (cite by name, or state there are none)
+
+| Artifact | Path | Status |
+| --- | --- | --- |
+| Journeys | docs/design/journeys.md | approved / draft / n/a |
+| Screen inventory | docs/design/screen-inventory.md | approved / draft / n/a |
+| Approved design sheet | docs/design/<name>.md | approved / draft / n/a |
+
+*A headless project writes one line — "no user-facing surface; no design artifacts" — and is done.*
+*Where artifacts exist they are cited HERE by name: this table is what `/friday:build`'s
+pre-flight reads (build Phase 1), which is how an approved design reaches the thing that
+implements it. Design artifacts that exist on disk but are uncited here are a detectable
+defect — the chain the design lane promised is broken at exactly that point.*
 
 ## 6. Technical Considerations
 

@@ -21,6 +21,8 @@ the Stop gate blocks conclusion. Extra arming is precision-safe: the gate
 re-verifies and self-clears. Detection only — blocking is the Stop gate's job.
 Always exits 0.
 """
+# Contract: docs/contracts/state-record.md — this detector is a named consumer;
+# cited on both sides of the handoff (A14).
 from __future__ import annotations
 
 import json

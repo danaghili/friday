@@ -166,3 +166,23 @@ def test_no_state_block_is_skipped(proj):
     (proj / "CLAUDE.md").write_text("# proj\n\n" + CLAIMS + "\n", encoding="utf-8")
     res = vst.verify_state(str(proj))
     assert res["ok"] and res.get("skipped")
+
+
+# tsow-approved (D-0105 wired the producer): the bootstrap crash window. A
+# stub CLAUDE.md holding ONLY the state block is the expected shape here —
+# FRIDAY-CLAIMS arrives later with the Strategist, so K0 must not demand it.
+def test_tsow_approved_stub_claude_md_passes(proj):
+    (proj / "CLAUDE.md").write_text(
+        "# proj\n\n" + _state_block("tsow-approved"), encoding="utf-8")
+    res = vst.verify_state(str(proj))
+    assert res["ok"], res["failures"]
+    assert res["state"] == "tsow-approved"
+
+
+def test_tsow_approved_without_tsow_file_fails_K0(proj):
+    (proj / "CLAUDE.md").write_text(
+        "# proj\n\n" + _state_block("tsow-approved"), encoding="utf-8")
+    (proj / "docs" / "TECHNICAL_SOW.md").unlink()
+    res = vst.verify_state(str(proj))
+    assert any(f["check"] == "K0" and f["severity"] == "blocking"
+               for f in res["failures"])

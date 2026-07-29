@@ -35,7 +35,7 @@ Say, in this shape: **"That sounds like something worth looking at — want me t
 | Recognise | Match observation-shaped noticing against the five triggers | A trigger matched, or you stay silent |
 | Offer | Surface the one-line offer above, its own message | The door is *named*, not opened, and not pre-classified |
 | Confirm | Wait for an explicit yes | Nothing runs without it |
-| Hand off | The PM's yes → `/friday:feedback` runs | Terminal state reached |
+| Hand off | The PM's yes → `/friday:feedback` runs, carrying the PM's original observation verbatim as its intake — they never repeat what they just said (the rebuild spec's carry-the-conversation rule) | Terminal state reached |
 
 ## Excuse | Reality
 

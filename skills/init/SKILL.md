@@ -20,7 +20,7 @@ Bootstrap check:
 0. Client intake (./intake-output.md or docs/intake/intake-output.md): [present / missing — client project?]
 1. User profile (~/.claude/CLAUDE.md FRIDAY-PROFILE markers): [present / missing]
 2. TSOW (docs/TECHNICAL_SOW.md): [present / missing]
-3. UX artifacts (docs/design/mockups/handoff.md or docs/design/ux-flows.md): [present / missing / n/a — headless]
+3. UX artifacts (docs/design/journeys.md or docs/design/screen-inventory.md — the files the UX Designer actually writes, per its frontmatter): [present / missing / n/a — headless]
 4. Substrate (CLAUDE.md with FRIDAY-CLAIMS + FRIDAY-STATE): [configured / missing / placeholder]
 5. Build record (docs/DECISIONS.md): [present — a build has run / missing]
 6. Git repository: [.git present / missing] · origin remote: [present — {URL} / missing]
@@ -42,21 +42,26 @@ Proposing to run: {stages} · Skipping: {stages}
 
 ### Stage 1: Profiler (skip if FRIDAY-PROFILE present)
 
-Spawn `friday:bootstrap:friday-profiler`; relay its interview batches (QUESTION_PAYLOAD ↔ ANSWERS). Output: the FRIDAY-PROFILE block in `~/.claude/CLAUDE.md`.
+Spawn `friday-profiler` (model: **haiku** — pinned, matching `skills/profile/SKILL.md`; D-0116); relay its interview batches (QUESTION_PAYLOAD ↔ ANSWERS). Output: the FRIDAY-PROFILE block in `~/.claude/CLAUDE.md`.
 
 ### Stage 2: Brainstormer → the TSOW (skip if docs/TECHNICAL_SOW.md present)
 
-Spawn `friday:bootstrap:friday-brainstormer` (inject the CLIENT INTAKE BRIEF + any `/friday:research` findings). Relay the grilling-protocol dialog faithfully. The hard non-proceed gate, the one-way-door teach-backs, and the post-write second-PM-read are the Brainstormer's own contract — your job is faithful relay, **including having the PM read the actual written file** (not your summary) before accepting DONE.
+Spawn `friday-brainstormer` (model: **opus** — decision-density, matching every other dispatch site of this role). Spawn message carries: the CLIENT INTAKE BRIEF + any `/friday:research` findings. Relay the grilling-protocol dialog faithfully. The hard non-proceed gate, the one-way-door teach-backs, and the post-write second-PM-read are the Brainstormer's own contract — your job is faithful relay, **including having the PM read the actual written file** (not your summary) before accepting DONE. On acceptance, stamp `state: tsow-approved` into the FRIDAY-STATE block (stub `CLAUDE.md` with only that block if none exists yet — contract: `docs/contracts/state-record.md`, D-0105) so a crash before Stage 4's substrate seeding stays classifiable.
 
-### Stage 3: Front-loaded UX (skip if artifacts present, or n/a for headless projects)
+### Stage 3: Front-loaded UX — the fork (skip if artifacts present, or n/a for headless projects)
 
-When the TSOW has a user-facing surface: spawn `friday:roles:friday-ux-designer` — the whole UI is designed once, here, so the one-shot build implements against a settled visual contract. Iterate ≤3 times.
+Headless TSOW → nothing happens here. Otherwise this stage **forks**, and the fork is a decision Stage 3 was already making silently on the PM's behalf (D-0110 / INC-200 / D11 — it replaces that silent choice; init gains no new beat):
+
+- **Substantial user-facing surface** (multiple screens, a real navigation model, a design language to settle — the TSOW's §5 table and user stories are the evidence): **OFFER** `/friday:design-system` — the full claude-design pipeline — before defaulting to the lighter pass. Offer-first, in the PM's own words: *"This TSOW has a real interface — run `/friday:design-system` for the full design pipeline (a settled design language and screens you can click through), or stay with the lighter inline pass?"* A declined offer costs nothing and falls through to the inline pass below. `skills/design-system/SKILL.md` accepts this init-originated entry.
+- **Otherwise (a thin or incidental surface):** spawn `friday-ux-designer` (model: **sonnet** — matching `skills/design-system/SKILL.md`) — the whole UI is designed once, here, so the one-shot build implements against a settled visual contract. Iterate ≤3 times.
+
+**Either fork's artifacts must reach the build**: whatever this stage produces (`docs/design/journeys.md`, `docs/design/screen-inventory.md`, an approved sheet) is cited by name in the TSOW's §5 *Design & UX artifacts* table, which `/friday:build`'s pre-flight reads — artifacts on disk that no TSOW cites are the broken chain INC-200 closed.
 
 ### Stage 4: Substrate seeding (Strategist)
 
-Spawn `friday:bootstrap:friday-strategist` (model: **opus** — writing `CLAUDE.md` is decision-making, not templating). Its spawn message carries the TSOW path + intake brief + Stage-0 check 6/7 findings (so brownfield delivery/VCS state is proposed back, never re-derived) + the explicit Read list. Relay its context-elicitation batch FIRST (what the PM already runs, delivery preference, operational constraints, and — asked once here as a concrete scenario and then read from the record forever — **which single event this project could not tolerate** (data loss, a leak, downtime, a wrong charge…); intake omits this by design (D-0046), so init is its asker — facts only the PM holds), then its stack-confirmation table, exposure/environments/scale beats, and the approval gate — the stack is **grounded in the PM's answers and confirmed with the PM, never decided unilaterally**, and open `verify` rows sequence research before build.
+Spawn `friday-strategist` (model: **opus** — writing `CLAUDE.md` is decision-making, not templating). Its spawn message carries the TSOW path + intake brief + Stage-0 check 6/7 findings (so brownfield delivery/VCS state is proposed back, never re-derived) + the explicit Read list. Relay its context-elicitation batch FIRST (what the PM already runs, delivery preference, operational constraints, and — asked once here as a concrete scenario and then read from the record forever — **which single event this project could not tolerate** (data loss, a leak, downtime, a wrong charge…); intake omits this by design (D-0046), so init is its asker — facts only the PM holds), then its stack-confirmation table, exposure/environments/scale beats, and the approval gate — the stack is **grounded in the PM's answers and confirmed with the PM, never decided unilaterally**, and open `verify` rows sequence research before build.
 
-The Strategist writes `CLAUDE.md` with: tech-stack **fitness verdicts** (not a bare list), exposure/deployment profile, environments, scale profile, the reuse catalog, the recorded **intolerable-event** answer from the relay above (the tolerance question the security reviewer and architect read from the record forever, never re-asked), and the typed **FRIDAY-CLAIMS block** (one grep-able line per checkable claim: `stack:` / `non-goal:` / `threshold:` / `world:` / `provenance:` — never `ci-gate:` at bootstrap; the delivery work adds that line when it wires the workflow), plus the **FRIDAY-STATE block**: `state: substrate-seeded` · `tsow: docs/TECHNICAL_SOW.md` · `since: <now>`.
+The Strategist writes `CLAUDE.md` with: tech-stack **fitness verdicts** (not a bare list), exposure/deployment profile, environments, scale profile, the reuse catalog, the recorded **intolerable-event** answer from the relay above (the tolerance question the security reviewer and architect read from the record forever, never re-asked), and the typed **FRIDAY-CLAIMS block** (one grep-able line per checkable claim: `stack:` / `non-goal:` / `threshold:` / `world:` / `provenance:` — never `ci-gate:` at bootstrap; the delivery work adds that line when it wires the workflow), plus the **FRIDAY-STATE block**: `state: substrate-seeded` · `tsow: docs/TECHNICAL_SOW.md` · `since: <now>` (contract: `docs/contracts/state-record.md`).
 
 It also seeds the project's native `.claude/` (committed `settings.json` + path-scoped `rules/*.md`) per `docs/contracts/claude-scaffold.md` — the contract owns the seeding rules; init's local part: conflicts with pre-existing `.claude/` content reach the PM through the Strategist's relay, and re-running init never clobbers.
 

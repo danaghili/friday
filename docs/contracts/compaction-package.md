@@ -11,8 +11,10 @@ never by raw copy (D-0003). Consumers: `hooks/compaction_reorient.py`
 sides cite THIS file; neither invents its own shape.
 
 **This is NOT the seam handoff.** `.friday/seam-handoff.md` is the build-unit
-fork brief — a different mechanism with its own contract. The two names are
-never conflated (TSOW §13 landmine; INC-001 KH-6).
+fork brief — a different mechanism, owned by `tools/seam_handoff.py` (write +
+`--clear`; its docstring is the shape authority) with `/friday:resume` step 5
+as its consumer (D-0117 — no separate contract file exists for it, and none is
+owed). The two names are never conflated (TSOW §13 landmine; INC-001 KH-6).
 
 ## The drawer layout
 

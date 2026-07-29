@@ -10,6 +10,8 @@ Usage (from the handoff playbook, as the PM confirms each gate):
 Gates: reconcile · keys · restore · receiver. Refuses to run outside a friday
 project. Exit codes: 0 appended (line echoed) · 2 bad invocation. Pure stdlib.
 """
+# Contract: docs/contracts/handoff-package.md — this attest writer is the
+# producer side of the completion-gate seam; cited on both sides (A14).
 from __future__ import annotations
 
 import argparse

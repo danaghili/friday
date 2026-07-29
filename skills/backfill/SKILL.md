@@ -5,7 +5,7 @@ friday-lane: true
 disable-model-invocation: true
 ---
 
-You are the lead running `/friday:backfill` — migrate a project built by an **older friday** onto the current substrate; the marketplace promise is that an upgrade **never orphans a project and never invents its past** (contract: the approved `/friday:backfill` behavior paragraph).
+You are the lead running `/friday:backfill` — migrate a project built by an **older friday** onto the current substrate; the marketplace promise is that an upgrade **never orphans a project and never invents its past** (contract: the approved `/friday:backfill` behavior paragraph). Code that has never known friday at all is `/friday:adopt`'s door — the two are disjoint front doors, never a pipeline (journey audit J8).
 
 ### 1. Read the old record, show the plan BEFORE touching anything
 

@@ -2,7 +2,8 @@
 TECHNICAL_SOW_REBUILD FR-55 guard #2, D-0018 event mapping). No new
 checker — tools/doc_gate.py IS the checker, dispatched by path: `docs/
 TECHNICAL_SOW*.md` → --kind spec; `docs/increments/*.md` → --kind increment
---parent <wroot>/docs/TECHNICAL_SOW.md. Other paths are untouched.
+(no `--parent`: the TSOW pointer is an approval-time artifact and this guard
+fires on the write — BUG-005). Other paths are untouched.
 
 Positive control: a just-written TSOW missing its `provenance:` line (the
 seeded lie doc_gate's spec kind exists to catch) → PostToolUse block. Fail-
@@ -76,9 +77,30 @@ def test_valid_spec_write_is_untouched(tmp_path):
     assert p.stdout.strip() == ""
 
 
-def test_orphan_increment_is_blocked(tmp_path):
+def test_increment_without_a_pointer_is_allowed_while_being_authored(tmp_path):
+    """INVERTED BY BUG-005 — this test previously asserted the block, and the
+    block was the defect.
+
+    A missing `## Increments` pointer is the CORRECT state of a freshly written
+    increment: the lead appends the pointer at PM approval (D-0121, D-0076
+    refuse it earlier). Since this guard fires on the write, requiring the
+    pointer here meant the gate could never pass at the only moment it ran.
+    The pointer requirement moved to consumption; see
+    tests/test_bug_005_increment_gate_authoring.py.
+    """
     proj = _proj(tmp_path, tsow_text=GOOD_SPEC)  # no ## Increments pointer
     (proj / "docs" / "increments" / "INC-1.md").write_text(GOOD_INCREMENT, encoding="utf-8")
+    p = run_hook(BUILD_ROOT, "spec_write_guard.py",
+                 _event(proj, proj / "docs" / "increments" / "INC-1.md"))
+    assert p.stdout.strip() == "", p.stdout
+
+
+def test_a_malformed_increment_is_still_blocked_while_authoring(tmp_path):
+    """The loosening is one clause wide: the increment kind's own lie — an
+    undotted requirement ID — is still caught at write time."""
+    proj = _proj(tmp_path, tsow_text=GOOD_SPEC)
+    (proj / "docs" / "increments" / "INC-1.md").write_text(
+        GOOD_INCREMENT.replace("- **FR-1.1**", "- **FR-1**"), encoding="utf-8")
     p = run_hook(BUILD_ROOT, "spec_write_guard.py",
                  _event(proj, proj / "docs" / "increments" / "INC-1.md"))
     out = json.loads(p.stdout)

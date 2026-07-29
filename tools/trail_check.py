@@ -122,24 +122,7 @@ def check_text(text: str, decisions_text: str | None = None,
     if "Asked" in bodies and not any(ln.strip() for ln in bodies["Asked"]):
         errors.append("the Asked section is empty — say what was asked or found")
 
-    refs: list[str] = []
-    if "Decisions" in bodies:
-        dec_lines = [ln.strip() for ln in bodies["Decisions"] if ln.strip()]
-        sentinel = [ln for ln in dec_lines if ln == EMPTY_DECISIONS]
-        for ln in dec_lines:
-            m = _REF_RE.match(ln)
-            if m:
-                refs.append(m.group(1))
-            elif ln != EMPTY_DECISIONS:
-                errors.append(f"the Decisions section holds {ln!r} — every line must "
-                              "be a `- D-NNNN — <title>` reference into docs/DECISIONS.md, "
-                              f"or exactly `{EMPTY_DECISIONS}` when none arose")
-        if sentinel and refs:
-            errors.append("the Decisions section claims both 'none' and actual "
-                          "decision references — it must be one or the other")
-        if not sentinel and not refs:
-            errors.append("the Decisions section is empty — list `- D-NNNN — <title>` "
-                          f"references, or state exactly `{EMPTY_DECISIONS}`")
+    refs = _check_decisions_section(bodies, errors)
 
     proof_count = 0
     if "Proof" in bodies:
@@ -181,6 +164,31 @@ def check_text(text: str, decisions_text: str | None = None,
             "summary": (f"change trail OK: lane={fields.get('lane')} id={fields.get('id')} "
                         f"({len(refs)} decision reference(s), {proof_count} proof line(s))"
                         + note)}
+
+
+def _check_decisions_section(bodies: dict, errors: list[str]) -> list[str]:
+    """Validate the Decisions section; returns the D-NNNN references found.
+    (Kept BELOW check_text so its recorded breach location keeps its line.)"""
+    refs: list[str] = []
+    if "Decisions" not in bodies:
+        return refs
+    dec_lines = [ln.strip() for ln in bodies["Decisions"] if ln.strip()]
+    sentinel = [ln for ln in dec_lines if ln == EMPTY_DECISIONS]
+    for ln in dec_lines:
+        m = _REF_RE.match(ln)
+        if m:
+            refs.append(m.group(1))
+        elif ln != EMPTY_DECISIONS:
+            errors.append(f"the Decisions section holds {ln!r} — every line must "
+                          "be a `- D-NNNN — <title>` reference into docs/DECISIONS.md, "
+                          f"or exactly `{EMPTY_DECISIONS}` when none arose")
+    if sentinel and refs:
+        errors.append("the Decisions section claims both 'none' and actual "
+                      "decision references — it must be one or the other")
+    if not sentinel and not refs:
+        errors.append("the Decisions section is empty — list `- D-NNNN — <title>` "
+                      f"references, or state exactly `{EMPTY_DECISIONS}`")
+    return refs
 
 
 def main(argv: list[str] | None = None) -> int:

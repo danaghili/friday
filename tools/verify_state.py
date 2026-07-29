@@ -162,23 +162,7 @@ def verify_state(root: str) -> dict:
                  "capture is not happening (or the log is missing/malformed)")
 
     if state == "closed":
-        ok2, d2 = _review_ok(root)
-        if not ok2:
-            fail("K2", "blocking", "closer", d2)
-        ok3, d3 = _release_gate_ok(root)
-        if not ok3:
-            fail("K3", "blocking", "closer", d3)
-        if not (state_block.get("last-verified") and
-                state_block.get("record-status", [""])[0] in ("verified", "stale")):
-            fail("K5", "blocking", "closer",
-                 "closure record lacks the PROP-028 dirty-bit fields "
-                 "(last-verified: + record-status: verified|stale) in FRIDAY-STATE")
-        cov = verify_coverage.check(root)
-        if not cov["ok"]:
-            fail("K7", "blocking", "closer", cov["summary"])
-        claims = verify_claims.check_all(root)
-        if not claims["ok"]:
-            fail("K8", "blocking", "closer", claims["summary"])
+        _closed_checks(root, state_block, fail)
 
     blocking = [f for f in failures if f["severity"] == "blocking"]
     ok = not blocking
@@ -196,6 +180,28 @@ def verify_state(root: str) -> dict:
     except Exception:
         pass
     return out
+
+
+def _closed_checks(root: str, state_block: dict, fail) -> None:
+    """K2/K3/K5/K7/K8 — the closure gates, checked only at state=closed.
+    (Kept BELOW verify_state so its recorded breach location keeps its line.)"""
+    ok2, d2 = _review_ok(root)
+    if not ok2:
+        fail("K2", "blocking", "closer", d2)
+    ok3, d3 = _release_gate_ok(root)
+    if not ok3:
+        fail("K3", "blocking", "closer", d3)
+    if not (state_block.get("last-verified") and
+            state_block.get("record-status", [""])[0] in ("verified", "stale")):
+        fail("K5", "blocking", "closer",
+             "closure record lacks the PROP-028 dirty-bit fields "
+             "(last-verified: + record-status: verified|stale) in FRIDAY-STATE")
+    cov = verify_coverage.check(root)
+    if not cov["ok"]:
+        fail("K7", "blocking", "closer", cov["summary"])
+    claims = verify_claims.check_all(root)
+    if not claims["ok"]:
+        fail("K8", "blocking", "closer", claims["summary"])
 
 
 def main(argv: list[str] | None = None) -> int:

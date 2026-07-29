@@ -147,6 +147,15 @@
             "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/blast_radius_guard.py\" \"${CLAUDE_PLUGIN_ROOT}\""
           }
         ]
+      },
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/state_advisory.py\" \"${CLAUDE_PLUGIN_ROOT}\""
+          }
+        ]
       }
     ],
     "Elicitation": [
@@ -220,6 +229,14 @@
             "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/compaction_reorient.py\" \"${CLAUDE_PLUGIN_ROOT}\""
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/due_signal.py\" \"${CLAUDE_PLUGIN_ROOT}\""
+          }
+        ]
       }
     ],
     "SessionEnd": [
@@ -265,11 +282,23 @@
           },
           {
             "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/maintainability_gate.py\" \"${CLAUDE_PLUGIN_ROOT}\""
+          },
+          {
+            "type": "command",
             "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/substrate_ask_cleanup.py\" \"${CLAUDE_PLUGIN_ROOT}\""
           },
           {
             "type": "command",
             "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/usage_telemetry.py\" \"${CLAUDE_PLUGIN_ROOT}\""
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/state_advisory.py\" \"${CLAUDE_PLUGIN_ROOT}\""
           }
         ]
       }

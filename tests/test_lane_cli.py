@@ -50,7 +50,9 @@ def test_patch_open_takes_repeated_blast_radius(tmp_path):
              "--blast-radius", "docs/help.md", "--blast-radius", "README.md")
     assert p.returncode == 0, p.stderr
     s = json.loads(_run("status", "--root", root).stdout)
-    assert s["blast-radius"] == ["docs/help.md", "README.md"]
+    # the trail path rides along by construction (NF12 — see lane_open)
+    assert s["blast-radius"] == ["docs/help.md", "README.md",
+                                 "docs/trails/PATCH-2.md"]
 
 
 def test_clear_records_who_via_by_flag(tmp_path):

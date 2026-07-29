@@ -2,7 +2,7 @@
 
 # Dependency graph (generated)
 
-Intra-tree import graph — **154 modules, 214 import edges**. Every edge is a literal `import` statement in the source; the C4 Component level, correct-by-construction.
+Intra-tree import graph — **196 modules, 280 import edges**. Every edge is a literal `import` statement in the source; the C4 Component level, correct-by-construction.
 
 ```mermaid
 graph LR
@@ -19,10 +19,12 @@ graph LR
     hooks_decision_capture["hooks.decision_capture"]
     hooks_design_contract_guard["hooks.design_contract_guard"]
     hooks_doc_consumption_guard["hooks.doc_consumption_guard"]
+    hooks_due_signal["hooks.due_signal"]
     hooks_elicitation_journal["hooks.elicitation_journal"]
     hooks_foundation_gate["hooks.foundation_gate"]
     hooks_graph_freshness_guard["hooks.graph_freshness_guard"]
     hooks_lane_close_gate["hooks.lane_close_gate"]
+    hooks_maintainability_gate["hooks.maintainability_gate"]
     hooks_open_risks_guard["hooks.open_risks_guard"]
     hooks_oracle_edit_guard["hooks.oracle_edit_guard"]
     hooks_profile_guard["hooks.profile_guard"]
@@ -32,6 +34,7 @@ graph LR
     hooks_session_lifecycle["hooks.session_lifecycle"]
     hooks_setup_selfcheck["hooks.setup_selfcheck"]
     hooks_spec_write_guard["hooks.spec_write_guard"]
+    hooks_state_advisory["hooks.state_advisory"]
     hooks_state_sentinel["hooks.state_sentinel"]
     hooks_state_stop_gate["hooks.state_stop_gate"]
     hooks_substrate_ask_cleanup["hooks.substrate_ask_cleanup"]
@@ -44,10 +47,14 @@ graph LR
     hooks_worktree_substrate_warn["hooks.worktree_substrate_warn"]
     tests_conftest["tests.conftest"]
     tests_guardkit["tests.guardkit"]
+    tests_test_adopt_parity["tests.test_adopt_parity"]
     tests_test_batch_edit["tests.test_batch_edit"]
     tests_test_bug_001_verify_claims_stack["tests.test_bug_001_verify_claims_stack"]
     tests_test_bug_002_bug_close_gate_pause["tests.test_bug_002_bug_close_gate_pause"]
     tests_test_bug_003_check_readme_sync["tests.test_bug_003_check_readme_sync"]
+    tests_test_bug_004_decision_capture_multiquestion["tests.test_bug_004_decision_capture_multiquestion"]
+    tests_test_bug_005_increment_gate_authoring["tests.test_bug_005_increment_gate_authoring"]
+    tests_test_capture_integrity["tests.test_capture_integrity"]
     tests_test_committed_test_check["tests.test_committed_test_check"]
     tests_test_compaction_capture["tests.test_compaction_capture"]
     tests_test_companion_offer["tests.test_companion_offer"]
@@ -55,6 +62,7 @@ graph LR
     tests_test_decisions["tests.test_decisions"]
     tests_test_doc_gate["tests.test_doc_gate"]
     tests_test_doc_synthesis["tests.test_doc_synthesis"]
+    tests_test_due_signals["tests.test_due_signals"]
     tests_test_findings_brief_check["tests.test_findings_brief_check"]
     tests_test_gen_command_index_skills["tests.test_gen_command_index_skills"]
     tests_test_graph_query["tests.test_graph_query"]
@@ -71,6 +79,7 @@ graph LR
     tests_test_guard_foundation["tests.test_guard_foundation"]
     tests_test_guard_graph_freshness["tests.test_guard_graph_freshness"]
     tests_test_guard_lane_close["tests.test_guard_lane_close"]
+    tests_test_guard_maintainability["tests.test_guard_maintainability"]
     tests_test_guard_open_risks["tests.test_guard_open_risks"]
     tests_test_guard_oracle_edit["tests.test_guard_oracle_edit"]
     tests_test_guard_profile["tests.test_guard_profile"]
@@ -89,25 +98,45 @@ graph LR
     tests_test_harden_fixes["tests.test_harden_fixes"]
     tests_test_hooks["tests.test_hooks"]
     tests_test_hooks_compaction["tests.test_hooks_compaction"]
+    tests_test_inc008_deviations["tests.test_inc008_deviations"]
+    tests_test_inc008_envelope["tests.test_inc008_envelope"]
+    tests_test_inc008_gate["tests.test_inc008_gate"]
+    tests_test_inc008_maintainability_claim["tests.test_inc008_maintainability_claim"]
+    tests_test_inc008_measurer["tests.test_inc008_measurer"]
+    tests_test_inc200_coverage_channel["tests.test_inc200_coverage_channel"]
+    tests_test_inc200_dispatch_liveness["tests.test_inc200_dispatch_liveness"]
+    tests_test_inc200_experiment_e2e["tests.test_inc200_experiment_e2e"]
+    tests_test_inc200_experiment_request["tests.test_inc200_experiment_request"]
+    tests_test_inc200_state_advisory["tests.test_inc200_state_advisory"]
+    tests_test_inc201_consent_record["tests.test_inc201_consent_record"]
+    tests_test_inc201_experiments_server["tests.test_inc201_experiments_server"]
+    tests_test_inc201_runner_grant["tests.test_inc201_runner_grant"]
     tests_test_lane_cli["tests.test_lane_cli"]
     tests_test_lane_open_helper["tests.test_lane_open_helper"]
     tests_test_mdparse["tests.test_mdparse"]
+    tests_test_parked_ledger["tests.test_parked_ledger"]
     tests_test_registry["tests.test_registry"]
     tests_test_review_format_interim["tests.test_review_format_interim"]
     tests_test_sanitized_mirror["tests.test_sanitized_mirror"]
+    tests_test_seam_handoff["tests.test_seam_handoff"]
     tests_test_secret_names["tests.test_secret_names"]
     tests_test_server["tests.test_server"]
+    tests_test_session_heartbeat["tests.test_session_heartbeat"]
     tests_test_session_lifecycle["tests.test_session_lifecycle"]
     tests_test_skill_standard_check["tests.test_skill_standard_check"]
+    tests_test_spawn_grant_check["tests.test_spawn_grant_check"]
     tests_test_spec_id_strip_bundled["tests.test_spec_id_strip_bundled"]
+    tests_test_state_record_dirty_bit["tests.test_state_record_dirty_bit"]
     tests_test_stop_gate_failopen["tests.test_stop_gate_failopen"]
     tests_test_substrate["tests.test_substrate"]
     tests_test_substrate_compaction["tests.test_substrate_compaction"]
     tests_test_taglines["tests.test_taglines"]
     tests_test_trail_check["tests.test_trail_check"]
+    tests_test_usage_telemetry["tests.test_usage_telemetry"]
     tests_test_verify_claims["tests.test_verify_claims"]
     tests_test_verify_coverage["tests.test_verify_coverage"]
     tests_test_verify_generated["tests.test_verify_generated"]
+    tests_test_verify_review_format_dispositions["tests.test_verify_review_format_dispositions"]
     tests_test_verify_state["tests.test_verify_state"]
     tools_batch_edit["tools.batch_edit"]
     tools_blast_radius_check["tools.blast_radius_check"]
@@ -119,14 +148,19 @@ graph LR
     tools_decisions["tools.decisions"]
     tools_decisions_append["tools.decisions_append"]
     tools_design_contract_check["tools.design_contract_check"]
+    tools_dispatch_liveness_check["tools.dispatch_liveness_check"]
     tools_doc_index_mdparse["tools.doc-index.mdparse"]
     tools_doc_index_registry["tools.doc-index.registry"]
     tools_doc_index_server["tools.doc-index.server"]
     tools_doc_synthesis_extract_architecture["tools.doc-synthesis.extract_architecture"]
     tools_doc_synthesis_synthesis_diff["tools.doc-synthesis.synthesis_diff"]
     tools_doc_gate["tools.doc_gate"]
+    tools_experiment_request["tools.experiment_request"]
+    tools_experiment_run["tools.experiment_run"]
+    tools_experiments_server["tools.experiments.server"]
     tools_findings_brief_check["tools.findings_brief_check"]
     tools_foundation_check["tools.foundation_check"]
+    tools_friday_consent["tools.friday_consent"]
     tools_friday_substrate["tools.friday_substrate"]
     tools_gen_command_index["tools.gen_command_index"]
     tools_graph_freshness_check["tools.graph_freshness_check"]
@@ -136,8 +170,12 @@ graph LR
     tools_handoff_gate["tools.handoff_gate"]
     tools_handoff_package_check["tools.handoff_package_check"]
     tools_lane["tools.lane"]
+    tools_maintainability_envelope_check["tools.maintainability_envelope_check"]
+    tools_maintainability_gate_check["tools.maintainability_gate_check"]
+    tools_maintainability_measure["tools.maintainability_measure"]
     tools_open_risks_check["tools.open_risks_check"]
     tools_oracle_edit_check["tools.oracle_edit_check"]
+    tools_parked["tools.parked"]
     tools_profile_check["tools.profile_check"]
     tools_receipt["tools.receipt"]
     tools_research_orphan_check["tools.research_orphan_check"]
@@ -146,8 +184,12 @@ graph LR
     tools_secret_names["tools.secret_names"]
     tools_session_heartbeat["tools.session_heartbeat"]
     tools_skill_standard_check["tools.skill_standard_check"]
+    tools_spawn_grant_check["tools.spawn_grant_check"]
     tools_spawn_telemetry["tools.spawn_telemetry"]
     tools_spec_id_strip_check["tools.spec_id_strip_check"]
+    tools_standards_deviations["tools.standards_deviations"]
+    tools_state_advisory_check["tools.state_advisory_check"]
+    tools_state_record["tools.state_record"]
     tools_taglines["tools.taglines"]
     tools_trail_check["tools.trail_check"]
     tools_usage_report["tools.usage_report"]
@@ -180,6 +222,8 @@ graph LR
     hooks_design_contract_guard --> hooks__hookutil
     hooks_doc_consumption_guard --> hooks__guard
     hooks_doc_consumption_guard --> hooks__hookutil
+    hooks_due_signal --> hooks__guard
+    hooks_due_signal --> hooks__hookutil
     hooks_elicitation_journal --> hooks__hookutil
     hooks_foundation_gate --> hooks__guard
     hooks_foundation_gate --> hooks__hookutil
@@ -187,6 +231,10 @@ graph LR
     hooks_graph_freshness_guard --> hooks__hookutil
     hooks_lane_close_gate --> hooks__guard
     hooks_lane_close_gate --> hooks__hookutil
+    hooks_maintainability_gate --> hooks__guard
+    hooks_maintainability_gate --> hooks__hookutil
+    hooks_maintainability_gate -.->|deferred| tools_maintainability_measure
+    hooks_maintainability_gate -.->|deferred| tools_verify_claims
     hooks_open_risks_guard --> hooks__guard
     hooks_open_risks_guard --> hooks__hookutil
     hooks_oracle_edit_guard --> hooks__guard
@@ -201,6 +249,8 @@ graph LR
     hooks_setup_selfcheck --> hooks__hookutil
     hooks_spec_write_guard --> hooks__guard
     hooks_spec_write_guard --> hooks__hookutil
+    hooks_state_advisory --> hooks__guard
+    hooks_state_advisory --> hooks__hookutil
     hooks_state_sentinel --> hooks__hookutil
     hooks_state_stop_gate --> hooks__hookutil
     hooks_substrate_ask_cleanup --> hooks__hookutil
@@ -220,6 +270,10 @@ graph LR
     tests_test_bug_001_verify_claims_stack --> tools_verify_claims
     tests_test_bug_002_bug_close_gate_pause --> tools_bug_close_check
     tests_test_bug_003_check_readme_sync --> tools_gen_command_index
+    tests_test_bug_004_decision_capture_multiquestion --> tools_decisions
+    tests_test_bug_005_increment_gate_authoring --> tests_guardkit
+    tests_test_capture_integrity --> tools_capture_integrity
+    tests_test_capture_integrity --> tools_decisions
     tests_test_committed_test_check --> tools_committed_test_check
     tests_test_compaction_capture --> tools_friday_substrate
     tests_test_companion_offer --> tests_guardkit
@@ -231,6 +285,7 @@ graph LR
     tests_test_doc_gate --> tools_doc_gate
     tests_test_doc_synthesis --> tools_doc_synthesis_extract_architecture
     tests_test_doc_synthesis --> tools_doc_synthesis_synthesis_diff
+    tests_test_due_signals --> tools_state_advisory_check
     tests_test_findings_brief_check --> hooks__guard
     tests_test_findings_brief_check --> tools_findings_brief_check
     tests_test_gen_command_index_skills --> tools_gen_command_index
@@ -259,6 +314,8 @@ graph LR
     tests_test_guard_graph_freshness --> tests_guardkit
     tests_test_guard_graph_freshness --> tools_graph_freshness_check
     tests_test_guard_lane_close --> tests_guardkit
+    tests_test_guard_maintainability -.->|deferred| hooks_maintainability_gate
+    tests_test_guard_maintainability --> tests_guardkit
     tests_test_guard_open_risks --> tests_guardkit
     tests_test_guard_open_risks --> tools_open_risks_check
     tests_test_guard_oracle_edit --> tests_guardkit
@@ -293,25 +350,55 @@ graph LR
     tests_test_hooks --> tools_decisions
     tests_test_hooks --> tools_verify_review_format
     tests_test_hooks_compaction --> tools_friday_substrate
+    tests_test_inc008_deviations --> tools_standards_deviations
+    tests_test_inc008_envelope -.->|deferred| tools_friday_substrate
+    tests_test_inc008_envelope --> tools_maintainability_envelope_check
+    tests_test_inc008_gate --> tools_maintainability_gate_check
+    tests_test_inc008_maintainability_claim --> tools_taglines
+    tests_test_inc008_maintainability_claim --> tools_verify_claims
+    tests_test_inc008_measurer --> tools_maintainability_measure
+    tests_test_inc200_coverage_channel --> tools_verify_coverage
+    tests_test_inc200_dispatch_liveness --> tools_dispatch_liveness_check
+    tests_test_inc200_experiment_e2e --> tools_experiment_request
+    tests_test_inc200_experiment_e2e --> tools_experiment_run
+    tests_test_inc200_experiment_e2e --> tools_friday_consent
+    tests_test_inc200_experiment_request --> tools_experiment_request
+    tests_test_inc200_state_advisory --> tools_state_advisory_check
+    tests_test_inc200_state_advisory --> tools_state_record
+    tests_test_inc201_consent_record --> tools_friday_consent
+    tests_test_inc201_consent_record -.->|deferred| tools_taglines
+    tests_test_inc201_experiments_server --> tools_experiment_run
+    tests_test_inc201_experiments_server --> tools_friday_consent
     tests_test_lane_open_helper --> tools_friday_substrate
     tests_test_mdparse --> tools_doc_index_mdparse
+    tests_test_parked_ledger --> tools_parked
     tests_test_registry --> tools_doc_index_registry
     tests_test_sanitized_mirror --> tools_sanitized_mirror
+    tests_test_seam_handoff -.->|deferred| tools_decisions
+    tests_test_seam_handoff --> tools_friday_substrate
+    tests_test_seam_handoff --> tools_seam_handoff
     tests_test_secret_names --> tools_secret_names
-    tests_test_server --> tools_doc_index_server
+    tests_test_session_heartbeat --> tools_friday_substrate
+    tests_test_session_heartbeat --> tools_session_heartbeat
     tests_test_skill_standard_check --> tests_guardkit
     tests_test_skill_standard_check --> tools_skill_standard_check
+    tests_test_spawn_grant_check --> tools_spawn_grant_check
     tests_test_spec_id_strip_bundled --> tools_spec_id_strip_check
+    tests_test_state_record_dirty_bit --> tools_state_record
     tests_test_substrate --> tools_friday_substrate
     tests_test_substrate -.->|deferred| tools_verify_spawn_coverage
     tests_test_substrate_compaction --> tools_friday_substrate
     tests_test_taglines --> tools_taglines
     tests_test_trail_check --> hooks__guard
     tests_test_trail_check --> tools_trail_check
+    tests_test_usage_telemetry --> hooks_usage_telemetry
+    tests_test_usage_telemetry --> tools_friday_substrate
     tests_test_verify_claims --> tools_taglines
     tests_test_verify_claims --> tools_verify_claims
     tests_test_verify_coverage --> tools_verify_coverage
     tests_test_verify_generated --> tools_verify_generated
+    tests_test_verify_review_format_dispositions --> tools_verify_coverage
+    tests_test_verify_review_format_dispositions --> tools_verify_review_format
     tests_test_verify_state --> tools_decisions
     tests_test_verify_state --> tools_verify_state
     tools_bug_close_check --> tools_trail_check
@@ -338,19 +425,34 @@ graph LR
     tools_doc_synthesis_synthesis_diff -.->|deferred| tools_doc_index_mdparse
     tools_doc_gate --> tools_findings_brief_check
     tools_doc_gate --> tools_taglines
+    tools_experiment_request --> tools_taglines
+    tools_experiment_run --> tools_experiment_request
+    tools_experiments_server --> tools_experiment_request
+    tools_experiments_server --> tools_experiment_run
+    tools_experiments_server --> tools_friday_consent
+    tools_experiments_server --> tools_spawn_telemetry
     tools_findings_brief_check --> tools_taglines
     tools_foundation_check --> tools_taglines
     tools_foundation_check --> tools_verify_claims
+    tools_friday_consent --> tools_friday_substrate
+    tools_friday_consent --> tools_taglines
     tools_graph_freshness_check --> tools_friday_substrate
     tools_graph_refresh --> tools_friday_substrate
     tools_handoff_attest --> tools_friday_substrate
     tools_handoff_attest --> tools_handoff_gate
     tools_handoff_gate --> tools_friday_substrate
     tools_lane --> tools_friday_substrate
+    tools_maintainability_envelope_check -.->|deferred| tools_friday_substrate
+    tools_maintainability_envelope_check --> tools_taglines
+    tools_maintainability_gate_check --> tools_maintainability_envelope_check
+    tools_maintainability_gate_check --> tools_maintainability_measure
+    tools_maintainability_measure --> tools_taglines
     tools_open_risks_check --> tools_decisions
     tools_open_risks_check --> tools_taglines
     tools_oracle_edit_check --> tools_decisions
     tools_oracle_edit_check --> tools_taglines
+    tools_parked --> tools_friday_substrate
+    tools_parked --> tools_taglines
     tools_receipt --> tools_friday_substrate
     tools_receipt -.->|deferred| tools_verify_claims
     tools_receipt -.->|deferred| tools_verify_coverage
@@ -361,12 +463,18 @@ graph LR
     tools_seam_handoff --> tools_friday_substrate
     tools_session_heartbeat --> tools_friday_substrate
     tools_spawn_telemetry --> tools_friday_substrate
+    tools_standards_deviations --> tools_friday_substrate
+    tools_state_advisory_check --> tools_friday_substrate
+    tools_state_advisory_check --> tools_taglines
+    tools_state_record --> tools_friday_substrate
+    tools_state_record --> tools_taglines
     tools_trail_check --> tools_decisions
     tools_trail_check --> tools_taglines
     tools_usage_report --> tools_friday_substrate
     tools_verify_claims --> tools_taglines
     tools_verify_coverage --> tools_taglines
     tools_verify_review_format --> tools_taglines
+    tools_verify_review_format --> tools_verify_coverage
     tools_verify_state --> tools_decisions
     tools_verify_state --> tools_friday_substrate
     tools_verify_state -.->|deferred| tools_receipt
@@ -381,8 +489,8 @@ graph LR
 
 | Module | Imports (out) | Imported by (in) |
 | --- | ---: | ---: |
-| `hooks._guard` | 0 | 23 |
-| `hooks._hookutil` | 1 | 34 |
+| `hooks._guard` | 0 | 26 |
+| `hooks._hookutil` | 1 | 37 |
 | `hooks.blast_radius_backstop` | 2 | 0 |
 | `hooks.blast_radius_guard` | 2 | 0 |
 | `hooks.bug_close_gate` | 2 | 0 |
@@ -394,10 +502,12 @@ graph LR
 | `hooks.decision_capture` | 2 | 0 |
 | `hooks.design_contract_guard` | 2 | 0 |
 | `hooks.doc_consumption_guard` | 2 | 0 |
+| `hooks.due_signal` | 2 | 0 |
 | `hooks.elicitation_journal` | 1 | 0 |
 | `hooks.foundation_gate` | 2 | 0 |
 | `hooks.graph_freshness_guard` | 2 | 0 |
 | `hooks.lane_close_gate` | 2 | 0 |
+| `hooks.maintainability_gate` | 4 | 1 |
 | `hooks.open_risks_guard` | 2 | 0 |
 | `hooks.oracle_edit_guard` | 2 | 0 |
 | `hooks.profile_guard` | 2 | 0 |
@@ -407,22 +517,27 @@ graph LR
 | `hooks.session_lifecycle` | 1 | 0 |
 | `hooks.setup_selfcheck` | 1 | 0 |
 | `hooks.spec_write_guard` | 2 | 0 |
+| `hooks.state_advisory` | 2 | 0 |
 | `hooks.state_sentinel` | 1 | 0 |
 | `hooks.state_stop_gate` | 1 | 0 |
 | `hooks.substrate_ask_cleanup` | 1 | 0 |
 | `hooks.substrate_ask_mirror` | 1 | 0 |
 | `hooks.teammate_idle_nudge` | 2 | 0 |
 | `hooks.thrash_detector` | 2 | 0 |
-| `hooks.usage_telemetry` | 1 | 0 |
+| `hooks.usage_telemetry` | 1 | 1 |
 | `hooks.worktree_create_guard` | 2 | 0 |
 | `hooks.worktree_remove_warn` | 2 | 0 |
 | `hooks.worktree_substrate_warn` | 2 | 0 |
 | `tests.conftest` | 0 | 0 |
-| `tests.guardkit` | 0 | 28 |
+| `tests.guardkit` | 0 | 30 |
+| `tests.test_adopt_parity` | 0 | 0 |
 | `tests.test_batch_edit` | 1 | 0 |
 | `tests.test_bug_001_verify_claims_stack` | 1 | 0 |
 | `tests.test_bug_002_bug_close_gate_pause` | 1 | 0 |
 | `tests.test_bug_003_check_readme_sync` | 1 | 0 |
+| `tests.test_bug_004_decision_capture_multiquestion` | 1 | 0 |
+| `tests.test_bug_005_increment_gate_authoring` | 1 | 0 |
+| `tests.test_capture_integrity` | 2 | 0 |
 | `tests.test_committed_test_check` | 1 | 0 |
 | `tests.test_compaction_capture` | 1 | 0 |
 | `tests.test_companion_offer` | 2 | 0 |
@@ -430,6 +545,7 @@ graph LR
 | `tests.test_decisions` | 1 | 0 |
 | `tests.test_doc_gate` | 2 | 0 |
 | `tests.test_doc_synthesis` | 2 | 0 |
+| `tests.test_due_signals` | 1 | 0 |
 | `tests.test_findings_brief_check` | 2 | 0 |
 | `tests.test_gen_command_index_skills` | 1 | 0 |
 | `tests.test_graph_query` | 2 | 0 |
@@ -446,6 +562,7 @@ graph LR
 | `tests.test_guard_foundation` | 2 | 0 |
 | `tests.test_guard_graph_freshness` | 2 | 0 |
 | `tests.test_guard_lane_close` | 1 | 0 |
+| `tests.test_guard_maintainability` | 2 | 0 |
 | `tests.test_guard_open_risks` | 2 | 0 |
 | `tests.test_guard_oracle_edit` | 2 | 0 |
 | `tests.test_guard_profile` | 2 | 0 |
@@ -464,45 +581,70 @@ graph LR
 | `tests.test_harden_fixes` | 9 | 0 |
 | `tests.test_hooks` | 2 | 0 |
 | `tests.test_hooks_compaction` | 1 | 0 |
+| `tests.test_inc008_deviations` | 1 | 0 |
+| `tests.test_inc008_envelope` | 2 | 0 |
+| `tests.test_inc008_gate` | 1 | 0 |
+| `tests.test_inc008_maintainability_claim` | 2 | 0 |
+| `tests.test_inc008_measurer` | 1 | 0 |
+| `tests.test_inc200_coverage_channel` | 1 | 0 |
+| `tests.test_inc200_dispatch_liveness` | 1 | 0 |
+| `tests.test_inc200_experiment_e2e` | 3 | 0 |
+| `tests.test_inc200_experiment_request` | 1 | 0 |
+| `tests.test_inc200_state_advisory` | 2 | 0 |
+| `tests.test_inc201_consent_record` | 2 | 0 |
+| `tests.test_inc201_experiments_server` | 2 | 0 |
+| `tests.test_inc201_runner_grant` | 0 | 0 |
 | `tests.test_lane_cli` | 0 | 0 |
 | `tests.test_lane_open_helper` | 1 | 0 |
 | `tests.test_mdparse` | 1 | 0 |
+| `tests.test_parked_ledger` | 1 | 0 |
 | `tests.test_registry` | 1 | 0 |
 | `tests.test_review_format_interim` | 0 | 0 |
 | `tests.test_sanitized_mirror` | 1 | 0 |
+| `tests.test_seam_handoff` | 3 | 0 |
 | `tests.test_secret_names` | 1 | 0 |
-| `tests.test_server` | 1 | 0 |
+| `tests.test_server` | 0 | 0 |
+| `tests.test_session_heartbeat` | 2 | 0 |
 | `tests.test_session_lifecycle` | 0 | 0 |
 | `tests.test_skill_standard_check` | 2 | 0 |
+| `tests.test_spawn_grant_check` | 1 | 0 |
 | `tests.test_spec_id_strip_bundled` | 1 | 0 |
+| `tests.test_state_record_dirty_bit` | 1 | 0 |
 | `tests.test_stop_gate_failopen` | 0 | 0 |
 | `tests.test_substrate` | 2 | 0 |
 | `tests.test_substrate_compaction` | 1 | 0 |
 | `tests.test_taglines` | 1 | 0 |
 | `tests.test_trail_check` | 2 | 0 |
+| `tests.test_usage_telemetry` | 2 | 0 |
 | `tests.test_verify_claims` | 2 | 0 |
 | `tests.test_verify_coverage` | 1 | 0 |
 | `tests.test_verify_generated` | 1 | 0 |
+| `tests.test_verify_review_format_dispositions` | 2 | 0 |
 | `tests.test_verify_state` | 2 | 0 |
 | `tools.batch_edit` | 0 | 1 |
 | `tools.blast_radius_check` | 0 | 2 |
 | `tools.bug_close_check` | 1 | 2 |
-| `tools.capture_integrity` | 2 | 0 |
+| `tools.capture_integrity` | 2 | 1 |
 | `tools.codex-adapter.state_stop_gate` | 0 | 0 |
 | `tools.committed_test_check` | 3 | 1 |
 | `tools.compaction_note` | 1 | 0 |
-| `tools.decisions` | 2 | 15 |
+| `tools.decisions` | 2 | 18 |
 | `tools.decisions_append` | 2 | 0 |
 | `tools.design_contract_check` | 1 | 1 |
+| `tools.dispatch_liveness_check` | 0 | 1 |
 | `tools.doc-index.mdparse` | 0 | 3 |
 | `tools.doc-index.registry` | 3 | 2 |
-| `tools.doc-index.server` | 5 | 1 |
+| `tools.doc-index.server` | 5 | 0 |
 | `tools.doc-synthesis.extract_architecture` | 0 | 1 |
 | `tools.doc-synthesis.synthesis_diff` | 2 | 1 |
 | `tools.doc_gate` | 2 | 1 |
+| `tools.experiment_request` | 1 | 4 |
+| `tools.experiment_run` | 1 | 3 |
+| `tools.experiments.server` | 4 | 0 |
 | `tools.findings_brief_check` | 1 | 3 |
 | `tools.foundation_check` | 2 | 1 |
-| `tools.friday_substrate` | 0 | 29 |
+| `tools.friday_consent` | 2 | 4 |
+| `tools.friday_substrate` | 0 | 39 |
 | `tools.gen_command_index` | 0 | 3 |
 | `tools.graph_freshness_check` | 1 | 3 |
 | `tools.graph_query` | 0 | 1 |
@@ -511,25 +653,33 @@ graph LR
 | `tools.handoff_gate` | 1 | 4 |
 | `tools.handoff_package_check` | 0 | 1 |
 | `tools.lane` | 1 | 0 |
+| `tools.maintainability_envelope_check` | 2 | 2 |
+| `tools.maintainability_gate_check` | 2 | 1 |
+| `tools.maintainability_measure` | 1 | 3 |
 | `tools.open_risks_check` | 2 | 1 |
 | `tools.oracle_edit_check` | 2 | 1 |
+| `tools.parked` | 2 | 1 |
 | `tools.profile_check` | 0 | 1 |
 | `tools.receipt` | 5 | 2 |
 | `tools.research_orphan_check` | 1 | 1 |
 | `tools.sanitized_mirror` | 0 | 2 |
-| `tools.seam_handoff` | 2 | 0 |
+| `tools.seam_handoff` | 2 | 1 |
 | `tools.secret_names` | 0 | 1 |
-| `tools.session_heartbeat` | 1 | 0 |
+| `tools.session_heartbeat` | 1 | 1 |
 | `tools.skill_standard_check` | 0 | 1 |
-| `tools.spawn_telemetry` | 1 | 0 |
+| `tools.spawn_grant_check` | 0 | 1 |
+| `tools.spawn_telemetry` | 1 | 1 |
 | `tools.spec_id_strip_check` | 0 | 2 |
-| `tools.taglines` | 0 | 16 |
+| `tools.standards_deviations` | 1 | 1 |
+| `tools.state_advisory_check` | 2 | 2 |
+| `tools.state_record` | 2 | 2 |
+| `tools.taglines` | 0 | 25 |
 | `tools.trail_check` | 2 | 2 |
 | `tools.usage_report` | 1 | 0 |
-| `tools.verify_claims` | 1 | 6 |
-| `tools.verify_coverage` | 1 | 3 |
+| `tools.verify_claims` | 1 | 8 |
+| `tools.verify_coverage` | 1 | 6 |
 | `tools.verify_generated` | 0 | 1 |
-| `tools.verify_review_format` | 1 | 1 |
+| `tools.verify_review_format` | 2 | 2 |
 | `tools.verify_spawn_coverage` | 0 | 2 |
 | `tools.verify_state` | 6 | 4 |
 | `tools.visual-companion.companion_server` | 1 | 1 |

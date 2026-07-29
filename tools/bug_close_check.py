@@ -5,13 +5,17 @@ regression test and the completed trail"). Contract:
 docs/contracts/lane-open.md's `regression-test` field (required when
 lane=bug).
 
-Two mechanical requirements, both must hold:
+Three mechanical requirements, all must hold:
   1. The sentinel's `regression-test` field names an EXISTING `tests/*.py`
      file (worktree-root-relative). Existence is what is mechanically
      checked here; S-1's commit requirement lands in the fix commit itself.
   2. The sentinel's `trail` field, delegated whole to
      tools/trail_check.py's check_text() (one grammar, one home — this
      checker never re-derives the trail grammar), passes.
+  3. The `docs/BUGS.md` ledger entry for the closing bug id exists and its
+     `**Status:**` line no longer reads open (journey audit NF11) — a bug
+     that closes while the dedup ledger still calls it open poisons every
+     future duplicate-and-past-ruling grep.
 
 The owning hook (hooks/bug_close_gate.py) disarms the sentinel on this
 checker's pass — bug lanes have exactly one owner (D-0023); this checker
@@ -29,10 +33,41 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import trail_check  # noqa: E402
+
+
+def _ledger_status_issue(root: str, bug_id) -> str | None:
+    """Requirement 3 — the ledger agreement. Returns the issue text, or None
+    when the ledger and the close agree. A sentinel without an id has nothing
+    to cross-check (fail open toward the other two requirements)."""
+    if not isinstance(bug_id, str) or not bug_id.strip():
+        return None
+    bug_id = bug_id.strip()
+    path = os.path.join(root, "docs", "BUGS.md")
+    try:
+        with open(path, encoding="utf-8") as fh:
+            text = fh.read()
+    except OSError:
+        return (f"docs/BUGS.md is missing — the {bug_id} entry the intake step "
+                "mints was never written")
+    heading = re.compile(rf"^##\s+{re.escape(bug_id)}(\s|—|$)")
+    in_entry = False
+    for line in text.splitlines():
+        if line.startswith("## "):
+            in_entry = bool(heading.match(line))
+            continue
+        if in_entry and line.lstrip().startswith("**Status:**"):
+            status_val = line.split("**Status:**", 1)[1].strip()
+            if status_val.lower().startswith("open"):
+                return (f"the {bug_id} ledger entry still reads Status: open — "
+                        "flip it (e.g. `fixed <date> (…)`) before closing")
+            return None
+    return (f"docs/BUGS.md has no `## {bug_id}` entry — the ledger the "
+            "bug/feedback lanes grep for past rulings never got this bug")
 
 
 def check(root: str, sentinel_path: str) -> dict:
@@ -83,9 +118,15 @@ def check(root: str, sentinel_path: str) -> dict:
                 "summary": f"regression test OK ({reg_test}) but the trail is "
                            f"invalid: {trail_res.get('summary')}"}
 
+    ledger_issue = _ledger_status_issue(root, sentinel.get("id"))
+    if ledger_issue:
+        return {"verdict": "valid-fail",
+                "summary": f"regression test OK ({reg_test}), trail valid, but "
+                           f"the ledger disagrees: {ledger_issue}"}
+
     return {"verdict": "valid-pass",
             "summary": f"bug closure OK: regression test {reg_test} exists, "
-                       "trail valid"}
+                       "trail valid, ledger status flipped"}
 
 
 def main(argv: list[str] | None = None) -> int:

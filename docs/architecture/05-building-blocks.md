@@ -5,8 +5,8 @@ Synthesized from `docs/DECISIONS.md` + the generated IR
 in the extractor and verified against it by the diff oracle
 (`tools/doc-synthesis/synthesis_diff.py`). Contract:
 `docs/contracts/synthesis-handoff.md`. This file is re-synthesized, not
-hand-curated: it carries **every** module the extractor sees (150) and
-**every** import edge (210), so it can never quietly drift into a
+hand-curated: it carries **every** module the extractor sees (201) and
+**every** import edge (281), so it can never quietly drift into a
 flattering subset.
 
 ## Component inventory
@@ -26,10 +26,12 @@ flattering subset.
 - `hooks.decision_capture` — Channel A: the harness-guaranteed pm-ratified decision write
 - `hooks.design_contract_guard` — guard: a locked design contract can't be edited without an override-grant
 - `hooks.doc_consumption_guard` — guard: a build-feeding doc must be read before it is cited (S-4)
+- `hooks.due_signal` — SessionStart warn: standing-care due-signals on a closed project (reconcile due / handover missing) [why: DECISIONS.md D-0111]
 - `hooks.elicitation_journal` — journals companion clicks / hesitation as elicitation events (FR-74)
 - `hooks.foundation_gate` — Stop gate: the foundation unit's interim check passes before any downstream unit
 - `hooks.graph_freshness_guard` — guard #8: warns 'N commits behind' when the code graph is stale (never blocks)
 - `hooks.lane_close_gate` — Stop gate: a change lane closes only against a satisfied record
+- `hooks.maintainability_gate` — close-time gate: blocks (armed) or warns (warn-first) on an un-dispositioned maintainability breach; fail-open on its own faults [why: DECISIONS.md D-0119]
 - `hooks.open_risks_guard` — guard: an open risk row blocks the move it endangers absent a decision
 - `hooks.oracle_edit_guard` — guard #9: the TSOW oracle is PM-only — edits need a typed override-grant [why: DECISIONS.md D-0065]
 - `hooks.profile_guard` — guard: the profile write stays inside its declared shape
@@ -39,6 +41,7 @@ flattering subset.
 - `hooks.session_lifecycle` — session locks + heartbeat spawn + session-start/end journal
 - `hooks.setup_selfcheck` — SessionStart: verifies the friday install is wired correctly
 - `hooks.spec_write_guard` — guard: a spec / increment write must carry provenance
+- `hooks.state_advisory` — PreToolUse warn: lane×state contradictions surfaced before the write lands [why: DECISIONS.md D-0107]
 - `hooks.state_sentinel` — K-rule detector (dual-bound; identity gate in-hook)
 - `hooks.state_stop_gate` — blocks conclusion while the state record is broken
 - `hooks.substrate_ask_cleanup` — decision-ask resolution tracking + orphan sweep
@@ -61,10 +64,14 @@ flattering subset.
 - `tools.decisions` — decision-log schema / parser / monotonic-ID allocator + override-grant [why: DECISIONS.md D-0004]
 - `tools.decisions_append` — the shared append CLI, both capture channels [why: DECISIONS.md D-0007]
 - `tools.design_contract_check` — verifies a locked design contract is unedited absent a decision
+- `tools.dispatch_liveness_check` — the role-orphan + phantom-contract checker — a role file that exists must be spawned somewhere or carry a declared exception [why: DECISIONS.md D-0121]
 - `tools.doc_gate` — the document-gate family: build-feeding docs consumed + consumer-cited (S-4)
+- `tools.experiment_request` — the experiment runner's closed menu — four moves, closed key set, site-relative paths; a command is structurally unrepresentable [why: DECISIONS.md D-0122]
+- `tools.experiment_run` — the executor: does exactly the planned calls, re-checks egress per call, redacts the credential, never starts a process [why: DECISIONS.md D-0122/D-0124]
 - `tools.findings_brief_check` — findings-brief grammar gate — concrete evidence required above informational
 - `tools.foundation_check` — the foundation-unit interim-gate logic
-- `tools.friday_substrate` — single .friday writer + git-common-dir root resolution [why: DECISIONS.md D-0003]
+- `tools.friday_consent` — the PM's recorded yes for one experiment batch: fingerprint over the request's exact bytes, spent by the run it authorises [why: DECISIONS.md D-0134/D-0135]
+- `tools.friday_substrate` — sole owner of the .friday path + git-common-dir root resolution (record-owning modules write their own records) [why: DECISIONS.md D-0003/D-0135]
 - `tools.gen_command_index` — single-field -> generated README table over both lane homes, commands/*.md line-1 openers + lane-skill frontmatter, with shadow detection (escapes table-breaking chars)
 - `tools.graph_freshness_check` — computes 'N commits behind' for the code graph (guard #8 logic)
 - `tools.graph_query` — the one explore seam: routes to graphify or friday's IR, EXTRACTED-only (FR-70)
@@ -73,8 +80,12 @@ flattering subset.
 - `tools.handoff_gate` — the handoff completion gate: gates need the pm channel + restore evidence (FR-85)
 - `tools.handoff_package_check` — verifies the handoff package's required members + who-can-do tags
 - `tools.lane` — the lane-sentinel CLI (open / clear, O_EXCL atomic claim) [why: DECISIONS.md D-0023]
+- `tools.maintainability_envelope_check` — validates the judge's typed disposition envelope against its contract [why: DECISIONS.md D-0120]
+- `tools.maintainability_gate_check` — the gate's decision logic — measured breaches against the envelope's dispositions [why: DECISIONS.md D-0119]
+- `tools.maintainability_measure` — the layer-1 measurer: complexity, size, duplication against a project's declared bars [why: DECISIONS.md D-0119]
 - `tools.open_risks_check` — the open-risk-row gate logic
 - `tools.oracle_edit_check` — guard #9 logic: oracle edits need a structured override-grant
+- `tools.parked` — the PARKED ledger: single writer for deferred-idea rows and their three exit routes [why: DECISIONS.md D-0108]
 - `tools.profile_check` — validates the profile write path
 - `tools.receipt` — tree-hash receipts backstop (hooks fail open; this does not)
 - `tools.research_orphan_check` — scans docs/research/** for a `consumer:` tag on every brief (S-4)
@@ -83,8 +94,12 @@ flattering subset.
 - `tools.secret_names` — enumerates env-var NAMES only from example dotenv / source; never opens a real .env (FR-84)
 - `tools.session_heartbeat` — per-session liveness ticker; a stale ts IS the crash signal
 - `tools.skill_standard_check` — the two-kinds skill floor over skills/*/SKILL.md: FR-81 strict standard for noticing-skills, FR-2.5 lighter floor for lane-skills
+- `tools.spawn_grant_check` — every grant-binding role is dispatched un-named, so its tools list actually binds [why: DECISIONS.md D-0132]
 - `tools.spawn_telemetry` — THE spawn / accept / done telemetry primitive
 - `tools.spec_id_strip_check` — ship-gate: flags surviving FR- / US- / S-n tags on user surfaces, incl. bundled files inside lane folders via the surface-aware --skills-dir mode [why: DECISIONS.md D-0044]
+- `tools.standards_deviations` — the PM-ratified standards-deviation ledger writer [why: DECISIONS.md D-0119/D-0120]
+- `tools.state_advisory_check` — the judgement half of the state-advisory + due-signal hooks (policy: docs/contracts/state-record.md)
+- `tools.state_record` — the PROP-028 dirty bit's ONE writer: --mark stale|verified on a closed record [why: DECISIONS.md D-0106]
 - `tools.taglines` — typed tag-line grammar family, empty-case-tested
 - `tools.trail_check` — the change-trail grammar checker (FR-62 / FR-65)
 - `tools.usage_report` — journal usage-event roll-up (NFR-2 cost visibility)
@@ -101,6 +116,10 @@ flattering subset.
 - `tools.doc-index.mdparse` — exact-after-normalization heading matcher [why: DECISIONS.md D-0006]
 - `tools.doc-index.registry` — sync-on-query sqlite index (documents / decisions / actions)
 - `tools.doc-index.server` — friday-docs MCP: live-parse triad + advisory aggregates (never RAG)
+
+**tools/experiments/ — the friday-experiments MCP door (the runner's only reach)**
+
+- `tools.experiments.server` — plan/run over one batch id (plus an argument-less `status`); derives the request, the root and the run-record path from the consent record so none of them is caller-supplied. The runner is granted only `plan` and `run` — the door declares three tools, its reach is two [why: DECISIONS.md D-0134/D-0138]
 
 **tools/doc-synthesis/ — the extract -> synthesize -> diff loop**
 
@@ -120,10 +139,13 @@ flattering subset.
 
 - `tests.conftest` — pytest configuration + shared fixtures
 - `tests.guardkit` — shared guard-test harness (1 positive control + fail-open controls per blocking guard)
+- `tests.test_adopt_parity` — content pins: adopt reaches greenfield parity (D-0109/D-0149)
 - `tests.test_batch_edit` — regression pins: the batch editor's destruction cases (multi/zero-match, missing file, empty list, dry-run, nothing-written-on-refusal)
 - `tests.test_bug_001_verify_claims_stack` — regression pins: BUG-001 stack-claim verification
 - `tests.test_bug_002_bug_close_gate_pause` — regression pins: BUG-002 bug-lane arm point
 - `tests.test_bug_003_check_readme_sync` — regression pins: BUG-003 README-table sync ownership (`--check` detects, hook resplices via `--write`, D-0096)
+- `tests.test_bug_004_decision_capture_multiquestion` — regression: per-question decision capture, all answers kept (BUG-004)
+- `tests.test_capture_integrity` — regression pins: capture_integrity
 - `tests.test_committed_test_check` — regression pins: committed test check
 - `tests.test_compaction_capture` — regression pins: compaction capture doors
 - `tests.test_companion_offer` — regression pins: companion offer
@@ -131,6 +153,7 @@ flattering subset.
 - `tests.test_decisions` — regression pins: decisions
 - `tests.test_doc_gate` — regression pins: doc gate
 - `tests.test_doc_synthesis` — regression pins: doc synthesis
+- `tests.test_due_signals` — regression pins: due-signal checker modes
 - `tests.test_findings_brief_check` — regression pins: findings brief check
 - `tests.test_gen_command_index_skills` — regression pins: the skill-aware lane index (INC-002 — both lane homes, shadow detection, A8 escaping on frontmatter)
 - `tests.test_graph_query` — regression pins: graph query
@@ -147,6 +170,7 @@ flattering subset.
 - `tests.test_guard_foundation` — regression pins: guard foundation
 - `tests.test_guard_graph_freshness` — regression pins: guard graph freshness
 - `tests.test_guard_lane_close` — regression pins: guard lane close
+- `tests.test_guard_maintainability` — the maintainability gate's four fail-open fault modes
 - `tests.test_guard_open_risks` — regression pins: guard open risks
 - `tests.test_guard_oracle_edit` — regression pins: guard oracle edit
 - `tests.test_guard_profile` — regression pins: guard profile
@@ -165,12 +189,33 @@ flattering subset.
 - `tests.test_harden_fixes` — regression pins: harden fixes
 - `tests.test_hooks` — regression pins: hooks
 - `tests.test_hooks_compaction` — regression pins: compaction hooks
+- `tests.test_inc008_deviations` — the deviation ledger's grammar and its empty case
+- `tests.test_inc008_envelope` — the disposition envelope's grammar and its empty case
+- `tests.test_bug_005_increment_gate_authoring` — the increment gate fires at consumption, not at authoring [why: DECISIONS.md D-0133]
+- `tests.test_inc008_gate` — gate verdicts over measured breaches and their dispositions
+- `tests.test_inc008_maintainability_claim` — the declared-bar claim vocabulary and its well-formedness
+- `tests.test_inc008_measurer` — the three metrics the measurer really computes
+- `tests.test_inc200_coverage_channel` — the coverage ledger's verifier channel — additive, weaker-by-default
+- `tests.test_inc200_dispatch_liveness` — role-orphan and phantom-contract catches, both empty cases, and the real tree
+- `tests.test_inc200_state_advisory` — regression pins: state advisory + dirty-bit wiring
+- `tests.test_inc201_consent_record` — the consent record: unforgeable, byte-bound, one yes one run
+- `tests.test_inc201_experiments_server` — the two tools take one batch id and refuse everything else
+- `tests.test_inc201_runner_grant` — the runner's frontmatter holds no shell and no write
+- `tests.test_parked_ledger` — regression pins: parked
+- `tests.test_session_heartbeat` — regression pins: session_heartbeat
+- `tests.test_spawn_grant_check` — the un-named dispatch rule over every grant-binding role
+- `tests.test_state_record_dirty_bit` — regression pins: state_record
+- `tests.test_usage_telemetry` — regression pins: usage_telemetry
+- `tests.test_verify_review_format_dispositions` — review-format verdicts against the disposition ledger
+- `tests.test_inc200_experiment_e2e` — the end-to-end run against a deliberately-broken toy target
+- `tests.test_inc200_experiment_request` — the closed menu attacked adversarially — 14 hostile requests, all unrepresentable
 - `tests.test_lane_cli` — regression pins: lane cli
 - `tests.test_lane_open_helper` — regression pins: lane open helper
 - `tests.test_mdparse` — regression pins: mdparse
 - `tests.test_registry` — regression pins: registry
 - `tests.test_review_format_interim` — regression pins: review format interim
 - `tests.test_sanitized_mirror` — regression pins: sanitized mirror
+- `tests.test_seam_handoff` — the seam-handoff record's expiry and cross-check
 - `tests.test_secret_names` — regression pins: secret names
 - `tests.test_server` — regression pins: server
 - `tests.test_session_lifecycle` — regression pins: session-start journals the SessionStart source label (the auto-compact label trap)
@@ -192,7 +237,7 @@ Every module and import edge the extractor found, grouped by subsystem. Solid
 edges are module-level imports; `-.->|deferred|` marks a function-local import
 (the fail-open pattern — a broken dependency degrades a feature, never the
 session). The graph is dense by design (the tests/ mirror alone carries
-94 of the 210
+136 of the 281
 edges); read it through the layering below, not left-to-right.
 
 ```mermaid
@@ -211,10 +256,12 @@ graph LR
         hooks_decision_capture["hooks.decision_capture"]
         hooks_design_contract_guard["hooks.design_contract_guard"]
         hooks_doc_consumption_guard["hooks.doc_consumption_guard"]
+        hooks_due_signal["hooks.due_signal"]
         hooks_elicitation_journal["hooks.elicitation_journal"]
         hooks_foundation_gate["hooks.foundation_gate"]
         hooks_graph_freshness_guard["hooks.graph_freshness_guard"]
         hooks_lane_close_gate["hooks.lane_close_gate"]
+        hooks_maintainability_gate["hooks.maintainability_gate"]
         hooks_open_risks_guard["hooks.open_risks_guard"]
         hooks_oracle_edit_guard["hooks.oracle_edit_guard"]
         hooks_profile_guard["hooks.profile_guard"]
@@ -224,6 +271,7 @@ graph LR
         hooks_session_lifecycle["hooks.session_lifecycle"]
         hooks_setup_selfcheck["hooks.setup_selfcheck"]
         hooks_spec_write_guard["hooks.spec_write_guard"]
+        hooks_state_advisory["hooks.state_advisory"]
         hooks_state_sentinel["hooks.state_sentinel"]
         hooks_state_stop_gate["hooks.state_stop_gate"]
         hooks_substrate_ask_cleanup["hooks.substrate_ask_cleanup"]
@@ -245,9 +293,13 @@ graph LR
         tools_decisions["tools.decisions"]
         tools_decisions_append["tools.decisions_append"]
         tools_design_contract_check["tools.design_contract_check"]
+        tools_dispatch_liveness_check["tools.dispatch_liveness_check"]
         tools_doc_gate["tools.doc_gate"]
+        tools_experiment_request["tools.experiment_request"]
+        tools_experiment_run["tools.experiment_run"]
         tools_findings_brief_check["tools.findings_brief_check"]
         tools_foundation_check["tools.foundation_check"]
+        tools_friday_consent["tools.friday_consent"]
         tools_friday_substrate["tools.friday_substrate"]
         tools_gen_command_index["tools.gen_command_index"]
         tools_graph_freshness_check["tools.graph_freshness_check"]
@@ -257,8 +309,12 @@ graph LR
         tools_handoff_gate["tools.handoff_gate"]
         tools_handoff_package_check["tools.handoff_package_check"]
         tools_lane["tools.lane"]
+        tools_maintainability_envelope_check["tools.maintainability_envelope_check"]
+        tools_maintainability_gate_check["tools.maintainability_gate_check"]
+        tools_maintainability_measure["tools.maintainability_measure"]
         tools_open_risks_check["tools.open_risks_check"]
         tools_oracle_edit_check["tools.oracle_edit_check"]
+        tools_parked["tools.parked"]
         tools_profile_check["tools.profile_check"]
         tools_receipt["tools.receipt"]
         tools_research_orphan_check["tools.research_orphan_check"]
@@ -267,8 +323,12 @@ graph LR
         tools_secret_names["tools.secret_names"]
         tools_session_heartbeat["tools.session_heartbeat"]
         tools_skill_standard_check["tools.skill_standard_check"]
+        tools_spawn_grant_check["tools.spawn_grant_check"]
         tools_spawn_telemetry["tools.spawn_telemetry"]
         tools_spec_id_strip_check["tools.spec_id_strip_check"]
+        tools_standards_deviations["tools.standards_deviations"]
+        tools_state_advisory_check["tools.state_advisory_check"]
+        tools_state_record["tools.state_record"]
         tools_taglines["tools.taglines"]
         tools_trail_check["tools.trail_check"]
         tools_usage_report["tools.usage_report"]
@@ -285,6 +345,9 @@ graph LR
         tools_doc_index_registry["tools.doc-index.registry"]
         tools_doc_index_server["tools.doc-index.server"]
     end
+    subgraph sg_experiments [tools/experiments/]
+        tools_experiments_server["tools.experiments.server"]
+    end
     subgraph sg_docsyn [tools/doc-synthesis/]
         tools_doc_synthesis_extract_architecture["tools.doc-synthesis.extract_architecture"]
         tools_doc_synthesis_synthesis_diff["tools.doc-synthesis.synthesis_diff"]
@@ -299,10 +362,13 @@ graph LR
     subgraph sg_tests [tests/]
         tests_conftest["tests.conftest"]
         tests_guardkit["tests.guardkit"]
+        tests_test_adopt_parity["tests.test_adopt_parity"]
         tests_test_batch_edit["tests.test_batch_edit"]
         tests_test_bug_001_verify_claims_stack["tests.test_bug_001_verify_claims_stack"]
         tests_test_bug_002_bug_close_gate_pause["tests.test_bug_002_bug_close_gate_pause"]
         tests_test_bug_003_check_readme_sync["tests.test_bug_003_check_readme_sync"]
+        tests_test_bug_004_decision_capture_multiquestion["tests.test_bug_004_decision_capture_multiquestion"]
+        tests_test_capture_integrity["tests.test_capture_integrity"]
         tests_test_committed_test_check["tests.test_committed_test_check"]
         tests_test_compaction_capture["tests.test_compaction_capture"]
         tests_test_companion_offer["tests.test_companion_offer"]
@@ -310,6 +376,7 @@ graph LR
         tests_test_decisions["tests.test_decisions"]
         tests_test_doc_gate["tests.test_doc_gate"]
         tests_test_doc_synthesis["tests.test_doc_synthesis"]
+        tests_test_due_signals["tests.test_due_signals"]
         tests_test_findings_brief_check["tests.test_findings_brief_check"]
         tests_test_gen_command_index_skills["tests.test_gen_command_index_skills"]
         tests_test_graph_query["tests.test_graph_query"]
@@ -326,6 +393,7 @@ graph LR
         tests_test_guard_foundation["tests.test_guard_foundation"]
         tests_test_guard_graph_freshness["tests.test_guard_graph_freshness"]
         tests_test_guard_lane_close["tests.test_guard_lane_close"]
+        tests_test_guard_maintainability["tests.test_guard_maintainability"]
         tests_test_guard_open_risks["tests.test_guard_open_risks"]
         tests_test_guard_oracle_edit["tests.test_guard_oracle_edit"]
         tests_test_guard_profile["tests.test_guard_profile"]
@@ -344,12 +412,33 @@ graph LR
         tests_test_harden_fixes["tests.test_harden_fixes"]
         tests_test_hooks["tests.test_hooks"]
         tests_test_hooks_compaction["tests.test_hooks_compaction"]
+        tests_test_inc008_deviations["tests.test_inc008_deviations"]
+        tests_test_inc008_envelope["tests.test_inc008_envelope"]
+        tests_test_bug_005_increment_gate_authoring["tests.test_bug_005_increment_gate_authoring"]
+        tests_test_inc200_state_advisory["tests.test_inc200_state_advisory"]
+        tests_test_inc201_consent_record["tests.test_inc201_consent_record"]
+        tests_test_inc201_experiments_server["tests.test_inc201_experiments_server"]
+        tests_test_inc201_runner_grant["tests.test_inc201_runner_grant"]
+        tests_test_parked_ledger["tests.test_parked_ledger"]
+        tests_test_session_heartbeat["tests.test_session_heartbeat"]
+        tests_test_spawn_grant_check["tests.test_spawn_grant_check"]
+        tests_test_state_record_dirty_bit["tests.test_state_record_dirty_bit"]
+        tests_test_usage_telemetry["tests.test_usage_telemetry"]
+        tests_test_verify_review_format_dispositions["tests.test_verify_review_format_dispositions"]
+        tests_test_inc008_gate["tests.test_inc008_gate"]
+        tests_test_inc008_maintainability_claim["tests.test_inc008_maintainability_claim"]
+        tests_test_inc008_measurer["tests.test_inc008_measurer"]
+        tests_test_inc200_coverage_channel["tests.test_inc200_coverage_channel"]
+        tests_test_inc200_dispatch_liveness["tests.test_inc200_dispatch_liveness"]
+        tests_test_inc200_experiment_e2e["tests.test_inc200_experiment_e2e"]
+        tests_test_inc200_experiment_request["tests.test_inc200_experiment_request"]
         tests_test_lane_cli["tests.test_lane_cli"]
         tests_test_lane_open_helper["tests.test_lane_open_helper"]
         tests_test_mdparse["tests.test_mdparse"]
         tests_test_registry["tests.test_registry"]
         tests_test_review_format_interim["tests.test_review_format_interim"]
         tests_test_sanitized_mirror["tests.test_sanitized_mirror"]
+        tests_test_seam_handoff["tests.test_seam_handoff"]
         tests_test_secret_names["tests.test_secret_names"]
         tests_test_server["tests.test_server"]
         tests_test_session_lifecycle["tests.test_session_lifecycle"]
@@ -385,6 +474,8 @@ graph LR
     hooks_design_contract_guard --> hooks__hookutil
     hooks_doc_consumption_guard --> hooks__guard
     hooks_doc_consumption_guard --> hooks__hookutil
+    hooks_due_signal --> hooks__guard
+    hooks_due_signal --> hooks__hookutil
     hooks_elicitation_journal --> hooks__hookutil
     hooks_foundation_gate --> hooks__guard
     hooks_foundation_gate --> hooks__hookutil
@@ -392,6 +483,10 @@ graph LR
     hooks_graph_freshness_guard --> hooks__hookutil
     hooks_lane_close_gate --> hooks__guard
     hooks_lane_close_gate --> hooks__hookutil
+    hooks_maintainability_gate --> hooks__guard
+    hooks_maintainability_gate --> hooks__hookutil
+    hooks_maintainability_gate -.->|deferred| tools_maintainability_measure
+    hooks_maintainability_gate -.->|deferred| tools_verify_claims
     hooks_open_risks_guard --> hooks__guard
     hooks_open_risks_guard --> hooks__hookutil
     hooks_oracle_edit_guard --> hooks__guard
@@ -406,6 +501,8 @@ graph LR
     hooks_setup_selfcheck --> hooks__hookutil
     hooks_spec_write_guard --> hooks__guard
     hooks_spec_write_guard --> hooks__hookutil
+    hooks_state_advisory --> hooks__guard
+    hooks_state_advisory --> hooks__hookutil
     hooks_state_sentinel --> hooks__hookutil
     hooks_state_stop_gate --> hooks__hookutil
     hooks_substrate_ask_cleanup --> hooks__hookutil
@@ -424,6 +521,9 @@ graph LR
     tests_test_bug_001_verify_claims_stack --> tools_verify_claims
     tests_test_bug_002_bug_close_gate_pause --> tools_bug_close_check
     tests_test_bug_003_check_readme_sync --> tools_gen_command_index
+    tests_test_bug_004_decision_capture_multiquestion --> tools_decisions
+    tests_test_capture_integrity --> tools_capture_integrity
+    tests_test_capture_integrity --> tools_decisions
     tests_test_committed_test_check --> tools_committed_test_check
     tests_test_compaction_capture --> tools_friday_substrate
     tests_test_companion_offer --> tests_guardkit
@@ -435,6 +535,7 @@ graph LR
     tests_test_doc_gate --> tools_doc_gate
     tests_test_doc_synthesis --> tools_doc_synthesis_extract_architecture
     tests_test_doc_synthesis --> tools_doc_synthesis_synthesis_diff
+    tests_test_due_signals --> tools_state_advisory_check
     tests_test_findings_brief_check --> hooks__guard
     tests_test_findings_brief_check --> tools_findings_brief_check
     tests_test_graph_query --> tests_guardkit
@@ -462,6 +563,8 @@ graph LR
     tests_test_guard_graph_freshness --> tests_guardkit
     tests_test_guard_graph_freshness --> tools_graph_freshness_check
     tests_test_guard_lane_close --> tests_guardkit
+    tests_test_guard_maintainability -.->|deferred| hooks_maintainability_gate
+    tests_test_guard_maintainability --> tests_guardkit
     tests_test_guard_open_risks --> tests_guardkit
     tests_test_guard_open_risks --> tools_open_risks_check
     tests_test_guard_oracle_edit --> tests_guardkit
@@ -497,15 +600,61 @@ graph LR
     tests_test_hooks --> tools_decisions
     tests_test_hooks --> tools_verify_review_format
     tests_test_hooks_compaction --> tools_friday_substrate
+    tests_test_inc008_deviations --> tools_standards_deviations
+    tests_test_inc008_envelope -.->|deferred| tools_friday_substrate
+    tests_test_inc008_envelope --> tools_maintainability_envelope_check
+    tests_test_inc008_gate --> tools_maintainability_gate_check
+    tests_test_inc008_maintainability_claim --> tools_taglines
+    tests_test_inc008_maintainability_claim --> tools_verify_claims
+    tests_test_inc008_measurer --> tools_maintainability_measure
+    tests_test_inc200_coverage_channel --> tools_verify_coverage
+    tests_test_inc200_dispatch_liveness --> tools_dispatch_liveness_check
+    tests_test_inc200_experiment_e2e --> tools_experiment_request
+    tests_test_inc200_experiment_e2e --> tools_experiment_run
+    tests_test_bug_005_increment_gate_authoring --> tests_guardkit
+    tests_test_inc200_experiment_e2e --> tools_friday_consent
+    tests_test_inc200_state_advisory --> tools_state_advisory_check
+    tests_test_inc200_state_advisory --> tools_state_record
+    tests_test_inc201_consent_record --> tools_friday_consent
+    tests_test_inc201_consent_record --> tools_taglines
+    tests_test_inc201_experiments_server --> tools_experiment_run
+    tests_test_inc201_experiments_server --> tools_friday_consent
+    tests_test_parked_ledger --> tools_parked
+    tests_test_seam_handoff -.->|deferred| tools_decisions
+    tests_test_session_heartbeat --> tools_friday_substrate
+    tests_test_session_heartbeat --> tools_session_heartbeat
+    tests_test_spawn_grant_check --> tools_spawn_grant_check
+    tests_test_state_record_dirty_bit --> tools_state_record
+    tests_test_usage_telemetry --> hooks_usage_telemetry
+    tests_test_usage_telemetry --> tools_friday_substrate
+    tests_test_verify_review_format_dispositions --> tools_verify_coverage
+    tests_test_verify_review_format_dispositions --> tools_verify_review_format
+    tools_experiments_server --> tools_experiment_request
+    tools_experiments_server --> tools_experiment_run
+    tools_experiments_server --> tools_friday_consent
+    tools_experiments_server --> tools_spawn_telemetry
+    tools_friday_consent --> tools_friday_substrate
+    tools_friday_consent --> tools_taglines
+    tools_maintainability_envelope_check -.->|deferred| tools_friday_substrate
+    tools_parked --> tools_friday_substrate
+    tools_parked --> tools_taglines
+    tools_state_advisory_check --> tools_friday_substrate
+    tools_state_advisory_check --> tools_taglines
+    tools_state_record --> tools_friday_substrate
+    tools_state_record --> tools_taglines
+    tools_verify_review_format --> tools_verify_coverage
+    tests_test_inc200_experiment_request --> tools_experiment_request
     tests_test_lane_open_helper --> tools_friday_substrate
     tests_test_mdparse --> tools_doc_index_mdparse
     tests_test_registry --> tools_doc_index_registry
     tests_test_sanitized_mirror --> tools_sanitized_mirror
+    tests_test_seam_handoff --> tools_friday_substrate
+    tests_test_seam_handoff --> tools_seam_handoff
     tests_test_secret_names --> tools_secret_names
-    tests_test_server --> tools_doc_index_server
     tests_test_skill_standard_check --> tests_guardkit
     tests_test_skill_standard_check --> tools_skill_standard_check
     tests_test_spec_id_strip_bundled --> tools_spec_id_strip_check
+    tests_test_server --> tools_doc_index_server
     tests_test_batch_edit --> tools_batch_edit
     tests_test_substrate --> tools_friday_substrate
     tests_test_substrate -.->|deferred| tools_verify_spawn_coverage
@@ -543,6 +692,8 @@ graph LR
     tools_doc_synthesis_synthesis_diff -.->|deferred| tools_doc_index_mdparse
     tools_doc_gate --> tools_findings_brief_check
     tools_doc_gate --> tools_taglines
+    tools_experiment_request --> tools_taglines
+    tools_experiment_run --> tools_experiment_request
     tools_findings_brief_check --> tools_taglines
     tools_foundation_check --> tools_taglines
     tools_foundation_check --> tools_verify_claims
@@ -552,6 +703,10 @@ graph LR
     tools_handoff_attest --> tools_handoff_gate
     tools_handoff_gate --> tools_friday_substrate
     tools_lane --> tools_friday_substrate
+    tools_maintainability_envelope_check --> tools_taglines
+    tools_maintainability_gate_check --> tools_maintainability_envelope_check
+    tools_maintainability_gate_check --> tools_maintainability_measure
+    tools_maintainability_measure --> tools_taglines
     tools_open_risks_check --> tools_decisions
     tools_open_risks_check --> tools_taglines
     tools_oracle_edit_check --> tools_decisions
@@ -566,6 +721,7 @@ graph LR
     tools_seam_handoff --> tools_friday_substrate
     tools_session_heartbeat --> tools_friday_substrate
     tools_spawn_telemetry --> tools_friday_substrate
+    tools_standards_deviations --> tools_friday_substrate
     tools_trail_check --> tools_decisions
     tools_trail_check --> tools_taglines
     tools_usage_report --> tools_friday_substrate
@@ -586,11 +742,13 @@ graph LR
 
 Read bottom-up, four layers:
 
-1. **The foundation — `tools.friday_substrate`.** The single-writer invariant
-   made visible: nearly every tool edge points into it (every `.friday/` write
-   goes through one place; the worktree-shared root via the git common dir —
-   Appendix B). `tools.decisions` + `tools.taglines` sit just above it as the
-   shared record and grammar.
+1. **The foundation — `tools.friday_substrate`.** The single-*path* invariant
+   made visible: nearly every tool edge points into it (every `.friday/` path is
+   resolved in one place — the worktree-shared root via the git common dir,
+   Appendix B — and nothing hand-builds one). Modules owning a whole record type
+   write that record themselves and come here for the shared primitives (D-0135).
+   `tools.decisions` + `tools.taglines` sit just above it as the shared record
+   and grammar.
 2. **The logic core — `tools/`.** The checker/verifier family
    (`verify_*`, `*_check`, the `*_gate` logic) builds on `taglines` + `decisions`
    + the substrate. This is where every script-checked claim actually lives; the
@@ -610,4 +768,4 @@ Read bottom-up, four layers:
    supplying each blocking guard its positive control + fail-open controls.
    `.claude/hooks/` is repo CI, not shipped plugin runtime.
 
-**Last-verified:** 2026-07-24 (reconcile deep clean: BUG-003 test module back-filled into inventory + graph; synthesis_diff clean) · **Record-status:** verified
+**Last-verified:** 2026-07-29 (lab-line merge: master + vnext-adopt-O; synthesis_diff on the merged tree) · **Record-status:** verified

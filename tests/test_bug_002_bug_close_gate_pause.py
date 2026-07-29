@@ -71,6 +71,10 @@ def test_full_close_bar_still_passes(tmp_path):
     os.makedirs(os.path.join(root, "tests"), exist_ok=True)
     os.makedirs(os.path.join(root, "docs", "trails"), exist_ok=True)
     open(os.path.join(root, "tests", "test_bug_xxx.py"), "w").close()
+    # the close bar grew a third requirement (NF11): the ledger entry, flipped
+    with open(os.path.join(root, "docs", "BUGS.md"), "w", encoding="utf-8") as fh:
+        fh.write("# Bugs\n\n## BUG-XXX — fixture\n\n"
+                 "**Status:** fixed 2026-07-15 (trail docs/trails/BUG-XXX.md)\n")
     with open(os.path.join(root, "docs", "trails", "BUG-XXX.md"), "w",
               encoding="utf-8") as fh:
         fh.write("trail: lane=bug id=BUG-XXX date=2026-07-15\n\n"

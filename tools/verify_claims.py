@@ -97,6 +97,91 @@ def well_formed(claude_md_text: str) -> tuple[bool, list[str]]:
     return (not errs), errs
 
 
+# --- INC-008 FR-8.1: the maintainability claim type (additive) -------------------
+# A project declares its code-health bars as `maintainability: <metric> <= <N>[%]`
+# lines inside a FRIDAY-MAINTAINABILITY block in its coding-standards file — a
+# DIFFERENT file and block from CLAUDE.md's FRIDAY-CLAIMS, so nothing above is
+# touched (the additive-only guarantee, AC-8.3 / KH-2). THIS verifier only checks
+# WELL-FORMEDNESS (real metric, `<=`, a number); the mechanical measurer owns the
+# actual code check. Absence of the block is a VALID "no bars declared" outcome —
+# the non-adopter invariant (FR-8.13): a project that declares no bars sees zero
+# new behavior.
+MAINTAINABILITY_MARKER = "FRIDAY-MAINTAINABILITY"
+# The one per-project strictness switch (D2): `arm: block` turns the hard block
+# on; absent or `arm: warn` = disarmed (warn-first — the default). Co-homed with
+# the bars in the same block. An unknown arm value is a malformation.
+ARM_VALUES = ("block", "warn")
+
+
+def maintainability_arm(text: str) -> str:
+    """The declared arm state — 'block' if the project has armed the hard block,
+    else 'warn' (the warn-first default: absent, empty, or `arm: warn`)."""
+    lines = taglines.block_lines(text, MAINTAINABILITY_MARKER) or []
+    for ln in lines:
+        parsed = taglines.parse_typed_line(ln)
+        if parsed and parsed[0] == "arm" and parsed[1].strip() in ARM_VALUES:
+            return parsed[1].strip()
+    return "warn"
+
+
+def maintainability_bars(text: str) -> list[dict] | None:
+    """Declared bars from a coding-standards file's FRIDAY-MAINTAINABILITY block.
+
+    None when the block is ABSENT (a non-adopter — tolerated, zero change); []
+    when the block is present but EMPTY; otherwise one dict per line — a parsed
+    bar {'metric', 'limit', 'pct'} or, for a line that does not parse,
+    {'metric': None, 'raw': <line>} (a malformation the caller surfaces). The
+    absent-vs-empty distinction mirrors taglines.block_lines and must not be
+    conflated."""
+    lines = taglines.block_lines(text, MAINTAINABILITY_MARKER)
+    if lines is None:
+        return None
+    bars = []
+    for ln in lines:
+        if ln.startswith("<!--"):
+            continue
+        parsed = taglines.parse_typed_line(ln)
+        if parsed and parsed[0] == "arm":
+            continue  # the arm switch is not a bar — validated separately
+        if parsed and parsed[0] == "maintainability":
+            bar = taglines.parse_maintainability_bar(parsed[1])
+            bars.append(bar if bar else {"metric": None, "raw": ln})
+        else:
+            bars.append({"metric": None, "raw": ln})
+    return bars
+
+
+def well_formed_maintainability(text: str) -> tuple[bool, list[str]]:
+    """Well-formedness of a coding-standards file's maintainability declaration.
+
+    ABSENCE is valid (no bars declared — the non-adopter, zero-change case), so a
+    file with no block returns (True, []). A present block's every line must be a
+    `maintainability: <metric> <= <N>[%]` over the closed metric vocabulary, and
+    each metric may appear at most once (one bar per metric — a duplicate is
+    ambiguous). Returns (ok, errors)."""
+    bars = maintainability_bars(text)
+    if bars is None:            # no block — a project may legitimately declare none
+        return True, []
+    errs: list[str] = []
+    # An `arm:` line, if present, must carry a known value.
+    for ln in (taglines.block_lines(text, MAINTAINABILITY_MARKER) or []):
+        parsed = taglines.parse_typed_line(ln)
+        if parsed and parsed[0] == "arm" and parsed[1].strip() not in ARM_VALUES:
+            errs.append(f"unknown arm value {parsed[1].strip()!r} — must be one of "
+                        f"{'|'.join(ARM_VALUES)}")
+    seen: set[str] = set()
+    for b in bars:
+        if b.get("metric") is None:
+            errs.append(f"unparseable maintainability bar: {b['raw']!r} — "
+                        f"expected `maintainability: <metric> <= <N>[%]` over "
+                        f"{'|'.join(taglines.MAINTAINABILITY_METRICS)}")
+            continue
+        if b["metric"] in seen:
+            errs.append(f"duplicate bar for metric {b['metric']!r} — one bar per metric")
+        seen.add(b["metric"])
+    return (not errs), errs
+
+
 # --- ground-truth lookups (string-mechanical) ------------------------------------
 
 def _manifest_texts(root: str) -> dict[str, str]:
@@ -326,8 +411,25 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--root", default=".")
     ap.add_argument("--all", action="store_true", help="check every claim (default)")
+    ap.add_argument("--maintainability", metavar="CODING_STANDARDS",
+                    help="check the FRIDAY-MAINTAINABILITY block of a coding-standards "
+                         "file for well-formedness (INC-008 FR-8.1) — additive, "
+                         "independent of the CLAUDE.md FRIDAY-CLAIMS check")
     ap.add_argument("--json", action="store_true")
     args = ap.parse_args(argv)
+    if args.maintainability:
+        try:
+            with open(args.maintainability, encoding="utf-8") as fh:
+                text = fh.read()
+        except OSError as exc:
+            print(f"verify_claims: {exc}", file=sys.stderr)
+            return 2
+        ok, errs = well_formed_maintainability(text)
+        res = {"ok": ok, "errors": errs,
+               "summary": ("maintainability bars well-formed" if ok
+                           else f"{len(errs)} malformed maintainability bar(s)")}
+        print(json.dumps(res) if args.json else res["summary"])
+        return 0 if ok else 1
     if not os.path.isdir(args.root):
         print(f"verify_claims: no such dir: {args.root}", file=sys.stderr)
         return 2

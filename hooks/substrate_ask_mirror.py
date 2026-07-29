@@ -16,6 +16,8 @@ substrate_ask_cleanup.py retires the mirror on resolution;
 decision_capture.py (Channel A) fires the DECISIONS.md write when — and only
 when — the ask carries the narrow [FRIDAY-DECISION] shape.
 """
+# Contract: docs/contracts/decision-capture.md — the ask grammar this mirror
+# recognizes is owned there, cited on both sides of the handoff (A14).
 from __future__ import annotations
 
 import contextlib

@@ -35,12 +35,21 @@ changelog: fixed the empty-input crash
 INVALID_TRAIL = "trail: lane=bug id=BUG-1 date=2026-07-14\n\n## Asked\nx\n"
 
 
+FIXED_LEDGER = ("# Bugs — proj\n\n## BUG-1 — the parser crashed on empty input\n\n"
+                "**Status:** fixed 2026-07-14 (trail docs/trails/BUG-1.md)\n")
+OPEN_LEDGER = ("# Bugs — proj\n\n## BUG-1 — the parser crashed on empty input\n\n"
+               "**Status:** open\n")
+
+
 def _proj(tmp_path, *, trail=VALID_TRAIL, regression_test="tests/test_bug1.py",
-         write_regression_test=True, sentinel_lane="bug", sentinel_body=None):
+         write_regression_test=True, sentinel_lane="bug", sentinel_body=None,
+         bugs_md=FIXED_LEDGER):
     root = tmp_path / "proj"
     (root / "docs" / "trails").mkdir(parents=True)
     (root / "tests").mkdir()
     (root / "docs" / "DECISIONS.md").write_text("# Decisions — proj\n", encoding="utf-8")
+    if bugs_md is not None:
+        (root / "docs" / "BUGS.md").write_text(bugs_md, encoding="utf-8")
     if trail is not None:
         (root / "docs" / "trails" / "BUG-1.md").write_text(trail, encoding="utf-8")
     if write_regression_test and regression_test:
@@ -105,6 +114,29 @@ def test_unreadable_sentinel_is_no_verdict(tmp_path):
     proj = _proj(tmp_path, sentinel_body="not json {{{")
     res = bcc.check(str(proj), _sentinel_path(proj))
     assert res["verdict"] == "no-verdict"
+
+
+# --- the ledger Status flip (journey audit NF11) --------------------------------
+
+def test_ledger_status_still_open_is_valid_fail(tmp_path):
+    # A bug must not close while the dedup ledger still calls it open.
+    proj = _proj(tmp_path, bugs_md=OPEN_LEDGER)
+    res = bcc.check(str(proj), _sentinel_path(proj))
+    assert res["verdict"] == "valid-fail"
+    assert "open" in res["summary"].lower()
+
+
+def test_ledger_entry_missing_is_valid_fail(tmp_path):
+    proj = _proj(tmp_path, bugs_md="# Bugs — proj\n\n## BUG-9 — other\n\n**Status:** open\n")
+    res = bcc.check(str(proj), _sentinel_path(proj))
+    assert res["verdict"] == "valid-fail"
+    assert "BUG-1" in res["summary"]
+
+
+def test_ledger_file_missing_is_valid_fail(tmp_path):
+    proj = _proj(tmp_path, bugs_md=None)
+    res = bcc.check(str(proj), _sentinel_path(proj))
+    assert res["verdict"] == "valid-fail"
 
 
 # --- the hook: 5-test blocking pattern ------------------------------------------

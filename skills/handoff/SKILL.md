@@ -21,10 +21,10 @@ Handing a client a record that lies about itself defeats the point. Before compi
 
 ### 2. Gather the record + consult the experts
 
-The package is assembled from records and experts friday already has — never invented. Read: the intake brief (`docs/contracts/intake-brief.md` — the ownership/keys and client-tier source), the reference set (`docs/architecture/` arc42), `docs/DECISIONS.md` (the "why", to be rewritten client-plain), and the requirement-coverage ledger (the "promised and proven" list). Spawn the two operations experts (models named; telemetry via `spawn_telemetry.py`):
+The package is assembled from records and experts friday already has — never invented. Read: the intake brief (`docs/contracts/intake-brief.md` — the ownership/keys and client-tier source), the reference set (`docs/architecture/` arc42), `docs/DECISIONS.md` (the "why", to be rewritten client-plain), and the requirement-coverage ledger (the "promised and proven" list). Spawn the two operations experts (models named; telemetry via `spawn_telemetry.py`; each spawn message carries the `friday-docs: available` stamp — or a plain-Read pointer to `${CLAUDE_PLUGIN_ROOT}/docs/teammate-contract.md` — and the explicit Read list):
 
 - **`friday-operations`** (model: **sonnet**, `--phase handoff:ops`): a **short, practical runbook — "when X breaks, do Y", never a fat incident manual** — deploy, backups with a **demonstrated restore** (the evidence the restore gate needs), monitoring that is actually watching, and the maintenance schedule (what / cadence / owner / last-done).
-- **`friday-running-cost`** (model: **sonnet**, `--phase handoff:cost`): the plain monthly figure for keeping it running.
+- **`friday-running-cost`** (model: **sonnet**, `--phase handoff:cost`): the plain monthly figure for keeping it running — **grounded in `docs/ops/cost-projection.md`** where one exists (written at stack confirmation, INC-200; cited by name so the owner's figure traces to what was projected before the money was committed, and any drift from it is stated rather than silently replaced). No projection on disk means the figure is derived here from scratch and says so.
 
 ### 3. Build the ownership inventory — names and purposes, never a value (D-0056/D-0057)
 

@@ -8,7 +8,7 @@ friday-lane: true
 
 You are the lead running `/friday:brainstorm` — heavy-front discovery: interrogate the PM's idea via the grilling protocol and author the TSOW (the crown jewel).
 
-Spawn the Brainstormer (`friday:bootstrap:friday-brainstormer`, model: **opus** — decision-density → expensive role; name the model explicitly, never inherit) and relay between it and the PM. Emit telemetry at dispatch/first-response/completion via the single primitive: `python3 "${CLAUDE_PLUGIN_ROOT}/tools/spawn_telemetry.py" --emit spawn|accept|done --agent friday-brainstormer --phase brainstorm:discovery`.
+Spawn the Brainstormer (`friday-brainstormer`, model: **opus** — decision-density → expensive role; name the model explicitly, never inherit) and relay between it and the PM. Its spawn message carries the `friday-docs: available` stamp (or a plain-Read pointer to `${CLAUDE_PLUGIN_ROOT}/docs/teammate-contract.md`; § Bootstrap Relay Protocol binds the dialog) and the explicit Read list (project `CLAUDE.md` reaches ZERO subagents). Emit telemetry at dispatch/first-response/completion via the single primitive: `python3 "${CLAUDE_PLUGIN_ROOT}/tools/spawn_telemetry.py" --emit spawn|accept|done --agent friday-brainstormer --phase brainstorm:discovery`.
 
 ### The grilling protocol (binding on the Brainstormer)
 
@@ -31,4 +31,4 @@ Every PM-facing artifact is calibrated to the PM's Audience / Learning-Preferenc
 
 ### Post-write gate
 
-A self-QA pass against this checklist, then a **second PM read of the actual written file** — never report done off approved-content-plus-a-blind-write. Then route to `/friday:init` (substrate seeding). The TSOW is never rewritten by the build it governs.
+A self-QA pass against this checklist, then a **second PM read of the actual written file** — never report done off approved-content-plus-a-blind-write. On the PM's acceptance, stamp the approval into the state record: write the FRIDAY-STATE block — `state: tsow-approved` · `tsow: docs/TECHNICAL_SOW.md` · `since: <now>` — creating a stub `CLAUDE.md` holding only that block if none exists yet (contract: `docs/contracts/state-record.md`, D-0105; a crash between this approval and substrate seeding is now classifiable, and `/friday:resume` routes it back to init). Then route to `/friday:init` (substrate seeding). The TSOW is never rewritten by the build it governs.

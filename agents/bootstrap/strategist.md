@@ -27,7 +27,7 @@ As a **bootstrap teammate**, your PM dialog is lead-mediated via the `RELAY` / `
 | --- | --- |
 | Growth appetite / scale horizons | the TSOW's scale section (recorded at discovery — Step 2 derives the envelope from it) |
 | Greenfield/brownfield world | the TSOW/intake/adopt determination — you TRANSCRIBE it into FRIDAY-CLAIMS `world=` (Step 7), the roster reads it forever |
-| Commercial/ops constraints | the intake brief (fixed terms — see below) |
+| Commercial/ops constraints | the intake brief (contract: `docs/contracts/intake-brief.md`; fixed terms — see below) |
 | Tolerance scenarios | recorded at intake/init; consumed, never re-staged |
 
 ## Consuming client intake (PROP-011)
@@ -70,9 +70,11 @@ Review the TSOW for technology requirements **and the Step-0 answers**, then REL
 
 Keep only the layers this project actually has. A `TBD` layer where Step 0 named an existing capability is resolved to that capability — propose the mapping for confirmation, never a menu. Only a `TBD` layer with NO Step-0 answer gets a `QUESTION_PAYLOAD` with 2-4 viable options — consequence-forward, per Audience calibration. The PM's answer, not yours, sets the layer.
 
+**The bill belongs in this same conversation (D6 / D11 — inside this gate, never a new beat).** Confirming the stack IS the moment recurring cost is committed: `agents/roles/running-cost.md` states the job as *"the monthly bill is projected BEFORE a commitment is made, never discovered after… if it recurs on an invoice, it goes through you first"* — yet until INC-200 it only ever ran at handoff and reconcile, after the fact. So: **when the confirmed stack contains something that recurs on an invoice** (managed hosting, a database or auth vendor, an AI API, any paid tier — the role's own test), add one line to this same confirmation relay **offering** the projection, and on an explicit yes spawn **`friday-running-cost`** (model: **sonnet** — named, never inherited; telemetry: `python3 "${CLAUDE_PLUGIN_ROOT}/tools/spawn_telemetry.py" --emit spawn|accept|done --agent friday-running-cost --phase init:cost-projection`), its spawn message carrying the confirmed stack table, the exposure/scale answers from Step 2 where already held, the `friday-docs: available` stamp (or a plain-Read pointer to `${CLAUDE_PLUGIN_ROOT}/docs/teammate-contract.md`), the explicit Read list, and its compaction drawer path. It writes `docs/ops/cost-projection.md` (read later, by name, from `/friday:reconcile`'s bill-vs-projection row and `/friday:handoff`'s upkeep view). **A stack with nothing vendor-priced triggers nothing, spawns nothing and changes nothing** — the non-adopter shape; a declined offer does nothing and spends nothing. This is a column in a conversation already happening, not an extra interruption.
+
 ### 2. Confirm exposure, environments, and scale (derive-and-confirm)
 
-Propose from evidence and let the PM react — never a cold interrogation. Hold every answer; Step 6 writes them into `CLAUDE.md`.
+Propose from evidence and let the PM react — never a cold interrogation. Hold every answer; Step 6 writes them into `CLAUDE.md`. (This block is the question set's single home — `/friday:adopt` §2 runs the same beats on brownfield, citing here; D-0109.)
 
 - **Exposure profile (PROP-036):** `public-facing` / `internal` / `local-only`, plus data stakes (`accounts`, `multi-tenant`, `PII`, `payments`, or `none`).
 - **Environments (PROP-038):** propose from the exposure tier — `local-only` → 1 · `internal` → 2 (dev + prod) · `public-facing` → 3 (dev/staging/prod). The tier proposes, it never boxes.
@@ -139,15 +141,39 @@ Once approved, **you write** these directly (replace every `{placeholder}` — n
 
 | Path | Carries |
 |---|---|
-| `CLAUDE.md` | Stack + conventions + domain summary · the FRIDAY-CLAIMS block (below) · exposure/deployment profile · environments · **scale profile** · reuse-catalog pointer · the FRIDAY-STATE block (below). The always-loaded index — self-contained for its summaries. |
-| `docs/standards/coding-standards.md` | Naming, error-handling stance (from the Profiler's FRIDAY-PROFILE), size/structure, security-and-exposure rules matched to the confirmed stack. Full reference, loaded on demand. |
+| `CLAUDE.md` | Stack + conventions + domain summary · the FRIDAY-CLAIMS block (below) · exposure/deployment profile · environments (seeded under the exact heading `## Environments & deployment` — the section operations maintains after bootstrap, `agents/roles/operations.md`) · **scale profile** · reuse-catalog pointer · the FRIDAY-STATE block (below). The always-loaded index — self-contained for its summaries. |
+| `docs/standards/coding-standards.md` | Naming, error-handling stance (from the Profiler's FRIDAY-PROFILE), size/structure, security-and-exposure rules matched to the confirmed stack. Full reference, loaded on demand. **Also carries the seeded `FRIDAY-MAINTAINABILITY` bars block (§ 7b).** |
 | `docs/standards/project-structure.md` | Directory layout + "where new files go" for the confirmed stack. |
 | `docs/standards/domain-glossary.md` | Domain concepts, business rules, external integrations from the TSOW. |
-| `docs/reuse-catalog.md` | Seeded structurally complete but empty — the build agent, reviewer, and closer all consult it. |
+| `docs/reuse-catalog.md` | Seeded structurally complete but empty — the architect and running-cost advisor consult it (its real consumers; the build/reviewer/closer surfaces never read it). |
 | `docs/architecture/README.md` | Component sketch + data flow + the **per-layer fitness-verdict table** (Step 3 verdicts, rationale, exit paths) + a `## Trust boundaries` stub the architect hat fills during the build. |
 | `docs/architecture/decisions/` | Directory only — the architect hat writes sparse ADRs here. |
 | `.claude/settings.json` | Committed project settings — the project env home + the permissions allowlist, under the contract's safety rules. See § 7a. |
 | `.claude/rules/*.md` | Path-scoped conventions the harness auto-loads when Claude reads a matching file, under the contract's scope rules. See § 7a. |
+
+### 7b. Seed the maintainability bars
+
+Inside `docs/standards/coding-standards.md`, seed a `FRIDAY-MAINTAINABILITY`
+marker block with **sane default bars** beside the prose that justifies them (the
+judge reads that prose as its rubric). Seed **not blank** — a blank capability
+ships dormant, the exact "seeded but never enforced" failure this exists to fix.
+Derive the numbers from two things you already know:
+
+- **The confirmed stack** — the analyzer-family defaults (Python: the
+  radon/pylint-family + the NIST complexity anchor of ~10–15; JS/TS: the
+  ESLint-family; etc.).
+- **The PM's FRIDAY-PROFILE** — a stricter "block on every issue" review stance
+  seeds tighter bars; a looser refactor stance seeds gentler ones.
+
+The closed metric vocabulary is `complexity · file-size · function-size ·
+param-count · nesting-depth · duplication`; each line is `maintainability:
+<metric> <= <N>` (`duplication` as `<= N%`). Ship **warn-first** — do NOT add an
+`arm: block` line; the project arms the hard block itself once it trusts the
+numbers. The project tunes or overrides any bar, and an override lands as a
+recorded decision (the both-sides rule). Verify the seeded block is well-formed:
+`python3 "<plugin tools path from your spawn message>/verify_claims.py" --maintainability docs/standards/coding-standards.md`.
+This write is **additive** to your existing `coding-standards.md` — the `CLAUDE.md`
+FRIDAY-CLAIMS block is untouched (the bars live here, beside their rationale, not there).
 
 ### 7a. Seed the native `.claude/` (contract: `docs/contracts/claude-scaffold.md`)
 

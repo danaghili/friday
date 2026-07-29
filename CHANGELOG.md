@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.6.0 — maintainability standards, the sandboxed experiment runner, seam closes
+
+The first post-release update: the two lab lines merged and re-curated
+through the standing release recipe.
+
+- **Per-project maintainability standards (INC-8):** a written, per-project
+  code-health rubric with stdlib measurers (complexity / size / duplication),
+  the maintainability-judge role bounded to the measured breach set, a typed
+  envelope + deviations ledger with dangerous-file floors, and a warn-first
+  Stop-gate hook.
+- **Structural-seam closes (INC-200):** the build→harden→close chain is
+  dispatch-live (harden model-invocable, the closer auto-chained off harden's
+  approving verdict), `tsow-approved` wired into state, ops and running-cost
+  routes made real spawns at their named moments, state advisories and due
+  signals, and the experiment request/consent contracts.
+- **Sandboxed experiment runner (INC-201):** the runner loses the shell; its
+  executor becomes a tool it is granted via the new `friday-experiments` MCP
+  server — a four-move closed request grammar, consent records, and an
+  end-to-end-tested request→run→report loop.
+- Code map regenerated (196 modules, 280 edges); 959 tests green on the
+  public tree.
+
 ## 0.5.0 — vnext (replace-in-place rebuild)
 
 The ceremony-relocation rebuild: heavy front · light middle · synthesized

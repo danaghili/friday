@@ -75,6 +75,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import taglines  # noqa: E402
+import verify_coverage  # noqa: E402
 
 # --- FRIDAY-REVIEW grammar ---------------------------------------------------
 VERDICTS = ("approved", "approved-with-minors", "changes-required")
@@ -90,10 +91,16 @@ GATE_VALUES = {"suite": ("pass", "fail"),
                "migration": ("pass", "n/a")}
 GATE_REQUIRED = ("suite", "build", "migration")  # each exactly once
 
-# --- FRIDAY-DISPOSITIONS grammar (mirrors tools/verify_coverage.py, incl.
-# dotted increment IDs like FR-1.1 — the two regexes move together) ----------
-_DISPO_RE = re.compile(
-    r"^((?:FR|NFR|AC|S)-\d+(?:\.\d+)?)\s+(implemented|deferred)\s+—\s+(.+)$")
+# --- FRIDAY-DISPOSITIONS grammar ---------------------------------------------
+# ONE home for the pattern (found drifted during the INC-200 independent
+# hardening pass: this file used to carry its own hand-copied regex, and
+# verify_coverage.py's FR-200.10 widening — the optional `(verifier)` group,
+# `independently-tested` | `lead-authored` — updated only that copy. A
+# comment saying "the two regexes move together" is not a mechanism; importing
+# the real one is. Reusing verify_coverage.py's `_DISPO_RE` directly makes the
+# two grammars structurally identical rather than textually-duplicated-and-
+# hopefully-synced, so this class of drift cannot recur.
+_DISPO_RE = verify_coverage._DISPO_RE
 
 # The verdict families this directory holds, in declaration-precedence order.
 FAMILIES = ("FRIDAY-REVIEW", "FRIDAY-RELEASE-GATE", "FRIDAY-DISPOSITIONS")

@@ -5,10 +5,19 @@ TECHNICAL_SOW_REBUILD FR-55 guard #2; D-0018 event mapping).
 Thin per the skeleton doctrine: read event → run_checker → decide → emit.
 No new checker — tools/doc_gate.py IS the judgment, dispatched by path:
 `docs/TECHNICAL_SOW*.md` → --kind spec; `docs/increments/*.md` → --kind
-increment --parent <wroot>/docs/TECHNICAL_SOW.md (increments always mint
-against the MAIN oracle, per skills/feature/SKILL.md — never the rebuild
-oracle). Any other path is untouched — this guard does not re-derive what
+increment. Any other path is untouched — this guard does not re-derive what
 counts as a spec, doc_gate already owns that.
+
+**Why no `--parent` on the increment path (BUG-005).** It used to pass one,
+which made doc_gate demand the parent's `## Increments` pointer. That pointer
+is written at PM APPROVAL — D-0121/D-0076 refuse it earlier — while this guard
+fires on the WRITE. The gate therefore ran only at the moment it could not
+pass, so every increment ever authored had to be waved through by hand: a gate
+that read as enforcing and in practice was ignored. Worse, this guard was
+doc_gate's only live increment caller, so the pointer clause never once ran at
+the moment its own error text names ("cannot feed a build"). The requirement
+moved to consumption, keyed on dispositions — the build's own artifact, so no
+prose is involved (tests/test_bug_005_increment_gate_authoring.py).
 
 Fires AFTER the write (PostToolUse), so the document already exists on disk
 at the reported path; doc_gate reads it directly. Engages only in a friday
@@ -54,9 +63,20 @@ def main() -> int:
             argv = [sys.executable, checker, "--kind", "spec", "--file", path]
             what = f"this write to {path} — a spec document"
         elif fnmatch.fnmatch(rel, _INCREMENT_GLOB):
-            parent = os.path.join(wroot, "docs", "TECHNICAL_SOW.md")
+            # NO --parent here, deliberately (BUG-005). Passing it makes
+            # doc_gate require the TSOW `## Increments` pointer, and that
+            # pointer is an APPROVAL-time artifact: D-0121/D-0076 refuse it
+            # before the PM approves, and every live pointer carries an
+            # "(approved <date>)" stamp. This guard fires on the WRITE, so
+            # requiring it here meant the gate could never pass at the only
+            # moment it ran — every increment ever authored was waved through
+            # by hand. The pointer requirement now lives where doc_gate's own
+            # --help says it belongs, at consumption: an increment whose IDs
+            # carry dispositions must be pointer-linked
+            # (tests/test_bug_005_increment_gate_authoring.py). Everything
+            # else about the increment is still judged right here.
             argv = [sys.executable, checker, "--kind", "increment",
-                    "--file", path, "--parent", parent]
+                    "--file", path]
             what = f"this write to {path} — an increment document"
         else:
             return 0

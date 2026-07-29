@@ -36,8 +36,19 @@ import taglines  # noqa: E402
 
 _ANCHORED_ID_RE = re.compile(
     r"(?:^\s*[|\-*]\s*\**|\*\*)((?:FR|NFR|AC|S)-\d+(?:\.\d+)?)\b", re.M)
+# INC-200 FR-200.10 — the verifier channel, ADDITIVE (KH-2: this tool gates
+# requirement closure for every project, so the widening adds an OPTIONAL group
+# and changes no existing verdict). An unmarked line — all 265 lines written
+# before this — parses as `lead-authored`, the WEAKER value: omission can never
+# produce the stronger reading (AC-200.10), which is what makes the record
+# honest without rewriting history. Same two-channel shape DECISIONS.md
+# (pm-ratified/model-autonomous) and STANDARDS-DEVIATIONS.md already use.
+VERIFIER_CHANNELS = ("independently-tested", "lead-authored")
+DEFAULT_VERIFIER = "lead-authored"
+
 _DISPO_RE = re.compile(
-    r"^((?:FR|NFR|AC|S)-\d+(?:\.\d+)?)\s+(implemented|deferred)\s+—\s+(.+)$")
+    r"^((?:FR|NFR|AC|S)-\d+(?:\.\d+)?)\s+(implemented|deferred)"
+    r"(?:\s+\(([a-z-]+)\))?\s+—\s+(.+)$")
 
 # A2 (harden): a `deferred` disposition must cite a pm-ratified decision (D-NNNN) —
 # a model-authored deferral with only a reason string is a gap, not a closure.
@@ -71,9 +82,19 @@ def parse_ledger(text: str) -> tuple[dict[str, dict], list[str]]:
         m = _DISPO_RE.match(parsed[1])
         if not m:
             errors.append(f"disposition does not parse (need '<ID> "
-                          f"implemented|deferred — <note>'): {parsed[1]!r}")
+                          f"implemented|deferred [(verifier)] — <note>'): "
+                          f"{parsed[1]!r}")
             continue
-        out[m.group(1)] = {"state": m.group(2), "note": m.group(3)}
+        verifier = m.group(3) or DEFAULT_VERIFIER
+        if verifier not in VERIFIER_CHANNELS:
+            # Surfaced, never silently dropped — and it still reads as the
+            # WEAKER channel while it is wrong (AC-200.10).
+            errors.append(f"unknown verifier channel {m.group(3)!r} on "
+                          f"{m.group(1)} (known: "
+                          f"{'|'.join(VERIFIER_CHANNELS)})")
+            verifier = DEFAULT_VERIFIER
+        out[m.group(1)] = {"state": m.group(2), "note": m.group(4),
+                           "verifier": verifier}
     return out, errors
 
 

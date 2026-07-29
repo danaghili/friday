@@ -9,6 +9,10 @@ discovery and the strategist (FR-38 — the brief feeds both directly),
 package — `docs/contracts/handoff-package.md`). Both sides cite THIS file;
 neither invents its own shape.
 
+**Where it lives (D-0115):** the approved brief is written to
+`docs/intake/intake-output.md` — the path init Stage 0 reads. One named path
+on both sides; the seam never depends on a filename guess.
+
 ## The shape
 
 ```

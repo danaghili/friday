@@ -47,7 +47,7 @@ are and what to run next.**
 | `/friday:feature` | run when the PM asks for new scope on a delivered project — a scaled mini one-shot |
 | `/friday:feedback` | the free-form front door for anything the PM noticed — understand first, then route |
 | `/friday:handoff` | run when a client-ownership handover package is due — written for a non-technical owner |
-| `/friday:harden` | post-build independent hardening — the one review ceremony after the build completes |
+| `/friday:harden` | run when a completed build needs its independent hardening pass — the one review ceremony |
 | `/friday:help` | run when the PM asks what friday can do or where they are — the generated command index |
 | `/friday:init` | the discovery front door — profile → TSOW → front-loaded UX → substrate seeding |
 | `/friday:intake` | run when client work arrives — capture the client's world before discovery begins |

@@ -10,9 +10,12 @@ never the session's history (fold resolved, already-logged decisions OUT; a
 dispatch describes one unit of work).
 
 Writes `<shared .friday>/seam-handoff.md` and journals a `state-transition`
-event with `data: {"seam": true}`.
+event with `data: {"seam": true}`. `--clear` removes a stale brief through
+this same single writer (journey audit NF13 — resume must never resume from
+a seam the work outlived), journaling `{"seam": "cleared", "reason": ...}`.
 
 Usage: python3 tools/seam_handoff.py --root . [--next "<one-line next-unit goal>"]
+       python3 tools/seam_handoff.py --root . --clear [--reason "<why>"]
 """
 from __future__ import annotations
 
@@ -79,11 +82,26 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--root", default=".")
     ap.add_argument("--next", dest="next_goal", default=None)
+    ap.add_argument("--clear", action="store_true",
+                    help="remove a stale brief (single-writer path; journals why)")
+    ap.add_argument("--reason", default=None,
+                    help="with --clear: why the brief is being cleared")
     args = ap.parse_args(argv)
     root = os.path.abspath(args.root)
     if not fs.should_engage(root):
         print("seam_handoff: not a friday project", file=sys.stderr)
         return 2
+    if args.clear:
+        out = os.path.join(fs.friday_dir(root), "seam-handoff.md")
+        if not os.path.isfile(out):
+            print("seam_handoff: no brief to clear")
+            return 0
+        os.remove(out)
+        fs.append_journal_line(root, fs.build_journal_line(
+            "state-transition", "build:seam", by="lead",
+            data={"seam": "cleared", "reason": args.reason or "unspecified"}))
+        print(f"seam_handoff: cleared {out}")
+        return 0
     brief = assemble(root, args.next_goal)
     out = os.path.join(fs.friday_dir(root), "seam-handoff.md")
     os.makedirs(os.path.dirname(out), exist_ok=True)

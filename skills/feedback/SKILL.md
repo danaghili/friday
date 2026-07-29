@@ -11,7 +11,7 @@ A PM who already knows what they have skips this door and types the lane directl
 
 ### Phase 1: Take the observation as typed
 
-Read `$ARGUMENTS` — the PM's own words are the intake. No taxonomy, no form, no "what kind of feedback is this?" question. If `$ARGUMENTS` is empty, ask exactly one open question: *"What did you notice? Tell me in your own words — what you saw and what you'd have wanted instead."*
+Read `$ARGUMENTS` — the PM's own words are the intake. When this lane was entered through a watcher's confirmed offer (noticing-something-off), the observation the PM already voiced IS the intake, carried forward verbatim — never re-ask what was just said (the rebuild spec's carry-the-conversation rule). No taxonomy, no form, no "what kind of feedback is this?" question. Only if BOTH are empty — a bare typed `/friday:feedback` with no prior observation — ask exactly one open question: *"What did you notice? Tell me in your own words — what you saw and what you'd have wanted instead."*
 
 Mint `FB-NNN` (next number by grepping `docs/feedback-log.md`; create the file with an H1 if absent — growing-log discipline from day one: cap 100, archive the oldest half to `docs/feedback/archive-NNN.md`; entries move, never vanish).
 
@@ -46,13 +46,15 @@ The PM confirms before anything moves — you route, you never fix. On confirm, 
 
 ```
 ## FB-NNN — <one-line summary>
-outcome: routed-bug | routed-patch | routed-feature
-routed-to: <BUG-NNN | PATCH-NNN | the /friday:feature run>
+outcome: routed-bug | routed-patch | routed-feature | parked
+routed-to: <BUG-NNN | PATCH-NNN | the /friday:feature run | PARK-NNN>
 reason: <why this lane, one plain sentence>
 date: <ISO-8601>
 ```
 
 **A "no" is also an outcome.** When the answer is that nothing will change, the decline is typed and recorded with its reason — `outcome: wont-fix` (the PM's choice, with their reason), `outcome: works-as-intended` (cites the decision or spec line), or `outcome: duplicate-of` (names the FB/BUG it duplicates). Recorded knowledge, not a brush-off.
+
+**"Good idea, not now" is neither a route nor a no — it parks (D-0108).** When the PM wants it but not yet, record `outcome: parked` and put it in the waiting room with the condition that brings it back: `python3 "${CLAUDE_PLUGIN_ROOT}/tools/parked.py" append --root . --source feedback --what "<the idea, their words>" --revisit-when "<what makes it timely>"` — the printed `PARK-NNN` goes in `routed-to:`. Reconcile's §5 roundup re-presents every parked entry for a fresh call, which is the whole difference between parked and `wont-fix` (contract: `docs/contracts/parked-ledger.md`). On the PM's word only — parking is their choice, never a polite decline.
 
 ### What you never do
 

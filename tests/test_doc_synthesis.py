@@ -52,7 +52,7 @@ def test_zero_module_empty_case(tmp_path):
     (tmp_path / "empty").mkdir()
     ir = xa.extract(str(tmp_path), src_dirs=["empty"])
     for key in ("modules", "edges", "routes", "config_surface", "data_models",
-                "deploy_topology"):
+                "deploy_topology", "ambiguous_imports"):
         assert ir[key] == []
     assert ir["generated-empty"] is True
     # every downstream consumer accepts the zero-module input:
@@ -126,6 +126,90 @@ def test_diff_flags_uncaptured_why(tmp_path):
     res = sd.diff(ir, SYNTH_OK, decisions_entries=[])
     assert any(f["kind"] == "uncaptured-why" for f in res["findings"])
     assert res["ok"]  # informational, not blocking — honesty, not a gate
+
+
+# --- task #41: same-named modules make a bare import ambiguous — surfaced, never ------
+# --- silently dropped, and the oracle stops punishing truth it cannot see -------------
+
+def _seed_ambiguous(tmp_path):
+    """Two subpackages each holding a server.py, one consumer bare-importing
+    `server` — the INC-201 shape: the name resolved fine for eight increments,
+    then a second same-named file appeared and the edge silently vanished."""
+    for sub in ("pkga", "pkgb"):
+        d = tmp_path / "svc" / sub
+        d.mkdir(parents=True)
+        (d / "server.py").write_text("X = 1\n", encoding="utf-8")
+    (tmp_path / "svc" / "consumer.py").write_text("import server\n",
+                                                  encoding="utf-8")
+    return tmp_path
+
+
+def test_ambiguous_bare_import_is_recorded_not_silently_dropped(tmp_path):
+    """Live failure 2026-07-29: tests/test_server.py's `import server` lost its
+    real edge the day tools/experiments/server.py was born, and the doc oracle
+    then reported the doc's ACCURATE edge as hallucinated — following the
+    'extractor is ground truth' rule deleted a true fact. Refusing to guess
+    stays right (accuracy > recall); hiding that a guess was refused does not."""
+    ir = xa.extract(str(_seed_ambiguous(tmp_path)), src_dirs=["svc"])
+    # still no guessed edge — the refusal itself is unchanged
+    assert all(e["from"] != "svc.consumer" for e in ir["edges"])
+    (amb,) = ir["ambiguous_imports"]
+    assert amb["from"] == "svc.consumer" and amb["name"] == "server"
+    assert amb["candidates"] == ["svc.pkga.server", "svc.pkgb.server"]
+    assert amb["line"] == 1
+
+
+def test_unique_basename_still_resolves_with_no_ambiguity_noise(tmp_path):
+    """The regression pin both ways: a unique basename keeps resolving to its
+    edge, and a tree with nothing ambiguous reports an empty list — plain
+    unresolvable symbols (stdlib, third-party) are NOT ambiguity."""
+    ir = xa.extract(str(_seed_pkg(tmp_path)), src_dirs=["app"])
+    assert ("app.web", "app.state") in {(e["from"], e["to"]) for e in ir["edges"]}
+    assert ir["ambiguous_imports"] == []
+
+
+SYNTH_AMBIG = """# Building blocks
+
+## Component inventory
+
+- `svc.consumer` — the bare importer
+- `svc.pkga.server` — server A
+- `svc.pkgb.server` — server B
+
+## Component diagram
+
+```mermaid
+graph LR
+    svc_consumer["svc.consumer"]
+    svc_pkga_server["svc.pkga.server"]
+    svc_pkgb_server["svc.pkgb.server"]
+
+    svc_consumer --> svc_pkga_server
+```
+"""
+
+
+def test_doc_edge_matching_a_recorded_ambiguity_is_not_hallucinated(tmp_path):
+    """The oracle half: the extractor REFUSED to pick between two same-named
+    candidates, so a doc edge naming one of them is knowledge the extractor
+    lacks — an informational finding, never a blocking 'hallucination' that
+    trains the synthesis to shed accurate content."""
+    ir = xa.extract(str(_seed_ambiguous(tmp_path)), src_dirs=["svc"])
+    res = sd.diff(ir, SYNTH_AMBIG)
+    assert res["ok"], res["findings"]
+    kinds = {f["kind"] for f in res["findings"]}
+    assert "ambiguous-edge" in kinds and "hallucinated-edge" not in kinds
+
+
+def test_a_doc_edge_outside_the_candidate_set_is_still_hallucinated(tmp_path):
+    """The narrowness pin: only an edge the recorded ambiguity actually covers
+    gets the benefit of the doubt — anything else stays a blocking finding."""
+    ir = xa.extract(str(_seed_ambiguous(tmp_path)), src_dirs=["svc"])
+    bad = SYNTH_AMBIG.replace("svc_consumer --> svc_pkga_server",
+                              "svc_pkga_server --> svc_pkgb_server")
+    res = sd.diff(ir, bad)
+    assert not res["ok"]
+    assert any(f["kind"] == "hallucinated-edge" for f in res["findings"])
 
 
 # --- DF-017: import-form coverage --------------------------------------------

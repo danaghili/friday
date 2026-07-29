@@ -22,6 +22,8 @@ file-based state for parallel-safety and auditability, and substrate
 independence fell out — the record IS files, so any host that can run
 python3 can enforce it.
 """
+# Contract: docs/contracts/state-record.md — this ported gate is a named consumer;
+# cited on both sides of the handoff (A14).
 from __future__ import annotations
 
 import json

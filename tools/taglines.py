@@ -31,6 +31,16 @@ NOTE_TAGS = ("ACTION", "INFO", "DONE", "OBSOLETE")
 PROVENANCE_VALUES = ("born-from-discovery", "recovered-from-code")
 WORLD_VALUES = ("greenfield", "brownfield")
 
+# INC-008 FR-8.1: the closed maintainability-metric vocabulary. A project's
+# declared bars (`maintainability: <metric> <= <N>[%]`) live in a
+# FRIDAY-MAINTAINABILITY block in its coding-standards file — a DIFFERENT home
+# from CLAUDE.md's FRIDAY-CLAIMS, so the CLAUDE.md claim vocabulary is untouched
+# (the additive-only guarantee, AC-8.3). ONE home for the vocabulary, exactly
+# as with the value vocabularies above: verify_claims (well-formedness) and the
+# measurer (the code check) both import this; neither re-derives it.
+MAINTAINABILITY_METRICS = ("complexity", "file-size", "function-size",
+                           "param-count", "nesting-depth", "duplication")
+
 # `- [ACTION] desc (From F015 — Architect — 2026-04-12)` — the canonical line
 # shape. The attribution suffix is required: an unattributed note can't be
 # routed or retired.
@@ -68,6 +78,27 @@ def parse_typed_line(line: str) -> tuple[str, str] | None:
     if not m:
         return None
     return m.group(1), m.group(2)
+
+
+# A declared bar: `<metric> <= <N>` (a ceiling), duplication optionally as
+# `<= N%`. `<=` is the only comparator — every maintainability bar is an upper
+# limit. Numbers are non-negative integers; a negative/garbage/other-comparator
+# value does NOT parse (well-formedness rejects it).
+_MAINT_BAR_RE = re.compile(
+    r"^(" + "|".join(MAINTAINABILITY_METRICS) + r")\s*<=\s*(\d+)(%?)$")
+
+
+def parse_maintainability_bar(value: str) -> dict | None:
+    """Parse a maintainability claim's VALUE — `<metric> <= <N>[%]`.
+
+    Returns {'metric', 'limit': int, 'pct': bool} for a well-formed bar over the
+    closed metric vocabulary, or None for anything else (unknown metric, wrong
+    comparator, non-numeric or negative limit). Parsing only — the caller decides
+    what a breach of the bar means (the measurer reads `pct` for duplication)."""
+    m = _MAINT_BAR_RE.match(value.strip())
+    if not m:
+        return None
+    return {"metric": m.group(1), "limit": int(m.group(2)), "pct": m.group(3) == "%"}
 
 
 def block_lines(text: str, name: str) -> list[str] | None:

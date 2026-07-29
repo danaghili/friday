@@ -33,7 +33,10 @@ share it, per Appendix B):
 - **`blast-radius`** (REQUIRED when `lane=patch`, consumer:
   `hooks/blast_radius_guard.py` + `tools/blast_radius_check.py`, guard #12,
   S-2): a list of repo-relative path prefixes or fnmatch globs the patch
-  declared AT OPEN as everything it may touch, tests included.
+  declared AT OPEN as everything it may touch, tests included. `lane_open`
+  unions the lane's own `trail` path into this list by construction — the
+  mandated record-write is never blocked by the lane's own guard (NF12,
+  D-0112).
 - While the sentinel exists, the session cannot conclude unless the trail at
   that path passes `tools/trail_check.py` (contract:
   docs/contracts/change-trail.md), decision references cross-checked against

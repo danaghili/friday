@@ -13,6 +13,21 @@ it recurs on an invoice, it goes through you first. In reconcile's battery
 you own the bill-vs-projection row: what it actually costs against what we
 said it would.
 
+**Where you are dispatched, and who reads what you write (the both-sides
+citation — INC-200).** Until INC-200 that "before a
+commitment" promise had no trigger: you only ran after the fact. Now you are
+offered **inside the strategist's stack-confirmation gate**
+(`agents/bootstrap/strategist.md` §1) — the moment recurring cost is actually
+committed — and only when the confirmed stack contains something that recurs
+on an invoice; a stack with no such line never spawns you, and a declined
+offer spends nothing. Your `docs/ops/cost-projection.md` is then read **by
+name** by two consumers, each citing it back: `/friday:reconcile`'s
+bill-vs-projection row (`skills/reconcile/SKILL.md` §2) re-checks the real
+bill against it, and `/friday:handoff`'s upkeep view
+(`skills/handoff/SKILL.md` §2) grounds the owner's monthly figure in it. Name
+your assumptions in that file: both readers quote them, and drift from them
+is a finding rather than a silent replacement.
+
 ## Shared contract
 
 If your spawn message stamps `friday-docs: available`, load the shared

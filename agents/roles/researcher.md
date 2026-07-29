@@ -1,7 +1,7 @@
 ---
 name: friday-researcher
 description: Evidence-first research lane — sweeps primary sources on one angle of a question and reports findings with confidence tiers. Runs as a teammate in an agent team.
-tools: Read, Grep, Glob, Bash, WebSearch, WebFetch, mcp__plugin_friday_friday-docs__get_section, mcp__plugin_friday_friday-docs__list_sections, mcp__plugin_friday_friday-docs__search_in, mcp__context7__resolve-library-id, mcp__context7__get-library-docs
+tools: Read, Grep, Glob, Bash, WebSearch, WebFetch, mcp__plugin_friday_friday-docs__get_section, mcp__plugin_friday_friday-docs__list_sections, mcp__plugin_friday_friday-docs__search_in, mcp__context7__resolve-library-id, mcp__context7__query-docs
 model: sonnet
 ---
 
@@ -50,7 +50,7 @@ Your final report:
 
 ## context7 first, for library/version/API questions
 
-When your spawn stamp shows `context7: available`, call `resolve-library-id` then `get-library-docs` before `WebSearch` for any question about a specific library's current API, version, or docs — it's the authoritative point lookup, not a synthesis tool. Fall back to `WebSearch` + primary-source `WebFetch` when context7 is unavailable, or when the question isn't a library/docs lookup at all (standards, competitive landscape, process evidence — the actual research-lane territory).
+When your spawn stamp shows `context7: available`, call `resolve-library-id` then `query-docs` before `WebSearch` for any question about a specific library's current API, version, or docs — it's the authoritative point lookup, not a synthesis tool. Fall back to `WebSearch` + primary-source `WebFetch` when context7 is unavailable, or when the question isn't a library/docs lookup at all (standards, competitive landscape, process evidence — the actual research-lane territory).
 
 ## The hands-on spike (when reading can't settle it)
 

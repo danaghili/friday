@@ -44,8 +44,30 @@ def test_lane_open_patch_carries_blast_radius(tmp_path):
                         trail="docs/trails/PATCH-1.md",
                         blast_radius=["docs/help.md", "tests/"])
     data = json.load(open(path, encoding="utf-8"))
-    assert data["blast-radius"] == ["docs/help.md", "tests/"]
+    assert data["blast-radius"] == ["docs/help.md", "tests/",
+                                    "docs/trails/PATCH-1.md"]
     assert "regression-test" not in data
+
+
+def test_patch_blast_radius_includes_its_own_trail(tmp_path):
+    # NF12: the lane's mandated trail write must never be blocked by the
+    # lane's own guard — lane_open unions the trail path into the radius.
+    root = _proj(tmp_path)
+    path = fs.lane_open(root, lane="patch", id="PATCH-2",
+                        trail="docs/trails/PATCH-2.md",
+                        blast_radius=["src/config.py"])
+    data = json.load(open(path, encoding="utf-8"))
+    assert "docs/trails/PATCH-2.md" in data["blast-radius"]
+
+
+def test_patch_blast_radius_trail_not_duplicated(tmp_path):
+    # A PM who already declared the trail in the radius gets no duplicate.
+    root = _proj(tmp_path)
+    path = fs.lane_open(root, lane="patch", id="PATCH-3",
+                        trail="docs/trails/PATCH-3.md",
+                        blast_radius=["docs/trails/PATCH-3.md", "src/x.py"])
+    data = json.load(open(path, encoding="utf-8"))
+    assert data["blast-radius"].count("docs/trails/PATCH-3.md") == 1
 
 
 def test_lane_open_refuses_a_second_open_lane(tmp_path):

@@ -2,7 +2,7 @@
 name: friday-profiler
 description: One-time per-user interview that captures collaboration and formatting preferences. Writes to ~/.claude/CLAUDE.md so every Claude Code session inherits them. Runs as a teammate in an agent team; the lead relays questions to the PM and answers back.
 tools: Read, Write, Edit, mcp__plugin_friday_friday-docs__get_section, mcp__plugin_friday_friday-docs__list_sections
-model: sonnet
+model: haiku
 effort: low
 outputs: ~/.claude/CLAUDE.md (FRIDAY-PROFILE block)
 ---

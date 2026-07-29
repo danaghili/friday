@@ -2,10 +2,17 @@
 
 The invariants that bind every module (each is code, not aspiration):
 
-- **Single-writer substrate** — every `.friday/` write goes through
-  `tools/friday_substrate.py`; root resolution is `git rev-parse
-  --git-common-dir` everywhere (never cwd). Journal lines: one O_APPEND write,
-  ≤4096 bytes, envelope `{ts, feature, phase, event, by[, data]}`.
+- **Single-*path* substrate** — every `.friday/` path resolves through
+  `tools/friday_substrate.py`, the one owner of the worktree-shared root; root
+  resolution is `git rev-parse --git-common-dir` everywhere (never cwd), and
+  nothing hand-builds a `.friday/` path. A module owning a whole record type
+  writes that record itself and reaches the substrate only for the shared
+  primitives — root, journal, locks, time (`decisions.py`,
+  `standards_deviations.py`, `friday_consent.py`, `state_record.py`). Journal
+  lines: one O_APPEND write, ≤4096 bytes, envelope `{ts, feature, phase, event,
+  by[, data]}`. *(Was stated as "every write goes through one module", which
+  D-0135 records as already untrue when written — the invariant is the path, not
+  the write.)*
 - **Typed tag lines** (`tools/taglines.py`) — every script-checked claim is a
   grep-able line inside a named marker block; every grammar defines + tests
   its empty case (`_No decisions captured yet._`, `"generated-empty": true`,
@@ -20,10 +27,13 @@ The invariants that bind every module (each is code, not aspiration):
   Codex gate that blocks on a missing verifier.
 - **Contracts over convention** — every filesystem handoff has one canonical
   contract file under `docs/contracts/`, cited by name on both sides.
-- **Trust boundaries** — the MCP server contains paths under the project root
-  (or the plugin's own `docs/` for `plugin:` paths), realpath-checked;
-  substrate CLIs refuse to run outside a friday project rather than
-  lazy-create stray state; the ask mirror never alters the dialog it mirrors.
+- **Trust boundaries** — the doc-index MCP server contains paths under the
+  project root (or the plugin's own `docs/` for `plugin:` paths),
+  realpath-checked; the experiments MCP server (INC-201) accepts only the
+  closed request menu, re-checks egress per call, and spends a
+  fingerprint-bound PM consent before any run; substrate CLIs refuse to run
+  outside a friday project rather than lazy-create stray state; the ask
+  mirror never alters the dialog it mirrors.
 - **Provenance** — generated artifacts stamp their generator in line 1 and are
   regenerated, never edited; receipts bind verdicts to tree hashes; decision
   entries carry channel + weight + floor + optional back-filled provenance.
@@ -42,4 +52,4 @@ The invariants that bind every module (each is code, not aspiration):
   push while subagents pull their drawer. Contract:
   `docs/contracts/compaction-package.md`; distinct from the seam handoff.
 
-**Last-verified:** 2026-07-15 (INC-1 re-synthesis, D-0077 tree) · **Record-status:** verified
+**Last-verified:** 2026-07-29 (task #42 re-synthesis, D-0151 tree) · **Record-status:** verified

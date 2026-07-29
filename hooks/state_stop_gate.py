@@ -11,6 +11,8 @@ human escalation is NOT blocked — removing the sentinel is the conscious
 handoff path — and Claude Code caps consecutive Stop-blocks, so this can
 never hard-lock a session. Always exits 0; the block rides the JSON decision.
 """
+# Contract: docs/contracts/state-record.md — this stop gate is a named consumer;
+# cited on both sides of the handoff (A14).
 from __future__ import annotations
 
 import json

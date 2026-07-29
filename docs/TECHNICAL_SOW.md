@@ -304,4 +304,7 @@ These are genuinely open and deferred to build-time — none gate this TSOW's ap
 - INC-5 — Proposals ledger: one file per proposal, folders as status (approved 2026-07-16)
 - INC-6 — Project-owned .claude/ scaffold: doctrine contract, settings + path-scoped rules seeded at init, never-clobber parity (approved 2026-07-16)
 - INC-7 — Lanes become model-invocable: retire the typed-only wall, move the discriminator to an explicit marker (approved 2026-07-16)
+- INC-8 — Per-project maintainability standards: a measured, judged, and governed code-health capability (approved 2026-07-24)
+- INC-200 — Close the structural seams the three audits found: dispatch wiring, missing gates, and standing care (approved 2026-07-28)
+- INC-201 — Take the shell away from the experiment runner: its executor becomes a tool it is granted (approved 2026-07-29)
 - INC-8 — Ship friday public: a fresh clean marketplace repo, MIT-licensed, the lab kept private (approved 2026-07-25)

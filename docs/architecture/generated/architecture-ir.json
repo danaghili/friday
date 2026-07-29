@@ -3,7 +3,7 @@
   {
    "id": "hooks._guard",
    "path": "hooks/_guard.py",
-   "loc": 192
+   "loc": 199
   },
   {
    "id": "hooks._hookutil",
@@ -53,7 +53,7 @@
   {
    "id": "hooks.decision_capture",
    "path": "hooks/decision_capture.py",
-   "loc": 103
+   "loc": 189
   },
   {
    "id": "hooks.design_contract_guard",
@@ -64,6 +64,11 @@
    "id": "hooks.doc_consumption_guard",
    "path": "hooks/doc_consumption_guard.py",
    "loc": 99
+  },
+  {
+   "id": "hooks.due_signal",
+   "path": "hooks/due_signal.py",
+   "loc": 67
   },
   {
    "id": "hooks.elicitation_journal",
@@ -84,6 +89,11 @@
    "id": "hooks.lane_close_gate",
    "path": "hooks/lane_close_gate.py",
    "loc": 111
+  },
+  {
+   "id": "hooks.maintainability_gate",
+   "path": "hooks/maintainability_gate.py",
+   "loc": 250
   },
   {
    "id": "hooks.open_risks_guard",
@@ -128,17 +138,22 @@
   {
    "id": "hooks.spec_write_guard",
    "path": "hooks/spec_write_guard.py",
-   "loc": 87
+   "loc": 107
+  },
+  {
+   "id": "hooks.state_advisory",
+   "path": "hooks/state_advisory.py",
+   "loc": 106
   },
   {
    "id": "hooks.state_sentinel",
    "path": "hooks/state_sentinel.py",
-   "loc": 93
+   "loc": 95
   },
   {
    "id": "hooks.state_stop_gate",
    "path": "hooks/state_stop_gate.py",
-   "loc": 101
+   "loc": 103
   },
   {
    "id": "hooks.substrate_ask_cleanup",
@@ -148,7 +163,7 @@
   {
    "id": "hooks.substrate_ask_mirror",
    "path": "hooks/substrate_ask_mirror.py",
-   "loc": 168
+   "loc": 170
   },
   {
    "id": "hooks.teammate_idle_nudge",
@@ -191,6 +206,11 @@
    "loc": 60
   },
   {
+   "id": "tests.test_adopt_parity",
+   "path": "tests/test_adopt_parity.py",
+   "loc": 138
+  },
+  {
    "id": "tests.test_batch_edit",
    "path": "tests/test_batch_edit.py",
    "loc": 122
@@ -203,12 +223,27 @@
   {
    "id": "tests.test_bug_002_bug_close_gate_pause",
    "path": "tests/test_bug_002_bug_close_gate_pause.py",
-   "loc": 98
+   "loc": 102
   },
   {
    "id": "tests.test_bug_003_check_readme_sync",
    "path": "tests/test_bug_003_check_readme_sync.py",
    "loc": 83
+  },
+  {
+   "id": "tests.test_bug_004_decision_capture_multiquestion",
+   "path": "tests/test_bug_004_decision_capture_multiquestion.py",
+   "loc": 147
+  },
+  {
+   "id": "tests.test_bug_005_increment_gate_authoring",
+   "path": "tests/test_bug_005_increment_gate_authoring.py",
+   "loc": 184
+  },
+  {
+   "id": "tests.test_capture_integrity",
+   "path": "tests/test_capture_integrity.py",
+   "loc": 125
   },
   {
    "id": "tests.test_committed_test_check",
@@ -243,7 +278,12 @@
   {
    "id": "tests.test_doc_synthesis",
    "path": "tests/test_doc_synthesis.py",
-   "loc": 250
+   "loc": 334
+  },
+  {
+   "id": "tests.test_due_signals",
+   "path": "tests/test_due_signals.py",
+   "loc": 173
   },
   {
    "id": "tests.test_findings_brief_check",
@@ -283,7 +323,7 @@
   {
    "id": "tests.test_guard_bug_close",
    "path": "tests/test_guard_bug_close.py",
-   "loc": 165
+   "loc": 197
   },
   {
    "id": "tests.test_guard_committed_test",
@@ -326,6 +366,11 @@
    "loc": 109
   },
   {
+   "id": "tests.test_guard_maintainability",
+   "path": "tests/test_guard_maintainability.py",
+   "loc": 258
+  },
+  {
    "id": "tests.test_guard_open_risks",
    "path": "tests/test_guard_open_risks.py",
    "loc": 134
@@ -358,7 +403,7 @@
   {
    "id": "tests.test_guard_spec_write",
    "path": "tests/test_guard_spec_write.py",
-   "loc": 115
+   "loc": 137
   },
   {
    "id": "tests.test_guard_teammate_idle",
@@ -416,19 +461,89 @@
    "loc": 108
   },
   {
+   "id": "tests.test_inc008_deviations",
+   "path": "tests/test_inc008_deviations.py",
+   "loc": 113
+  },
+  {
+   "id": "tests.test_inc008_envelope",
+   "path": "tests/test_inc008_envelope.py",
+   "loc": 172
+  },
+  {
+   "id": "tests.test_inc008_gate",
+   "path": "tests/test_inc008_gate.py",
+   "loc": 235
+  },
+  {
+   "id": "tests.test_inc008_maintainability_claim",
+   "path": "tests/test_inc008_maintainability_claim.py",
+   "loc": 133
+  },
+  {
+   "id": "tests.test_inc008_measurer",
+   "path": "tests/test_inc008_measurer.py",
+   "loc": 129
+  },
+  {
+   "id": "tests.test_inc200_coverage_channel",
+   "path": "tests/test_inc200_coverage_channel.py",
+   "loc": 129
+  },
+  {
+   "id": "tests.test_inc200_dispatch_liveness",
+   "path": "tests/test_inc200_dispatch_liveness.py",
+   "loc": 161
+  },
+  {
+   "id": "tests.test_inc200_experiment_e2e",
+   "path": "tests/test_inc200_experiment_e2e.py",
+   "loc": 334
+  },
+  {
+   "id": "tests.test_inc200_experiment_request",
+   "path": "tests/test_inc200_experiment_request.py",
+   "loc": 289
+  },
+  {
+   "id": "tests.test_inc200_state_advisory",
+   "path": "tests/test_inc200_state_advisory.py",
+   "loc": 312
+  },
+  {
+   "id": "tests.test_inc201_consent_record",
+   "path": "tests/test_inc201_consent_record.py",
+   "loc": 217
+  },
+  {
+   "id": "tests.test_inc201_experiments_server",
+   "path": "tests/test_inc201_experiments_server.py",
+   "loc": 367
+  },
+  {
+   "id": "tests.test_inc201_runner_grant",
+   "path": "tests/test_inc201_runner_grant.py",
+   "loc": 111
+  },
+  {
    "id": "tests.test_lane_cli",
    "path": "tests/test_lane_cli.py",
-   "loc": 75
+   "loc": 77
   },
   {
    "id": "tests.test_lane_open_helper",
    "path": "tests/test_lane_open_helper.py",
-   "loc": 142
+   "loc": 164
   },
   {
    "id": "tests.test_mdparse",
    "path": "tests/test_mdparse.py",
    "loc": 39
+  },
+  {
+   "id": "tests.test_parked_ledger",
+   "path": "tests/test_parked_ledger.py",
+   "loc": 213
   },
   {
    "id": "tests.test_registry",
@@ -446,6 +561,11 @@
    "loc": 123
   },
   {
+   "id": "tests.test_seam_handoff",
+   "path": "tests/test_seam_handoff.py",
+   "loc": 118
+  },
+  {
    "id": "tests.test_secret_names",
    "path": "tests/test_secret_names.py",
    "loc": 93
@@ -454,6 +574,11 @@
    "id": "tests.test_server",
    "path": "tests/test_server.py",
    "loc": 106
+  },
+  {
+   "id": "tests.test_session_heartbeat",
+   "path": "tests/test_session_heartbeat.py",
+   "loc": 116
   },
   {
    "id": "tests.test_session_lifecycle",
@@ -466,9 +591,19 @@
    "loc": 205
   },
   {
+   "id": "tests.test_spawn_grant_check",
+   "path": "tests/test_spawn_grant_check.py",
+   "loc": 187
+  },
+  {
    "id": "tests.test_spec_id_strip_bundled",
    "path": "tests/test_spec_id_strip_bundled.py",
    "loc": 84
+  },
+  {
+   "id": "tests.test_state_record_dirty_bit",
+   "path": "tests/test_state_record_dirty_bit.py",
+   "loc": 215
   },
   {
    "id": "tests.test_stop_gate_failopen",
@@ -496,6 +631,11 @@
    "loc": 240
   },
   {
+   "id": "tests.test_usage_telemetry",
+   "path": "tests/test_usage_telemetry.py",
+   "loc": 159
+  },
+  {
    "id": "tests.test_verify_claims",
    "path": "tests/test_verify_claims.py",
    "loc": 82
@@ -511,9 +651,14 @@
    "loc": 153
   },
   {
+   "id": "tests.test_verify_review_format_dispositions",
+   "path": "tests/test_verify_review_format_dispositions.py",
+   "loc": 66
+  },
+  {
    "id": "tests.test_verify_state",
    "path": "tests/test_verify_state.py",
-   "loc": 169
+   "loc": 189
   },
   {
    "id": "tools.batch_edit",
@@ -528,7 +673,7 @@
   {
    "id": "tools.bug_close_check",
    "path": "tools/bug_close_check.py",
-   "loc": 103
+   "loc": 144
   },
   {
    "id": "tools.capture_integrity",
@@ -538,7 +683,7 @@
   {
    "id": "tools.codex-adapter.state_stop_gate",
    "path": "tools/codex-adapter/state_stop_gate.py",
-   "loc": 70
+   "loc": 72
   },
   {
    "id": "tools.committed_test_check",
@@ -566,6 +711,11 @@
    "loc": 75
   },
   {
+   "id": "tools.dispatch_liveness_check",
+   "path": "tools/dispatch_liveness_check.py",
+   "loc": 182
+  },
+  {
    "id": "tools.doc-index.mdparse",
    "path": "tools/doc-index/mdparse.py",
    "loc": 208
@@ -583,17 +733,32 @@
   {
    "id": "tools.doc-synthesis.extract_architecture",
    "path": "tools/doc-synthesis/extract_architecture.py",
-   "loc": 452
+   "loc": 472
   },
   {
    "id": "tools.doc-synthesis.synthesis_diff",
    "path": "tools/doc-synthesis/synthesis_diff.py",
-   "loc": 160
+   "loc": 184
   },
   {
    "id": "tools.doc_gate",
    "path": "tools/doc_gate.py",
    "loc": 350
+  },
+  {
+   "id": "tools.experiment_request",
+   "path": "tools/experiment_request.py",
+   "loc": 328
+  },
+  {
+   "id": "tools.experiment_run",
+   "path": "tools/experiment_run.py",
+   "loc": 171
+  },
+  {
+   "id": "tools.experiments.server",
+   "path": "tools/experiments/server.py",
+   "loc": 396
   },
   {
    "id": "tools.findings_brief_check",
@@ -606,9 +771,14 @@
    "loc": 74
   },
   {
+   "id": "tools.friday_consent",
+   "path": "tools/friday_consent.py",
+   "loc": 201
+  },
+  {
    "id": "tools.friday_substrate",
    "path": "tools/friday_substrate.py",
-   "loc": 523
+   "loc": 540
   },
   {
    "id": "tools.gen_command_index",
@@ -633,7 +803,7 @@
   {
    "id": "tools.handoff_attest",
    "path": "tools/handoff_attest.py",
-   "loc": 90
+   "loc": 92
   },
   {
    "id": "tools.handoff_gate",
@@ -651,6 +821,21 @@
    "loc": 83
   },
   {
+   "id": "tools.maintainability_envelope_check",
+   "path": "tools/maintainability_envelope_check.py",
+   "loc": 211
+  },
+  {
+   "id": "tools.maintainability_gate_check",
+   "path": "tools/maintainability_gate_check.py",
+   "loc": 225
+  },
+  {
+   "id": "tools.maintainability_measure",
+   "path": "tools/maintainability_measure.py",
+   "loc": 354
+  },
+  {
    "id": "tools.open_risks_check",
    "path": "tools/open_risks_check.py",
    "loc": 137
@@ -659,6 +844,11 @@
    "id": "tools.oracle_edit_check",
    "path": "tools/oracle_edit_check.py",
    "loc": 95
+  },
+  {
+   "id": "tools.parked",
+   "path": "tools/parked.py",
+   "loc": 250
   },
   {
    "id": "tools.profile_check",
@@ -683,7 +873,7 @@
   {
    "id": "tools.seam_handoff",
    "path": "tools/seam_handoff.py",
-   "loc": 100
+   "loc": 118
   },
   {
    "id": "tools.secret_names",
@@ -701,6 +891,11 @@
    "loc": 156
   },
   {
+   "id": "tools.spawn_grant_check",
+   "path": "tools/spawn_grant_check.py",
+   "loc": 198
+  },
+  {
    "id": "tools.spawn_telemetry",
    "path": "tools/spawn_telemetry.py",
    "loc": 117
@@ -711,14 +906,29 @@
    "loc": 115
   },
   {
+   "id": "tools.standards_deviations",
+   "path": "tools/standards_deviations.py",
+   "loc": 311
+  },
+  {
+   "id": "tools.state_advisory_check",
+   "path": "tools/state_advisory_check.py",
+   "loc": 407
+  },
+  {
+   "id": "tools.state_record",
+   "path": "tools/state_record.py",
+   "loc": 201
+  },
+  {
    "id": "tools.taglines",
    "path": "tools/taglines.py",
-   "loc": 117
+   "loc": 148
   },
   {
    "id": "tools.trail_check",
    "path": "tools/trail_check.py",
-   "loc": 224
+   "loc": 232
   },
   {
    "id": "tools.usage_report",
@@ -728,12 +938,12 @@
   {
    "id": "tools.verify_claims",
    "path": "tools/verify_claims.py",
-   "loc": 341
+   "loc": 443
   },
   {
    "id": "tools.verify_coverage",
    "path": "tools/verify_coverage.py",
-   "loc": 174
+   "loc": 195
   },
   {
    "id": "tools.verify_generated",
@@ -743,7 +953,7 @@
   {
    "id": "tools.verify_review_format",
    "path": "tools/verify_review_format.py",
-   "loc": 309
+   "loc": 316
   },
   {
    "id": "tools.verify_spawn_coverage",
@@ -753,7 +963,7 @@
   {
    "id": "tools.verify_state",
    "path": "tools/verify_state.py",
-   "loc": 216
+   "loc": 222
   },
   {
    "id": "tools.visual-companion.companion_server",
@@ -867,14 +1077,14 @@
    "from": "hooks.decision_capture",
    "to": "hooks._hookutil",
    "kind": "import",
-   "line": 29,
+   "line": 37,
    "deferred": false
   },
   {
    "from": "hooks.decision_capture",
    "to": "tools.decisions",
    "kind": "import",
-   "line": 73,
+   "line": 167,
    "deferred": true
   },
   {
@@ -903,6 +1113,20 @@
    "to": "hooks._hookutil",
    "kind": "import",
    "line": 27,
+   "deferred": false
+  },
+  {
+   "from": "hooks.due_signal",
+   "to": "hooks._guard",
+   "kind": "import",
+   "line": 31,
+   "deferred": false
+  },
+  {
+   "from": "hooks.due_signal",
+   "to": "hooks._hookutil",
+   "kind": "import",
+   "line": 32,
    "deferred": false
   },
   {
@@ -953,6 +1177,34 @@
    "kind": "import",
    "line": 43,
    "deferred": false
+  },
+  {
+   "from": "hooks.maintainability_gate",
+   "to": "hooks._guard",
+   "kind": "import",
+   "line": 50,
+   "deferred": false
+  },
+  {
+   "from": "hooks.maintainability_gate",
+   "to": "hooks._hookutil",
+   "kind": "import",
+   "line": 51,
+   "deferred": false
+  },
+  {
+   "from": "hooks.maintainability_gate",
+   "to": "tools.maintainability_measure",
+   "kind": "import",
+   "line": 91,
+   "deferred": true
+  },
+  {
+   "from": "hooks.maintainability_gate",
+   "to": "tools.verify_claims",
+   "kind": "import",
+   "line": 151,
+   "deferred": true
   },
   {
    "from": "hooks.open_risks_guard",
@@ -1042,28 +1294,42 @@
    "from": "hooks.spec_write_guard",
    "to": "hooks._guard",
    "kind": "import",
-   "line": 25,
+   "line": 34,
    "deferred": false
   },
   {
    "from": "hooks.spec_write_guard",
    "to": "hooks._hookutil",
    "kind": "import",
-   "line": 26,
+   "line": 35,
+   "deferred": false
+  },
+  {
+   "from": "hooks.state_advisory",
+   "to": "hooks._guard",
+   "kind": "import",
+   "line": 38,
+   "deferred": false
+  },
+  {
+   "from": "hooks.state_advisory",
+   "to": "hooks._hookutil",
+   "kind": "import",
+   "line": 39,
    "deferred": false
   },
   {
    "from": "hooks.state_sentinel",
    "to": "hooks._hookutil",
    "kind": "import",
-   "line": 32,
+   "line": 34,
    "deferred": false
   },
   {
    "from": "hooks.state_stop_gate",
    "to": "hooks._hookutil",
    "kind": "import",
-   "line": 22,
+   "line": 24,
    "deferred": false
   },
   {
@@ -1077,7 +1343,7 @@
    "from": "hooks.substrate_ask_mirror",
    "to": "hooks._hookutil",
    "kind": "import",
-   "line": 29,
+   "line": 31,
    "deferred": false
   },
   {
@@ -1186,6 +1452,34 @@
    "deferred": false
   },
   {
+   "from": "tests.test_bug_004_decision_capture_multiquestion",
+   "to": "tools.decisions",
+   "kind": "import",
+   "line": 17,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_bug_005_increment_gate_authoring",
+   "to": "tests.guardkit",
+   "kind": "import",
+   "line": 45,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_capture_integrity",
+   "to": "tools.capture_integrity",
+   "kind": "import",
+   "line": 17,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_capture_integrity",
+   "to": "tools.decisions",
+   "kind": "import",
+   "line": 18,
+   "deferred": false
+  },
+  {
    "from": "tests.test_committed_test_check",
    "to": "tools.committed_test_check",
    "kind": "import",
@@ -1260,6 +1554,13 @@
    "to": "tools.doc-synthesis.synthesis_diff",
    "kind": "import",
    "line": 7,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_due_signals",
+   "to": "tools.state_advisory_check",
+   "kind": "import",
+   "line": 31,
    "deferred": false
   },
   {
@@ -1459,6 +1760,20 @@
    "deferred": false
   },
   {
+   "from": "tests.test_guard_maintainability",
+   "to": "hooks.maintainability_gate",
+   "kind": "import",
+   "line": 137,
+   "deferred": true
+  },
+  {
+   "from": "tests.test_guard_maintainability",
+   "to": "tests.guardkit",
+   "kind": "import",
+   "line": 15,
+   "deferred": false
+  },
+  {
    "from": "tests.test_guard_open_risks",
    "to": "tests.guardkit",
    "kind": "import",
@@ -1532,7 +1847,7 @@
    "from": "tests.test_guard_spec_write",
    "to": "tests.guardkit",
    "kind": "import",
-   "line": 14,
+   "line": 15,
    "deferred": false
   },
   {
@@ -1697,6 +2012,139 @@
    "deferred": false
   },
   {
+   "from": "tests.test_inc008_deviations",
+   "to": "tools.standards_deviations",
+   "kind": "import",
+   "line": 14,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_inc008_envelope",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 139,
+   "deferred": true
+  },
+  {
+   "from": "tests.test_inc008_envelope",
+   "to": "tools.maintainability_envelope_check",
+   "kind": "import",
+   "line": 16,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_inc008_gate",
+   "to": "tools.maintainability_gate_check",
+   "kind": "import",
+   "line": 20,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_inc008_maintainability_claim",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 20,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_inc008_maintainability_claim",
+   "to": "tools.verify_claims",
+   "kind": "import",
+   "line": 21,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_inc008_measurer",
+   "to": "tools.maintainability_measure",
+   "kind": "import",
+   "line": 19,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_inc200_coverage_channel",
+   "to": "tools.verify_coverage",
+   "kind": "import",
+   "line": 25,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_inc200_dispatch_liveness",
+   "to": "tools.dispatch_liveness_check",
+   "kind": "import",
+   "line": 21,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_inc200_experiment_e2e",
+   "to": "tools.experiment_request",
+   "kind": "import",
+   "line": 29,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_inc200_experiment_e2e",
+   "to": "tools.experiment_run",
+   "kind": "import",
+   "line": 30,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_inc200_experiment_e2e",
+   "to": "tools.friday_consent",
+   "kind": "import",
+   "line": 31,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_inc200_experiment_request",
+   "to": "tools.experiment_request",
+   "kind": "import",
+   "line": 25,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_inc200_state_advisory",
+   "to": "tools.state_advisory_check",
+   "kind": "import",
+   "line": 38,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_inc200_state_advisory",
+   "to": "tools.state_record",
+   "kind": "import",
+   "line": 39,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_inc201_consent_record",
+   "to": "tools.friday_consent",
+   "kind": "import",
+   "line": 41,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_inc201_consent_record",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 212,
+   "deferred": true
+  },
+  {
+   "from": "tests.test_inc201_experiments_server",
+   "to": "tools.experiment_run",
+   "kind": "import",
+   "line": 36,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_inc201_experiments_server",
+   "to": "tools.friday_consent",
+   "kind": "import",
+   "line": 37,
+   "deferred": false
+  },
+  {
    "from": "tests.test_lane_open_helper",
    "to": "tools.friday_substrate",
    "kind": "import",
@@ -1708,6 +2156,13 @@
    "to": "tools.doc-index.mdparse",
    "kind": "import",
    "line": 4,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_parked_ledger",
+   "to": "tools.parked",
+   "kind": "import",
+   "line": 34,
    "deferred": false
   },
   {
@@ -1725,6 +2180,27 @@
    "deferred": false
   },
   {
+   "from": "tests.test_seam_handoff",
+   "to": "tools.decisions",
+   "kind": "import",
+   "line": 84,
+   "deferred": true
+  },
+  {
+   "from": "tests.test_seam_handoff",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 14,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_seam_handoff",
+   "to": "tools.seam_handoff",
+   "kind": "import",
+   "line": 15,
+   "deferred": false
+  },
+  {
    "from": "tests.test_secret_names",
    "to": "tools.secret_names",
    "kind": "import",
@@ -1732,10 +2208,17 @@
    "deferred": false
   },
   {
-   "from": "tests.test_server",
-   "to": "tools.doc-index.server",
+   "from": "tests.test_session_heartbeat",
+   "to": "tools.friday_substrate",
    "kind": "import",
-   "line": 8,
+   "line": 18,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_session_heartbeat",
+   "to": "tools.session_heartbeat",
+   "kind": "import",
+   "line": 19,
    "deferred": false
   },
   {
@@ -1753,10 +2236,24 @@
    "deferred": false
   },
   {
+   "from": "tests.test_spawn_grant_check",
+   "to": "tools.spawn_grant_check",
+   "kind": "import",
+   "line": 34,
+   "deferred": false
+  },
+  {
    "from": "tests.test_spec_id_strip_bundled",
    "to": "tools.spec_id_strip_check",
    "kind": "import",
    "line": 13,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_state_record_dirty_bit",
+   "to": "tools.state_record",
+   "kind": "import",
+   "line": 29,
    "deferred": false
   },
   {
@@ -1802,6 +2299,20 @@
    "deferred": false
   },
   {
+   "from": "tests.test_usage_telemetry",
+   "to": "hooks.usage_telemetry",
+   "kind": "import",
+   "line": 20,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_usage_telemetry",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 19,
+   "deferred": false
+  },
+  {
    "from": "tests.test_verify_claims",
    "to": "tools.taglines",
    "kind": "import",
@@ -1830,6 +2341,20 @@
    "deferred": false
   },
   {
+   "from": "tests.test_verify_review_format_dispositions",
+   "to": "tools.verify_coverage",
+   "kind": "import",
+   "line": 27,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_verify_review_format_dispositions",
+   "to": "tools.verify_review_format",
+   "kind": "import",
+   "line": 28,
+   "deferred": false
+  },
+  {
    "from": "tests.test_verify_state",
    "to": "tools.decisions",
    "kind": "import",
@@ -1847,7 +2372,7 @@
    "from": "tools.bug_close_check",
    "to": "tools.trail_check",
    "kind": "import",
-   "line": 35,
+   "line": 40,
    "deferred": false
   },
   {
@@ -1987,14 +2512,14 @@
    "from": "tools.doc-synthesis.synthesis_diff",
    "to": "tools.decisions",
    "kind": "import",
-   "line": 145,
+   "line": 169,
    "deferred": true
   },
   {
    "from": "tools.doc-synthesis.synthesis_diff",
    "to": "tools.doc-index.mdparse",
    "kind": "import",
-   "line": 56,
+   "line": 59,
    "deferred": true
   },
   {
@@ -2009,6 +2534,48 @@
    "to": "tools.taglines",
    "kind": "import",
    "line": 46,
+   "deferred": false
+  },
+  {
+   "from": "tools.experiment_request",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 51,
+   "deferred": false
+  },
+  {
+   "from": "tools.experiment_run",
+   "to": "tools.experiment_request",
+   "kind": "import",
+   "line": 40,
+   "deferred": false
+  },
+  {
+   "from": "tools.experiments.server",
+   "to": "tools.experiment_request",
+   "kind": "import",
+   "line": 54,
+   "deferred": false
+  },
+  {
+   "from": "tools.experiments.server",
+   "to": "tools.experiment_run",
+   "kind": "import",
+   "line": 55,
+   "deferred": false
+  },
+  {
+   "from": "tools.experiments.server",
+   "to": "tools.friday_consent",
+   "kind": "import",
+   "line": 56,
+   "deferred": false
+  },
+  {
+   "from": "tools.experiments.server",
+   "to": "tools.spawn_telemetry",
+   "kind": "import",
+   "line": 57,
    "deferred": false
   },
   {
@@ -2033,6 +2600,20 @@
    "deferred": false
   },
   {
+   "from": "tools.friday_consent",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 46,
+   "deferred": false
+  },
+  {
+   "from": "tools.friday_consent",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 47,
+   "deferred": false
+  },
+  {
    "from": "tools.graph_freshness_check",
    "to": "tools.friday_substrate",
    "kind": "import",
@@ -2050,14 +2631,14 @@
    "from": "tools.handoff_attest",
    "to": "tools.friday_substrate",
    "kind": "import",
-   "line": 22,
+   "line": 24,
    "deferred": false
   },
   {
    "from": "tools.handoff_attest",
    "to": "tools.handoff_gate",
    "kind": "import",
-   "line": 23,
+   "line": 25,
    "deferred": false
   },
   {
@@ -2072,6 +2653,41 @@
    "to": "tools.friday_substrate",
    "kind": "import",
    "line": 29,
+   "deferred": false
+  },
+  {
+   "from": "tools.maintainability_envelope_check",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 184,
+   "deferred": true
+  },
+  {
+   "from": "tools.maintainability_envelope_check",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 41,
+   "deferred": false
+  },
+  {
+   "from": "tools.maintainability_gate_check",
+   "to": "tools.maintainability_envelope_check",
+   "kind": "import",
+   "line": 48,
+   "deferred": false
+  },
+  {
+   "from": "tools.maintainability_gate_check",
+   "to": "tools.maintainability_measure",
+   "kind": "import",
+   "line": 47,
+   "deferred": false
+  },
+  {
+   "from": "tools.maintainability_measure",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 36,
    "deferred": false
   },
   {
@@ -2100,6 +2716,20 @@
    "to": "tools.taglines",
    "kind": "import",
    "line": 31,
+   "deferred": false
+  },
+  {
+   "from": "tools.parked",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 51,
+   "deferred": false
+  },
+  {
+   "from": "tools.parked",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 52,
    "deferred": false
   },
   {
@@ -2148,14 +2778,14 @@
    "from": "tools.seam_handoff",
    "to": "tools.decisions",
    "kind": "import",
-   "line": 26,
+   "line": 29,
    "deferred": false
   },
   {
    "from": "tools.seam_handoff",
    "to": "tools.friday_substrate",
    "kind": "import",
-   "line": 27,
+   "line": 30,
    "deferred": false
   },
   {
@@ -2170,6 +2800,41 @@
    "to": "tools.friday_substrate",
    "kind": "import",
    "line": 37,
+   "deferred": false
+  },
+  {
+   "from": "tools.standards_deviations",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 40,
+   "deferred": false
+  },
+  {
+   "from": "tools.state_advisory_check",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 43,
+   "deferred": false
+  },
+  {
+   "from": "tools.state_advisory_check",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 44,
+   "deferred": false
+  },
+  {
+   "from": "tools.state_record",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 46,
+   "deferred": false
+  },
+  {
+   "from": "tools.state_record",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 47,
    "deferred": false
   },
   {
@@ -2215,6 +2880,13 @@
    "deferred": false
   },
   {
+   "from": "tools.verify_review_format",
+   "to": "tools.verify_coverage",
+   "kind": "import",
+   "line": 78,
+   "deferred": false
+  },
+  {
    "from": "tools.verify_state",
    "to": "tools.decisions",
    "kind": "import",
@@ -2232,7 +2904,7 @@
    "from": "tools.verify_state",
    "to": "tools.receipt",
    "kind": "import",
-   "line": 194,
+   "line": 178,
    "deferred": true
   },
   {
@@ -2318,6 +2990,12 @@
   {
    "name": "FRIDAY_GUARD_TIMEOUT_S",
    "kind": "env",
+   "module": "hooks.due_signal",
+   "line": 47
+  },
+  {
+   "name": "FRIDAY_GUARD_TIMEOUT_S",
+   "kind": "env",
    "module": "hooks.foundation_gate",
    "line": 40
   },
@@ -2332,6 +3010,12 @@
    "kind": "env",
    "module": "hooks.lane_close_gate",
    "line": 73
+  },
+  {
+   "name": "FRIDAY_GUARD_TIMEOUT_S",
+   "kind": "env",
+   "module": "hooks.maintainability_gate",
+   "line": 227
   },
   {
    "name": "FRIDAY_GUARD_TIMEOUT_S",
@@ -2361,7 +3045,13 @@
    "name": "FRIDAY_GUARD_TIMEOUT_S",
    "kind": "env",
    "module": "hooks.spec_write_guard",
-   "line": 51
+   "line": 60
+  },
+  {
+   "name": "FRIDAY_GUARD_TIMEOUT_S",
+   "kind": "env",
+   "module": "hooks.state_advisory",
+   "line": 78
   },
   {
    "name": "FRIDAY_GUARD_TIMEOUT_S",
@@ -2373,13 +3063,19 @@
    "name": "CODEX_PROJECT_DIR",
    "kind": "env",
    "module": "tools.codex-adapter.state_stop_gate",
-   "line": 37
+   "line": 39
   },
   {
    "name": "CLAUDE_PROJECT_DIR",
    "kind": "env",
    "module": "tools.doc-index.registry",
    "line": 47
+  },
+  {
+   "name": "CLAUDE_PROJECT_DIR",
+   "kind": "env",
+   "module": "tools.experiments.server",
+   "line": 97
   }
  ],
  "data_models": [
@@ -2392,7 +3088,7 @@
     "reason",
     "detail"
    ],
-   "line": 102
+   "line": 109
   },
   {
    "name": "Heading",
@@ -2430,6 +3126,11 @@
    "detail": "python3 ${CLAUDE_PLUGIN_ROOT}/tools/doc-index/server.py"
   },
   {
+   "kind": "mcp-server",
+   "name": "friday-experiments",
+   "detail": "python3 ${CLAUDE_PLUGIN_ROOT}/tools/experiments/server.py"
+  },
+  {
    "kind": "hook-binding",
    "name": "SubagentStop",
    "detail": "3 hook(s)"
@@ -2452,7 +3153,7 @@
   {
    "kind": "hook-binding",
    "name": "PreToolUse",
-   "detail": "6 hook(s)"
+   "detail": "7 hook(s)"
   },
   {
    "kind": "hook-binding",
@@ -2482,7 +3183,7 @@
   {
    "kind": "hook-binding",
    "name": "SessionStart",
-   "detail": "3 hook(s)"
+   "detail": "4 hook(s)"
   },
   {
    "kind": "hook-binding",
@@ -2492,7 +3193,7 @@
   {
    "kind": "hook-binding",
    "name": "Stop",
-   "detail": "9 hook(s)"
+   "detail": "11 hook(s)"
   },
   {
    "kind": "hook-binding",
@@ -2505,7 +3206,18 @@
    "detail": "1 hook(s)"
   }
  ],
+ "ambiguous_imports": [
+  {
+   "from": "tests.test_server",
+   "name": "server",
+   "candidates": [
+    "tools.doc-index.server",
+    "tools.experiments.server"
+   ],
+   "line": 8
+  }
+ ],
  "unparseable": [],
  "generated-by": "/friday:reference (tools/doc-synthesis/extract_architecture.py)",
- "generated-at": "2026-07-25T17:06:21+00:00"
+ "generated-at": "2026-07-29T15:24:15+00:00"
 }

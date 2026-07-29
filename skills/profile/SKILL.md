@@ -24,7 +24,7 @@ Create an agent team with one teammate:
 
 - **Name:** `profiler`
 - **Subagent type:** `friday-profiler`
-- **Model:** inherit (sonnet by default)
+- **Model:** haiku — pinned (a preferences questionnaire is cheap-model work; D-0116)
 
 Before spawning, resolve the plugin root: `echo "${CLAUDE_PLUGIN_ROOT}"`, falling back to `~/.claude/plugins/marketplaces/local/friday` if empty (paste the expanded absolute path below — never the literal `${CLAUDE_PLUGIN_ROOT}`, teammates don't inherit the lead's shell env).
 
@@ -90,5 +90,5 @@ Next steps:
 ## Notes
 
 - **Single-teammate teams** are valid; they exist to give you persistent SendMessage continuity with the Profiler across the multi-round interview without respawning.
-- **Do not** invoke `friday-profiler` (the v1 subagent). v1 and v2 share the global `~/.claude/CLAUDE.md` so it's safe to use either, but the v2 flow uses `friday-profiler`.
+- The lane's flow above is the only entry — there is no separate legacy profiler agent (a pre-rename warning against `friday-v3-profiler` collided into self-contradiction when the 0.4.0 rename unified the names; removed per the structure audit).
 - **Arguments:** `$ARGUMENTS` may be empty (default behavior) or contain hints like "communication only" to scope a re-run. Pass them verbatim to the Profiler.

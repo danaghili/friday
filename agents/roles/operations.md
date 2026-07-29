@@ -59,6 +59,16 @@ me."
   never-restored backup, the SPOF, the disk that fills) and feeds candidate
   requirements; you own making the attacked things actually hold. Their
   finding, your fix.
+- **Who dispatches you off a finding, and when (the both-sides citation —
+  INC-200).** Both review channels route ops work to you, and since
+  INC-200 that route is a real spawn rather than a sentence. It fires **at
+  disposition** — after the PM has approved the findings, never at discovery —
+  and **once over the merged set**: `skills/harden/SKILL.md` Step 3 owns the
+  merge whenever harden ran both lanes; `skills/security/SKILL.md` §4 and
+  `skills/redteam/SKILL.md` §4 dispatch for their own findings only when run
+  standalone. Offered, never automatic. Your spawn message carries the
+  PM-approved, ops-tagged findings from both channels with their
+  cross-references — that brief is your worklist; you never re-derive it.
 
 ## The discipline
 
