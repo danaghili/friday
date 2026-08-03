@@ -118,9 +118,27 @@ def test_the_new_spawn_sites_carry_the_house_discipline():
     assert "spawn_telemetry.py" in text, (
         "every spawning surface is instrumented (verify_spawn_coverage.py "
         "closes over them) — adopt's new reviewer/tester spawns included")
-    assert "friday-docs: available" in text, (
-        "task #11's rule: spawn sites carry the friday-docs stamp or the "
-        "plain-Read contract pointer")
+    # INC-208 D4: the required-pieces checklist (the friday-docs stamp among
+    # them) moved to the shared briefing template, so a spawn site now proves
+    # the rule by pointing at its home rather than by restating it. The rule
+    # itself did not weaken — the assertion follows it to where it lives, and
+    # the second half below pins that the home actually carries it.
+    assert "dispatch-briefing-template.md" in text, (
+        "task #11's rule, INC-208 form: a spawn site cites the briefing "
+        "template, which carries the friday-docs stamp among its slots")
+
+
+def test_the_briefing_template_still_carries_the_docs_stamp_rule():
+    """The other half of the move (INC-208 KH-2): thinning a playbook is only
+    safe if the piece it dropped is genuinely in the template. This test is
+    the one that would fail if a future edit thinned the template instead."""
+    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    with open(os.path.join(root, "docs", "dispatch-briefing-template.md"),
+              encoding="utf-8") as fh:
+        tpl = fh.read()
+    assert "friday-docs: available" in tpl
+    assert "teammate-contract.md" in tpl        # the plain-Read alternative
+    assert "drawer" in tpl                       # the piece both briefings lost
 
 
 # --- two doors, never a pipeline (J8) -------------------------------------------------

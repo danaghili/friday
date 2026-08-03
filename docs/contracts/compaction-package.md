@@ -28,6 +28,8 @@ owed). The two names are never conflated (TSOW §13 landmine; INC-001 KH-6).
                       #   same-second filings get a -N suffix
 ```
 
+- **`mission.md` written as a dispatch briefing opens with one typed line** (INC-208 FR-208.4, D-0179): `dispatch: lane=<lane> role=<agent-slug> drawer=<path> template=<path>`, the first non-blank line, parsed by `tools/taglines.py` — no new parser, the same leading-tag-line shape the change trail uses. Producer: any lane composing from `${CLAUDE_PLUGIN_ROOT}/docs/dispatch-briefing-template.md`, which cites this contract back. Consumer: `${CLAUDE_PLUGIN_ROOT}/tools/dispatch_briefing_check.py`, which reports a briefing whose line omits a required field and a recorded dispatch whose briefing was never saved — report only, never a gate.
+- **The lane-entry variant carries no such line, and is never checked.** The orchestrator's self-authored note is nobody's briefing; the checker scopes its worklist to the dispatches the journal records rather than to the files that exist, so a note in a drawer nobody dispatched into is invisible to it by construction (INC-208 KH-1).
 - `<session-id>` and `<agent-slug>` are sanitized (path-safe, no dot-runs).
 - The shared drawer `unattributed/` holds summaries whose self-ID line failed
   to parse: archived generations only — an unattributed summary can NEVER

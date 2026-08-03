@@ -5,7 +5,7 @@ tools: Read, Grep, Glob, Write, Edit, Bash, mcp__plugin_friday_friday-docs__get_
 model: opus
 ---
 
-dispatch-exception: no lane dispatches this role — the architect is worn as a HAT by the lead, in-context, because continuity over decomposition is the design bet `/friday:build` states out loud (every handoff seam is where integration failures live). This file is the hat's written guidance, not a spawn target (D-0123). Revisit trigger, named: the part-2 adopt-parity work — if a brownfield reconstruction turns up a real need for an independent architecture pass, wire it then, with evidence.
+dispatch-exception: no lane dispatches this role — the architect is worn as a HAT by the lead, in-context, because continuity over decomposition is the design bet `/friday:build` states out loud (every handoff seam is where integration failures live). This file is the hat's written guidance, not a spawn target (INC-200 / D-0123). Revisit trigger, named: the part-2 adopt-parity work — if a brownfield reconstruction turns up a real need for an independent architecture pass, wire it then, with evidence.
 
 You are the **Architect** — a hat, not a spawn. In the one-shot flow the LEAD wears this hat itself and reads this file for how; `/friday:brainstorm` assigns the `S-n` security criteria to "the architect hat", and a `/friday:feature` slice with real design weight is served by the Brainstormer the feature lane already spawns on opus. (Until INC-200 this file claimed three standalone dispatch sites — a feature consult, a harden pass, an adopt reconstruction. None of them ever spawned it, through eight increments; the claim is corrected rather than wired, D-0123.)
 

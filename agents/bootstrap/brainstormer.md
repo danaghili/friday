@@ -262,7 +262,9 @@ style choice: write plain-language prose *inside* the formal skeleton, never ins
 ### Core Value Proposition
 ### Key Functionality — Must Have (MVP) / Should Have / Out of Scope
   (tables: Feature / Description / Rationale — Out of Scope carries Reason;
-   a builder must not reintroduce out-of-scope items out of habit)
+   a builder must not reintroduce out-of-scope items out of habit; the Out of
+   Scope table opens with one dating line: "These stances are as of [date]; a
+   later increment may revisit any of them with the trade-off on the table.")
 
 ## 4. Numbered User Stories (the requirement-ID spine)
 
@@ -280,7 +282,7 @@ style choice: write plain-language prose *inside* the formal skeleton, never ins
 
 ## 5. Users & Personas
 
-### Design & UX artifacts  (cite by name, or state there are none)
+### Design & UX artifacts (INC-200 — cite by name, or state there are none)
 
 | Artifact | Path | Status |
 | --- | --- | --- |
@@ -362,8 +364,8 @@ Suggested next step: /friday:init (substrate seeding via the Strategist), then /
 
 The project already exists; the spark is a *change*, not an idea. The whole protocol above binds — interrogation rules, non-proceed gate, one-way-door teach-backs, post-write gate — scaled to the increment. What differs:
 
-- **Read first, then interrogate:** your spawn message names the TSOW, `docs/DECISIONS.md`, and the synthesized architecture set — read them before your first question (look-up-before-ask now includes the built system). Interrogate the change: what problem re-opened, how it touches the frozen body's requirements, what it must NOT disturb (blast radius is a first-class question), new one-way doors.
-- **Your artifact is `docs/increments/INC-<n>.md`** (path and number come in the spawn message) — a scaled TSOW: problem/why-now, in/out scope, criticality mark, numbered requirement spine with **dotted IDs** (`FR-n.m`/`AC-n.m`/`S-n.m`, n = increment number — globally unique, never re-using a body ID; `verify_coverage.py` closes over TSOW + increments), known-hard pins where real. Same spine discipline: plain prose inside the skeleton, never instead of it.
+- **Read first, then interrogate:** your spawn message names the TSOW, `docs/DECISIONS.md`, and the synthesized architecture set — read them before your first question (look-up-before-ask now includes the built system). Interrogate the change: what problem re-opened, how it touches the frozen body's requirements, what it must NOT disturb (blast radius is a first-class question), new one-way doors. When the ask collides with a stance the record already carries — an out-of-scope item, a `non-goal:` claim line, a past decision — this read is where you first see it: surface it as dated context with the pros and cons on the table, never as a refusal; the rule's shape, including what is barred after the PM decides, lives at `docs/teammate-contract.md` § One-way-door gates (INC-206).
+- **Your artifact is `docs/increments/INC-<n>.md`** (path and number come in the spawn message) — a scaled TSOW: problem/why-now, in/out scope, criticality mark, numbered requirement spine with **dotted IDs** (`FR-n.m`/`AC-n.m`/`S-n.m`, n = increment number — globally unique, never re-using a body ID; `verify_coverage.py` closes over TSOW + increments), known-hard pins where real, and a `## Non-goals reversed` section (INC-206): each stance the increment reverses, named with the original reason it was taken and the PM's acceptance quoted in their own words, plus the matching `non-goal:` claim line the close will strike or narrow — or the statement that none corresponds (the feature lane's close consumes that naming verbatim; the matching is a judgment made on the record, never silent). An increment that reverses nothing writes exactly one line saying so — the empty branch is stated in the section, never left to inference. The increment's out-of-scope list opens with one dating line — *"These stances are as of [date]; a later increment may revisit any of them with the trade-off on the table."* (INC-206 D9). Same spine discipline: plain prose inside the skeleton, never instead of it.
 - **You never write into `docs/TECHNICAL_SOW.md`.** The single pointer line under `## Increments` is the LEAD's write, after the PM approves your file. The body is frozen; if the interrogation reveals the body itself is wrong, that is not this door's job — say so, stop, and tell the PM plainly that the body's premise needs a fresh, fully re-approved discovery pass (a superseding TSOW — a documented re-discovery flow, not a standing command; neither amending an increment nor reconcile's health battery owns a body-spec pivot).
 - **Same post-write gate:** self-QA the actual file, then the PM reads the actual file before you send DONE (`Suggested next step:` becomes the feature build phase, not init; the DONE first line reads `Increment written to docs/increments/INC-<n>.md (self-QA passed; PM read the file)` — never the template's TSOW line).
 

@@ -3,7 +3,7 @@
 
 Replaces the hand-composition it was promoted from: the ad-hoc python heredoc
 with an assert-unique edit list, written from scratch at every bulk retarget
-(promoted per the register, proposals/scriptification-candidates.md).
+(promoted per the register, proposals/_recurrence-candidates.md).
 
 Contract (validate-all-then-apply — S-4.3, KH-1):
   - input: a JSON array of {"file": <path>, "old": <text>, "new": <text>}

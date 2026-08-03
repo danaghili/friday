@@ -14,7 +14,7 @@ Gate: runs during discovery (before or alongside `/friday:brainstorm`'s output) 
 
 ### 1. Conceptualize (friday's half — the UX Designer)
 
-Spawn the UX Designer (`friday-ux-designer`, model: sonnet; telemetry via the single primitive: `python3 "${CLAUDE_PLUGIN_ROOT}/tools/spawn_telemetry.py" --emit spawn|accept|done --agent friday-ux-designer --phase design:system`). Its spawn message carries the `friday-docs: available` stamp (or a plain-Read pointer to `${CLAUDE_PLUGIN_ROOT}/docs/teammate-contract.md`) and the explicit Read list. Spawn message: the product intent, the audience profile (FRIDAY-PROFILE overlay), and an explicit Read list. Its conceptual deliverables into `docs/design/`:
+Spawn the UX Designer (`friday-ux-designer`, model: sonnet; telemetry via the single primitive: `python3 "${CLAUDE_PLUGIN_ROOT}/tools/spawn_telemetry.py" --emit spawn|accept|done --agent friday-ux-designer --phase design:system`). Its spawn message carries the rest of the skeleton composed from the briefing template (`${CLAUDE_PLUGIN_ROOT}/docs/dispatch-briefing-template.md` — composed from the file, never from memory: a reassembled briefing drops pieces silently, and every briefing on disk before INC-208 was missing one), saved at dispatch with `--prompt-file` and the explicit Read list. Spawn message: the product intent, the audience profile (FRIDAY-PROFILE overlay), and an explicit Read list. Its conceptual deliverables into `docs/design/`:
 
 - **Who is looking at each screen** — on what device, in what context.
 - **User journeys mapped to the spec's numbered requirements** — every journey traces to an FR/US it serves.

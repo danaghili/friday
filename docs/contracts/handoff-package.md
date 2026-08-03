@@ -17,7 +17,7 @@ A "start here" summary plus a supporting folder. Required members:
 | `what-it-is-and-why.md` | the system in plain words + the decision log's "why", rewritten for a non-technical owner |
 | `user-guide.md` | everyday use, post-login (the guide the owner personally reads) |
 | `admin-guide.md` | accounts, permissions, the more technical operations (the guide handed to a hired developer) |
-| `operations-runbook.md` | deploy, backups, monitoring, "when X breaks", the maintenance schedule (what / cadence / owner / last-done) |
+| `operations-runbook.md` | deploy, backups, monitoring, "when X breaks", the maintenance schedule (what / cadence / owner / last-done) and each operations-battery row's verdict and date (INC-102 FR-102.8; row set and verdict grammar: `docs/contracts/ops-battery.md`, cited never restated; nothing here gates on them — INC-102 D4) |
 | `ownership-and-keys.md` | the key/account inventory — one row per item: name, plain-language purpose, owning account, current holder, target owner (NEVER a value) — plus the transfer runbook |
 | `running-cost.md` | the plain monthly upkeep figure |
 | `honest-state.md` | what's solid, what's known-fragile, what was deferred |
@@ -57,6 +57,14 @@ handoff refuses to report done until all four gates are confirmed, read by
 `tools/handoff_attest.py` (the single substrate writer) — the PM confirms each;
 friday records who and when, never the secret behind a transfer. The empty case
 (no attestations) is "all four outstanding".
+
+**The reconcile gate's meaning (INC-101 FR-101.7; D-1022):** it is satisfied
+only by a deep clean whose run included the document-truth probe, or by the
+PM's explicit recorded decision to hand over with findings outstanding. The
+attest tool refuses a bare confirmation of this gate and requires a `--note`
+pointing at one or the other — the same refusal the restore gate performs for
+its evidence. A client package never ships with its documents unread unless
+the PM decided that, on the record.
 
 ## Reconcile-first (FR-86; D-0058)
 

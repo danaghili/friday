@@ -31,7 +31,12 @@ Monotonic D-NNNN (A.5 #7, Appendix B.2): allocated under an advisory
 the SHARED substrate root, so concurrent writers — including writers in
 different worktrees, whose docs/DECISIONS.md checkouts differ — can never
 collide or reuse an id. The counter is regenerable: next id is
-max(counter, max id in the local file) + 1.
+max(counter, max id in the local file) + 1 — counting ONLY ids inside this
+clone's lane (D-0152; `git config friday.decision-id-base`, unset = the low
+lane [1, 1000)). Pre-merge the lanes held by construction because each log
+held one machine's entries; the 2026-07-29 merged log broke that silently
+(first post-merge mint came out D-1007, in the other machine's lane), so the
+lane is now enforced here: `_lane_bounds()`.
 
 Growing-log discipline (PROP-023, hard-won lesson #9): entry cap (default
 100) with archive-on-overflow — the oldest half MOVES to
@@ -45,6 +50,7 @@ from __future__ import annotations
 import fcntl
 import os
 import re
+import subprocess
 
 import friday_substrate as fs
 import taglines
@@ -246,6 +252,28 @@ def _locked(root: str):
     return open(os.path.join(fdir, "decisions.lock"), "a+")
 
 
+def _lane_bounds(root: str) -> tuple[int, int]:
+    """This clone's decision-id lane [lo, hi) — D-0152's rule, enforced.
+
+    `git config friday.decision-id-base`: unset/invalid = 0 → the low lane
+    [1, 1000); a machine configured with base N mints only inside
+    [N, N+1000) — the same 'next = highest inside my range + 1, or the base
+    when empty' shape as INC/PROP allocation (D-0113). Enforcement exists
+    because the merged log killed the by-construction guarantee: allocation
+    is highest-seen + 1, and post-merge 'seen' includes the other machine's
+    entries."""
+    base = 0
+    try:
+        out = subprocess.run(
+            ["git", "-C", root, "config", "--get", "friday.decision-id-base"],
+            capture_output=True, text=True, timeout=5)
+        if out.returncode == 0 and out.stdout.strip():
+            base = int(out.stdout.strip())
+    except (OSError, ValueError, subprocess.SubprocessError):
+        base = 0
+    return (max(base, 1), base + 1000)
+
+
 def _read_counter(root: str) -> int:
     try:
         with open(os.path.join(fs.friday_dir(root), "decisions.counter"), encoding="utf-8") as fh:
@@ -288,8 +316,19 @@ def append_entry(root: str, *, title: str, decision: str, why: str, rejected: st
                 os.makedirs(os.path.dirname(abs_path), exist_ok=True)
                 text = empty_form(project or os.path.basename(wroot), cap)
             parsed = parse(text)
-            local_max = max((e["id"] for e in parsed["entries"]), default=0)
-            next_id = max(_read_counter(root), local_max) + 1
+            lane_lo, lane_hi = _lane_bounds(root)
+            local_max = max((e["id"] for e in parsed["entries"]
+                             if lane_lo <= e["id"] < lane_hi),
+                            default=lane_lo - 1)
+            counter = _read_counter(root)
+            if not (lane_lo <= counter < lane_hi):
+                counter = lane_lo - 1  # other lane's (or stale) counter never steers this one
+            next_id = max(counter, local_max) + 1
+            if next_id >= lane_hi:
+                raise ValueError(
+                    f"decision-id lane [{lane_lo}, {lane_hi}) is exhausted — "
+                    "agree a new boundary FIRST (the id-lane rule: git config "
+                    "friday.decision-id-base); nothing was written")
 
             entry = format_entry(id_num=next_id, title=title,
                                  when=when or fs.now_iso(), channel=channel,

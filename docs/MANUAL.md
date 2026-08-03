@@ -26,9 +26,8 @@ teams, so set this once in your environment:
 CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1
 ```
 
-**Install.** In Claude Code, run `/plugin marketplace add danaghili/friday`,
-then `/plugin install friday@friday`. Once installed, its commands are
-available as `/friday:<name>` in any project.
+**Install.** friday installs from its marketplace (this repo). Once installed,
+its commands are available as `/friday:<name>` in any project.
 
 **Your first three steps.**
 

@@ -24,6 +24,8 @@ This writes the `.friday/lane-open` sentinel (contract: `docs/contracts/lane-ope
 
 Make exactly the declared change. Prove it: the build still passes, the affected surface is checked, real output quoted — an executable, fail-loud check, never prose self-report.
 
+**The compaction guardrail is a recognised one-tap route here (INC-209).** `/friday:patch` is one of the three doors that may take the narrow exception to never-clobber; `${CLAUDE_PLUGIN_ROOT}/docs/contracts/claude-scaffold.md` § The retrofit doors owns that rule and this surface never restates it. Ask the tool what to do before saying anything — `python3 "${CLAUDE_PLUGIN_ROOT}/tools/compaction_seed.py" --should-offer --root .` — and a `declined` answer means **say nothing at all**: the PM has already settled it. Otherwise the offer becomes the step-1 confirm, and only on an explicit yes run `--apply --root . --consented`. On a no, record it: `--decline --root . --reason "<the PM's own words>"`, so no later door re-asks a settled question.
+
 ### 3. The full trail in miniature
 
 Write `docs/trails/PATCH-NNN.md` in the change-trail grammar (`docs/contracts/change-trail.md`): what was asked, any judgment made along the way (D-NNNN pointers, or the explicit `decisions: none` line), proof with the quoted output — plus its one changelog line. *"Too small to record" does not exist.* If docs or the code graph describe what changed, they refresh (re-run `/friday:reference` Phase 1 when a generated file's source moved).

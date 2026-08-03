@@ -2,7 +2,7 @@
 
 # Dependency graph (generated)
 
-Intra-tree import graph — **196 modules, 280 import edges**. Every edge is a literal `import` statement in the source; the C4 Component level, correct-by-construction.
+Intra-tree import graph — **227 modules, 316 import edges**. Every edge is a literal `import` statement in the source; the C4 Component level, correct-by-construction.
 
 ```mermaid
 graph LR
@@ -59,6 +59,7 @@ graph LR
     tests_test_compaction_capture["tests.test_compaction_capture"]
     tests_test_companion_offer["tests.test_companion_offer"]
     tests_test_companion_server["tests.test_companion_server"]
+    tests_test_decision_lanes["tests.test_decision_lanes"]
     tests_test_decisions["tests.test_decisions"]
     tests_test_doc_gate["tests.test_doc_gate"]
     tests_test_doc_synthesis["tests.test_doc_synthesis"]
@@ -103,6 +104,8 @@ graph LR
     tests_test_inc008_gate["tests.test_inc008_gate"]
     tests_test_inc008_maintainability_claim["tests.test_inc008_maintainability_claim"]
     tests_test_inc008_measurer["tests.test_inc008_measurer"]
+    tests_test_inc101_doc_probe_scope["tests.test_inc101_doc_probe_scope"]
+    tests_test_inc101_handover_gate["tests.test_inc101_handover_gate"]
     tests_test_inc200_coverage_channel["tests.test_inc200_coverage_channel"]
     tests_test_inc200_dispatch_liveness["tests.test_inc200_dispatch_liveness"]
     tests_test_inc200_experiment_e2e["tests.test_inc200_experiment_e2e"]
@@ -111,13 +114,30 @@ graph LR
     tests_test_inc201_consent_record["tests.test_inc201_consent_record"]
     tests_test_inc201_experiments_server["tests.test_inc201_experiments_server"]
     tests_test_inc201_runner_grant["tests.test_inc201_runner_grant"]
+    tests_test_inc202_checker["tests.test_inc202_checker"]
+    tests_test_inc202_frozen_body["tests.test_inc202_frozen_body"]
+    tests_test_inc202_header_grammar["tests.test_inc202_header_grammar"]
+    tests_test_inc202_mover["tests.test_inc202_mover"]
+    tests_test_inc203_dispatch_workshop["tests.test_inc203_dispatch_workshop"]
+    tests_test_inc204_keys_gate["tests.test_inc204_keys_gate"]
+    tests_test_inc204_posture_check["tests.test_inc204_posture_check"]
+    tests_test_inc207_extract_js["tests.test_inc207_extract_js"]
+    tests_test_inc207_size_rule["tests.test_inc207_size_rule"]
+    tests_test_inc208_dispatch_check["tests.test_inc208_dispatch_check"]
+    tests_test_inc209_decline["tests.test_inc209_decline"]
+    tests_test_inc209_doctrine["tests.test_inc209_doctrine"]
+    tests_test_inc209_seed["tests.test_inc209_seed"]
+    tests_test_inc209_surfaces["tests.test_inc209_surfaces"]
     tests_test_lane_cli["tests.test_lane_cli"]
     tests_test_lane_open_helper["tests.test_lane_open_helper"]
     tests_test_mdparse["tests.test_mdparse"]
+    tests_test_ops_battery["tests.test_ops_battery"]
     tests_test_parked_ledger["tests.test_parked_ledger"]
+    tests_test_recurrence_register["tests.test_recurrence_register"]
     tests_test_registry["tests.test_registry"]
     tests_test_review_format_interim["tests.test_review_format_interim"]
     tests_test_sanitized_mirror["tests.test_sanitized_mirror"]
+    tests_test_scheduled_jobs["tests.test_scheduled_jobs"]
     tests_test_seam_handoff["tests.test_seam_handoff"]
     tests_test_secret_names["tests.test_secret_names"]
     tests_test_server["tests.test_server"]
@@ -138,6 +158,7 @@ graph LR
     tests_test_verify_generated["tests.test_verify_generated"]
     tests_test_verify_review_format_dispositions["tests.test_verify_review_format_dispositions"]
     tests_test_verify_state["tests.test_verify_state"]
+    tests_test_watcher_coverage["tests.test_watcher_coverage"]
     tools_batch_edit["tools.batch_edit"]
     tools_blast_radius_check["tools.blast_radius_check"]
     tools_bug_close_check["tools.bug_close_check"]
@@ -145,16 +166,20 @@ graph LR
     tools_codex_adapter_state_stop_gate["tools.codex-adapter.state_stop_gate"]
     tools_committed_test_check["tools.committed_test_check"]
     tools_compaction_note["tools.compaction_note"]
+    tools_compaction_seed["tools.compaction_seed"]
     tools_decisions["tools.decisions"]
     tools_decisions_append["tools.decisions_append"]
     tools_design_contract_check["tools.design_contract_check"]
+    tools_dispatch_briefing_check["tools.dispatch_briefing_check"]
     tools_dispatch_liveness_check["tools.dispatch_liveness_check"]
     tools_doc_index_mdparse["tools.doc-index.mdparse"]
     tools_doc_index_registry["tools.doc-index.registry"]
     tools_doc_index_server["tools.doc-index.server"]
     tools_doc_synthesis_extract_architecture["tools.doc-synthesis.extract_architecture"]
+    tools_doc_synthesis_extract_js["tools.doc-synthesis.extract_js"]
     tools_doc_synthesis_synthesis_diff["tools.doc-synthesis.synthesis_diff"]
     tools_doc_gate["tools.doc_gate"]
+    tools_doc_probe_scope["tools.doc_probe_scope"]
     tools_experiment_request["tools.experiment_request"]
     tools_experiment_run["tools.experiment_run"]
     tools_experiments_server["tools.experiments.server"]
@@ -174,14 +199,19 @@ graph LR
     tools_maintainability_gate_check["tools.maintainability_gate_check"]
     tools_maintainability_measure["tools.maintainability_measure"]
     tools_open_risks_check["tools.open_risks_check"]
+    tools_ops_battery["tools.ops_battery"]
     tools_oracle_edit_check["tools.oracle_edit_check"]
     tools_parked["tools.parked"]
     tools_profile_check["tools.profile_check"]
+    tools_proposal_pipeline["tools.proposal_pipeline"]
+    tools_proposal_pipeline_check["tools.proposal_pipeline_check"]
     tools_receipt["tools.receipt"]
     tools_research_orphan_check["tools.research_orphan_check"]
     tools_sanitized_mirror["tools.sanitized_mirror"]
+    tools_scheduled_jobs["tools.scheduled_jobs"]
     tools_seam_handoff["tools.seam_handoff"]
     tools_secret_names["tools.secret_names"]
+    tools_secret_posture_check["tools.secret_posture_check"]
     tools_session_heartbeat["tools.session_heartbeat"]
     tools_skill_standard_check["tools.skill_standard_check"]
     tools_spawn_grant_check["tools.spawn_grant_check"]
@@ -201,6 +231,7 @@ graph LR
     tools_verify_state["tools.verify_state"]
     tools_visual_companion_companion_server["tools.visual-companion.companion_server"]
     tools_visual_companion_offer["tools.visual-companion.offer"]
+    tools_watcher_coverage["tools.watcher_coverage"]
     tools_worktree_create_check["tools.worktree_create_check"]
 
     hooks__hookutil -.->|deferred| tools_friday_substrate
@@ -280,6 +311,7 @@ graph LR
     tests_test_companion_offer --> tools_visual_companion_offer
     tests_test_companion_server --> tests_guardkit
     tests_test_companion_server --> tools_visual_companion_companion_server
+    tests_test_decision_lanes --> tools_decisions
     tests_test_decisions --> tools_decisions
     tests_test_doc_gate --> hooks__guard
     tests_test_doc_gate --> tools_doc_gate
@@ -357,6 +389,8 @@ graph LR
     tests_test_inc008_maintainability_claim --> tools_taglines
     tests_test_inc008_maintainability_claim --> tools_verify_claims
     tests_test_inc008_measurer --> tools_maintainability_measure
+    tests_test_inc101_handover_gate --> tools_handoff_attest
+    tests_test_inc101_handover_gate --> tools_handoff_gate
     tests_test_inc200_coverage_channel --> tools_verify_coverage
     tests_test_inc200_dispatch_liveness --> tools_dispatch_liveness_check
     tests_test_inc200_experiment_e2e --> tools_experiment_request
@@ -369,11 +403,32 @@ graph LR
     tests_test_inc201_consent_record -.->|deferred| tools_taglines
     tests_test_inc201_experiments_server --> tools_experiment_run
     tests_test_inc201_experiments_server --> tools_friday_consent
+    tests_test_inc202_checker --> tools_proposal_pipeline
+    tests_test_inc202_checker --> tools_proposal_pipeline_check
+    tests_test_inc202_frozen_body --> tools_proposal_pipeline
+    tests_test_inc202_frozen_body --> tools_proposal_pipeline_check
+    tests_test_inc202_header_grammar --> tools_taglines
+    tests_test_inc202_mover --> tools_proposal_pipeline
+    tests_test_inc203_dispatch_workshop --> tools_dispatch_liveness_check
+    tests_test_inc204_keys_gate --> tools_handoff_attest
+    tests_test_inc204_keys_gate --> tools_handoff_gate
+    tests_test_inc204_posture_check -.->|deferred| tools_secret_names
+    tests_test_inc204_posture_check --> tools_secret_posture_check
+    tests_test_inc207_extract_js --> tools_doc_synthesis_extract_architecture
+    tests_test_inc207_extract_js --> tools_doc_synthesis_extract_js
+    tests_test_inc207_size_rule --> tools_doc_synthesis_synthesis_diff
+    tests_test_inc208_dispatch_check --> tools_dispatch_briefing_check
+    tests_test_inc209_decline --> tools_compaction_seed
+    tests_test_inc209_seed --> tools_compaction_seed
+    tests_test_inc209_surfaces --> tools_compaction_seed
     tests_test_lane_open_helper --> tools_friday_substrate
     tests_test_mdparse --> tools_doc_index_mdparse
+    tests_test_ops_battery --> tools_ops_battery
     tests_test_parked_ledger --> tools_parked
+    tests_test_recurrence_register --> tools_taglines
     tests_test_registry --> tools_doc_index_registry
     tests_test_sanitized_mirror --> tools_sanitized_mirror
+    tests_test_scheduled_jobs --> tools_scheduled_jobs
     tests_test_seam_handoff -.->|deferred| tools_decisions
     tests_test_seam_handoff --> tools_friday_substrate
     tests_test_seam_handoff --> tools_seam_handoff
@@ -401,6 +456,7 @@ graph LR
     tests_test_verify_review_format_dispositions --> tools_verify_review_format
     tests_test_verify_state --> tools_decisions
     tests_test_verify_state --> tools_verify_state
+    tests_test_watcher_coverage -.->|deferred| tools_watcher_coverage
     tools_bug_close_check --> tools_trail_check
     tools_capture_integrity --> tools_decisions
     tools_capture_integrity --> tools_friday_substrate
@@ -413,6 +469,7 @@ graph LR
     tools_decisions_append --> tools_decisions
     tools_decisions_append --> tools_friday_substrate
     tools_design_contract_check -.->|deferred| tools_decisions
+    tools_dispatch_briefing_check --> tools_taglines
     tools_doc_index_registry --> tools_decisions
     tools_doc_index_registry --> tools_friday_substrate
     tools_doc_index_registry --> tools_taglines
@@ -421,6 +478,7 @@ graph LR
     tools_doc_index_server -.->|deferred| tools_receipt
     tools_doc_index_server -.->|deferred| tools_verify_claims
     tools_doc_index_server -.->|deferred| tools_verify_state
+    tools_doc_synthesis_extract_architecture -.->|deferred| tools_doc_synthesis_extract_js
     tools_doc_synthesis_synthesis_diff -.->|deferred| tools_decisions
     tools_doc_synthesis_synthesis_diff -.->|deferred| tools_doc_index_mdparse
     tools_doc_gate --> tools_findings_brief_check
@@ -440,6 +498,7 @@ graph LR
     tools_graph_refresh --> tools_friday_substrate
     tools_handoff_attest --> tools_friday_substrate
     tools_handoff_attest --> tools_handoff_gate
+    tools_handoff_attest --> tools_secret_posture_check
     tools_handoff_gate --> tools_friday_substrate
     tools_lane --> tools_friday_substrate
     tools_maintainability_envelope_check -.->|deferred| tools_friday_substrate
@@ -449,18 +508,26 @@ graph LR
     tools_maintainability_measure --> tools_taglines
     tools_open_risks_check --> tools_decisions
     tools_open_risks_check --> tools_taglines
+    tools_ops_battery --> tools_friday_substrate
+    tools_ops_battery --> tools_taglines
     tools_oracle_edit_check --> tools_decisions
     tools_oracle_edit_check --> tools_taglines
     tools_parked --> tools_friday_substrate
     tools_parked --> tools_taglines
+    tools_proposal_pipeline --> tools_taglines
+    tools_proposal_pipeline_check --> tools_proposal_pipeline
     tools_receipt --> tools_friday_substrate
     tools_receipt -.->|deferred| tools_verify_claims
     tools_receipt -.->|deferred| tools_verify_coverage
     tools_receipt -.->|deferred| tools_verify_spawn_coverage
     tools_receipt -.->|deferred| tools_verify_state
     tools_research_orphan_check --> tools_taglines
+    tools_scheduled_jobs --> tools_friday_substrate
+    tools_scheduled_jobs --> tools_taglines
     tools_seam_handoff --> tools_decisions
     tools_seam_handoff --> tools_friday_substrate
+    tools_secret_posture_check --> tools_secret_names
+    tools_secret_posture_check --> tools_taglines
     tools_session_heartbeat --> tools_friday_substrate
     tools_spawn_telemetry --> tools_friday_substrate
     tools_standards_deviations --> tools_friday_substrate
@@ -542,6 +609,7 @@ graph LR
 | `tests.test_compaction_capture` | 1 | 0 |
 | `tests.test_companion_offer` | 2 | 0 |
 | `tests.test_companion_server` | 2 | 0 |
+| `tests.test_decision_lanes` | 1 | 0 |
 | `tests.test_decisions` | 1 | 0 |
 | `tests.test_doc_gate` | 2 | 0 |
 | `tests.test_doc_synthesis` | 2 | 0 |
@@ -586,6 +654,8 @@ graph LR
 | `tests.test_inc008_gate` | 1 | 0 |
 | `tests.test_inc008_maintainability_claim` | 2 | 0 |
 | `tests.test_inc008_measurer` | 1 | 0 |
+| `tests.test_inc101_doc_probe_scope` | 0 | 0 |
+| `tests.test_inc101_handover_gate` | 2 | 0 |
 | `tests.test_inc200_coverage_channel` | 1 | 0 |
 | `tests.test_inc200_dispatch_liveness` | 1 | 0 |
 | `tests.test_inc200_experiment_e2e` | 3 | 0 |
@@ -594,13 +664,30 @@ graph LR
 | `tests.test_inc201_consent_record` | 2 | 0 |
 | `tests.test_inc201_experiments_server` | 2 | 0 |
 | `tests.test_inc201_runner_grant` | 0 | 0 |
+| `tests.test_inc202_checker` | 2 | 0 |
+| `tests.test_inc202_frozen_body` | 2 | 0 |
+| `tests.test_inc202_header_grammar` | 1 | 0 |
+| `tests.test_inc202_mover` | 1 | 0 |
+| `tests.test_inc203_dispatch_workshop` | 1 | 0 |
+| `tests.test_inc204_keys_gate` | 2 | 0 |
+| `tests.test_inc204_posture_check` | 2 | 0 |
+| `tests.test_inc207_extract_js` | 2 | 0 |
+| `tests.test_inc207_size_rule` | 1 | 0 |
+| `tests.test_inc208_dispatch_check` | 1 | 0 |
+| `tests.test_inc209_decline` | 1 | 0 |
+| `tests.test_inc209_doctrine` | 0 | 0 |
+| `tests.test_inc209_seed` | 1 | 0 |
+| `tests.test_inc209_surfaces` | 1 | 0 |
 | `tests.test_lane_cli` | 0 | 0 |
 | `tests.test_lane_open_helper` | 1 | 0 |
 | `tests.test_mdparse` | 1 | 0 |
+| `tests.test_ops_battery` | 1 | 0 |
 | `tests.test_parked_ledger` | 1 | 0 |
+| `tests.test_recurrence_register` | 1 | 0 |
 | `tests.test_registry` | 1 | 0 |
 | `tests.test_review_format_interim` | 0 | 0 |
 | `tests.test_sanitized_mirror` | 1 | 0 |
+| `tests.test_scheduled_jobs` | 1 | 0 |
 | `tests.test_seam_handoff` | 3 | 0 |
 | `tests.test_secret_names` | 1 | 0 |
 | `tests.test_server` | 0 | 0 |
@@ -621,6 +708,7 @@ graph LR
 | `tests.test_verify_generated` | 1 | 0 |
 | `tests.test_verify_review_format_dispositions` | 2 | 0 |
 | `tests.test_verify_state` | 2 | 0 |
+| `tests.test_watcher_coverage` | 1 | 0 |
 | `tools.batch_edit` | 0 | 1 |
 | `tools.blast_radius_check` | 0 | 2 |
 | `tools.bug_close_check` | 1 | 2 |
@@ -628,43 +716,52 @@ graph LR
 | `tools.codex-adapter.state_stop_gate` | 0 | 0 |
 | `tools.committed_test_check` | 3 | 1 |
 | `tools.compaction_note` | 1 | 0 |
-| `tools.decisions` | 2 | 18 |
+| `tools.compaction_seed` | 0 | 3 |
+| `tools.decisions` | 2 | 19 |
 | `tools.decisions_append` | 2 | 0 |
 | `tools.design_contract_check` | 1 | 1 |
-| `tools.dispatch_liveness_check` | 0 | 1 |
+| `tools.dispatch_briefing_check` | 1 | 1 |
+| `tools.dispatch_liveness_check` | 0 | 2 |
 | `tools.doc-index.mdparse` | 0 | 3 |
 | `tools.doc-index.registry` | 3 | 2 |
 | `tools.doc-index.server` | 5 | 0 |
-| `tools.doc-synthesis.extract_architecture` | 0 | 1 |
-| `tools.doc-synthesis.synthesis_diff` | 2 | 1 |
+| `tools.doc-synthesis.extract_architecture` | 1 | 2 |
+| `tools.doc-synthesis.extract_js` | 0 | 2 |
+| `tools.doc-synthesis.synthesis_diff` | 2 | 2 |
 | `tools.doc_gate` | 2 | 1 |
+| `tools.doc_probe_scope` | 0 | 0 |
 | `tools.experiment_request` | 1 | 4 |
 | `tools.experiment_run` | 1 | 3 |
 | `tools.experiments.server` | 4 | 0 |
 | `tools.findings_brief_check` | 1 | 3 |
 | `tools.foundation_check` | 2 | 1 |
 | `tools.friday_consent` | 2 | 4 |
-| `tools.friday_substrate` | 0 | 39 |
+| `tools.friday_substrate` | 0 | 41 |
 | `tools.gen_command_index` | 0 | 3 |
 | `tools.graph_freshness_check` | 1 | 3 |
 | `tools.graph_query` | 0 | 1 |
 | `tools.graph_refresh` | 1 | 1 |
-| `tools.handoff_attest` | 2 | 2 |
-| `tools.handoff_gate` | 1 | 4 |
+| `tools.handoff_attest` | 3 | 4 |
+| `tools.handoff_gate` | 1 | 6 |
 | `tools.handoff_package_check` | 0 | 1 |
 | `tools.lane` | 1 | 0 |
 | `tools.maintainability_envelope_check` | 2 | 2 |
 | `tools.maintainability_gate_check` | 2 | 1 |
 | `tools.maintainability_measure` | 1 | 3 |
 | `tools.open_risks_check` | 2 | 1 |
+| `tools.ops_battery` | 2 | 1 |
 | `tools.oracle_edit_check` | 2 | 1 |
 | `tools.parked` | 2 | 1 |
 | `tools.profile_check` | 0 | 1 |
+| `tools.proposal_pipeline` | 1 | 4 |
+| `tools.proposal_pipeline_check` | 1 | 2 |
 | `tools.receipt` | 5 | 2 |
 | `tools.research_orphan_check` | 1 | 1 |
 | `tools.sanitized_mirror` | 0 | 2 |
+| `tools.scheduled_jobs` | 2 | 1 |
 | `tools.seam_handoff` | 2 | 1 |
-| `tools.secret_names` | 0 | 1 |
+| `tools.secret_names` | 0 | 3 |
+| `tools.secret_posture_check` | 2 | 2 |
 | `tools.session_heartbeat` | 1 | 1 |
 | `tools.skill_standard_check` | 0 | 1 |
 | `tools.spawn_grant_check` | 0 | 1 |
@@ -673,7 +770,7 @@ graph LR
 | `tools.standards_deviations` | 1 | 1 |
 | `tools.state_advisory_check` | 2 | 2 |
 | `tools.state_record` | 2 | 2 |
-| `tools.taglines` | 0 | 25 |
+| `tools.taglines` | 0 | 32 |
 | `tools.trail_check` | 2 | 2 |
 | `tools.usage_report` | 1 | 0 |
 | `tools.verify_claims` | 1 | 8 |
@@ -684,5 +781,6 @@ graph LR
 | `tools.verify_state` | 6 | 4 |
 | `tools.visual-companion.companion_server` | 1 | 1 |
 | `tools.visual-companion.offer` | 0 | 1 |
+| `tools.watcher_coverage` | 0 | 1 |
 | `tools.worktree_create_check` | 1 | 1 |
 

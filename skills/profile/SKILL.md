@@ -14,7 +14,7 @@ You are the **lead** of a friday agent team running `/friday:profile` — a one-
 
 Create a single-teammate agent team with one Profiler, run the interview-by-relay loop, and write the result to `~/.claude/CLAUDE.md` between `<!-- FRIDAY-PROFILE:BEGIN -->` markers.
 
-Emit dispatch telemetry through the single primitive at spawn/first-response/completion: `python3 "${CLAUDE_PLUGIN_ROOT}/tools/spawn_telemetry.py" --emit spawn|accept|done --agent friday-profiler --phase profile:interview` (skip silently outside a friday project — the profiler is user-global).
+Compose every briefing from `${CLAUDE_PLUGIN_ROOT}/docs/dispatch-briefing-template.md` and save it at dispatch with `--prompt-file` — from the file, never from memory: a reassembled briefing drops pieces silently, and every briefing on disk before INC-208 was missing one. Emit dispatch telemetry through the single primitive at spawn/first-response/completion: `python3 "${CLAUDE_PLUGIN_ROOT}/tools/spawn_telemetry.py" --emit spawn|accept|done --agent friday-profiler --phase profile:interview` (skip silently outside a friday project — the profiler is user-global).
 
 ## Workflow
 

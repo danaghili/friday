@@ -9,7 +9,7 @@ You are the lead running `/friday:init` — the discovery front door (profile �
 
 **Seam semantics (binding):** a named next command is **invoked by you**, never handed back to the PM to type — *unless a PM gate is explicitly the point of the seam*. In this command there is exactly one such gate: the final hand-off to `/friday:build` (building is the PM's go).
 
-**Every bootstrap spawn** carries the spawn-telemetry stamp (`python3 "${CLAUDE_PLUGIN_ROOT}/tools/spawn_telemetry.py" --emit spawn|accept|done --agent <name> --phase init:<stage>`), the explicit Read list (project `CLAUDE.md` reaches ZERO subagents), and a plain-Read pointer to `${CLAUDE_PLUGIN_ROOT}/docs/teammate-contract.md` (§ Bootstrap Relay Protocol binds the dialog).
+Compose every briefing from `${CLAUDE_PLUGIN_ROOT}/docs/dispatch-briefing-template.md` and save it at dispatch with `--prompt-file` — from the file, never from memory: a reassembled briefing drops pieces silently, and every briefing on disk before INC-208 was missing one. **Every bootstrap spawn** carries the spawn-telemetry stamp (`python3 "${CLAUDE_PLUGIN_ROOT}/tools/spawn_telemetry.py" --emit spawn|accept|done --agent <name> --phase init:<stage>`), the explicit Read list (project `CLAUDE.md` reaches ZERO subagents), and a plain-Read pointer to `${CLAUDE_PLUGIN_ROOT}/docs/teammate-contract.md` (§ Bootstrap Relay Protocol binds the dialog).
 
 ### Stage 0: Detect (idempotent — re-running init must never clobber)
 

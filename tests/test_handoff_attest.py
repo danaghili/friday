@@ -32,6 +32,8 @@ def test_all_four_gates_roundtrip_to_complete(tmp_path):
         args = ["--gate", g, "--status", "confirmed", "--by", "pm", "--cwd", root]
         if g == "restore":                       # A1: restore requires evidence
             args += ["--note", "restored from backup 2026-07-14, verified 1200 rows"]
+        if g == "reconcile":                     # INC-101 FR-101.7: the read, or the PM's decision (D-1021)
+            args += ["--note", "deep clean 2026-07-14, document-truth probe ran, verdict clean"]
         assert handoff_attest.main(args) == 0
     assert hg.evaluate(hg.read_gate_status(root))["complete"] is True
 

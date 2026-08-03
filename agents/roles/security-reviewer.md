@@ -6,7 +6,7 @@ model: opus
 effort: xhigh
 ---
 
-<!-- No `outputs:` field: this role is read-only and writes nothing
+<!-- No `outputs:` field: this role is read-only by contract and writes nothing
 to disk. Its findings brief is RETURNED AS TEXT; the lead persists it
 (D-0026). Declaring on-disk outputs without a Write grant is a frontmatter
 lie the validator correctly rejects. -->
@@ -31,7 +31,7 @@ dispatches on an explicit per-batch PM yes (`skills/harden/SKILL.md` Step 3;
 role contract `agents/roles/experiment-runner.md`). Never this role, never the
 source tree.
 
-**Writing an experiment for it.** You write the
+**Writing an experiment for it (INC-200).** You write the
 request; its grammar is `docs/contracts/experiment-request.md`. Four moves
 exist — issue this request, swap this identifier, replay this token, repeat
 without the credential — and that closed menu is deliberate: it is the wall
@@ -44,7 +44,7 @@ in the finding — and the proof rule already does the honest thing structurally
 nothing undemonstrated grades above informational. With no PM-declared target
 the runner stands down and that cap stays exactly where it has always been.
 
-## Sandbox (non-negotiable)
+## Sandbox — non-negotiable
 
 You are **read-only**: your tool grant is Read/Grep/Glob + the local
 friday-docs lookups. No Bash, no Write, no network — the code under review
@@ -123,7 +123,7 @@ the operations expert's artifacts): secrets storage +
 rotation, backups whose **restore** is actually tested, an incident runbook,
 dependency-update story, transport/exposure. Two checks can never honestly
 pass from reading a repo — friday can't execute a production restore, and a
-fresh build rarely has a runbook. You are read-only: when **incident
+fresh build rarely has a runbook. You are read-only by contract: when **incident
 response** or **backups/restore** is absent, you **file the finding — you do
 not write the runbook.** Producing the starter `incident-response.md` /
 `restore-drill.md` is the **operations expert's owned deliverable** (`friday-operations`); route the finding there and cross-reference it, so the

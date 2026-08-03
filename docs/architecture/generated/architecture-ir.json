@@ -208,7 +208,7 @@
   {
    "id": "tests.test_adopt_parity",
    "path": "tests/test_adopt_parity.py",
-   "loc": 138
+   "loc": 156
   },
   {
    "id": "tests.test_batch_edit",
@@ -238,7 +238,7 @@
   {
    "id": "tests.test_bug_005_increment_gate_authoring",
    "path": "tests/test_bug_005_increment_gate_authoring.py",
-   "loc": 184
+   "loc": 152
   },
   {
    "id": "tests.test_capture_integrity",
@@ -264,6 +264,11 @@
    "id": "tests.test_companion_server",
    "path": "tests/test_companion_server.py",
    "loc": 107
+  },
+  {
+   "id": "tests.test_decision_lanes",
+   "path": "tests/test_decision_lanes.py",
+   "loc": 115
   },
   {
    "id": "tests.test_decisions",
@@ -433,7 +438,7 @@
   {
    "id": "tests.test_handoff_attest",
    "path": "tests/test_handoff_attest.py",
-   "loc": 58
+   "loc": 60
   },
   {
    "id": "tests.test_handoff_gate",
@@ -486,9 +491,19 @@
    "loc": 129
   },
   {
+   "id": "tests.test_inc101_doc_probe_scope",
+   "path": "tests/test_inc101_doc_probe_scope.py",
+   "loc": 190
+  },
+  {
+   "id": "tests.test_inc101_handover_gate",
+   "path": "tests/test_inc101_handover_gate.py",
+   "loc": 50
+  },
+  {
    "id": "tests.test_inc200_coverage_channel",
    "path": "tests/test_inc200_coverage_channel.py",
-   "loc": 129
+   "loc": 117
   },
   {
    "id": "tests.test_inc200_dispatch_liveness",
@@ -526,6 +541,76 @@
    "loc": 111
   },
   {
+   "id": "tests.test_inc202_checker",
+   "path": "tests/test_inc202_checker.py",
+   "loc": 164
+  },
+  {
+   "id": "tests.test_inc202_frozen_body",
+   "path": "tests/test_inc202_frozen_body.py",
+   "loc": 145
+  },
+  {
+   "id": "tests.test_inc202_header_grammar",
+   "path": "tests/test_inc202_header_grammar.py",
+   "loc": 84
+  },
+  {
+   "id": "tests.test_inc202_mover",
+   "path": "tests/test_inc202_mover.py",
+   "loc": 134
+  },
+  {
+   "id": "tests.test_inc203_dispatch_workshop",
+   "path": "tests/test_inc203_dispatch_workshop.py",
+   "loc": 103
+  },
+  {
+   "id": "tests.test_inc204_keys_gate",
+   "path": "tests/test_inc204_keys_gate.py",
+   "loc": 78
+  },
+  {
+   "id": "tests.test_inc204_posture_check",
+   "path": "tests/test_inc204_posture_check.py",
+   "loc": 168
+  },
+  {
+   "id": "tests.test_inc207_extract_js",
+   "path": "tests/test_inc207_extract_js.py",
+   "loc": 261
+  },
+  {
+   "id": "tests.test_inc207_size_rule",
+   "path": "tests/test_inc207_size_rule.py",
+   "loc": 133
+  },
+  {
+   "id": "tests.test_inc208_dispatch_check",
+   "path": "tests/test_inc208_dispatch_check.py",
+   "loc": 260
+  },
+  {
+   "id": "tests.test_inc209_decline",
+   "path": "tests/test_inc209_decline.py",
+   "loc": 124
+  },
+  {
+   "id": "tests.test_inc209_doctrine",
+   "path": "tests/test_inc209_doctrine.py",
+   "loc": 109
+  },
+  {
+   "id": "tests.test_inc209_seed",
+   "path": "tests/test_inc209_seed.py",
+   "loc": 314
+  },
+  {
+   "id": "tests.test_inc209_surfaces",
+   "path": "tests/test_inc209_surfaces.py",
+   "loc": 201
+  },
+  {
    "id": "tests.test_lane_cli",
    "path": "tests/test_lane_cli.py",
    "loc": 77
@@ -541,9 +626,19 @@
    "loc": 39
   },
   {
+   "id": "tests.test_ops_battery",
+   "path": "tests/test_ops_battery.py",
+   "loc": 360
+  },
+  {
    "id": "tests.test_parked_ledger",
    "path": "tests/test_parked_ledger.py",
    "loc": 213
+  },
+  {
+   "id": "tests.test_recurrence_register",
+   "path": "tests/test_recurrence_register.py",
+   "loc": 43
   },
   {
    "id": "tests.test_registry",
@@ -559,6 +654,11 @@
    "id": "tests.test_sanitized_mirror",
    "path": "tests/test_sanitized_mirror.py",
    "loc": 123
+  },
+  {
+   "id": "tests.test_scheduled_jobs",
+   "path": "tests/test_scheduled_jobs.py",
+   "loc": 219
   },
   {
    "id": "tests.test_seam_handoff",
@@ -653,12 +753,17 @@
   {
    "id": "tests.test_verify_review_format_dispositions",
    "path": "tests/test_verify_review_format_dispositions.py",
-   "loc": 66
+   "loc": 54
   },
   {
    "id": "tests.test_verify_state",
    "path": "tests/test_verify_state.py",
    "loc": 189
+  },
+  {
+   "id": "tests.test_watcher_coverage",
+   "path": "tests/test_watcher_coverage.py",
+   "loc": 226
   },
   {
    "id": "tools.batch_edit",
@@ -696,9 +801,14 @@
    "loc": 74
   },
   {
+   "id": "tools.compaction_seed",
+   "path": "tools/compaction_seed.py",
+   "loc": 618
+  },
+  {
    "id": "tools.decisions",
    "path": "tools/decisions.py",
-   "loc": 363
+   "loc": 402
   },
   {
    "id": "tools.decisions_append",
@@ -711,9 +821,14 @@
    "loc": 75
   },
   {
+   "id": "tools.dispatch_briefing_check",
+   "path": "tools/dispatch_briefing_check.py",
+   "loc": 238
+  },
+  {
    "id": "tools.dispatch_liveness_check",
    "path": "tools/dispatch_liveness_check.py",
-   "loc": 182
+   "loc": 186
   },
   {
    "id": "tools.doc-index.mdparse",
@@ -733,17 +848,27 @@
   {
    "id": "tools.doc-synthesis.extract_architecture",
    "path": "tools/doc-synthesis/extract_architecture.py",
-   "loc": 472
+   "loc": 501
+  },
+  {
+   "id": "tools.doc-synthesis.extract_js",
+   "path": "tools/doc-synthesis/extract_js.py",
+   "loc": 436
   },
   {
    "id": "tools.doc-synthesis.synthesis_diff",
    "path": "tools/doc-synthesis/synthesis_diff.py",
-   "loc": 184
+   "loc": 239
   },
   {
    "id": "tools.doc_gate",
    "path": "tools/doc_gate.py",
    "loc": 350
+  },
+  {
+   "id": "tools.doc_probe_scope",
+   "path": "tools/doc_probe_scope.py",
+   "loc": 205
   },
   {
    "id": "tools.experiment_request",
@@ -803,7 +928,7 @@
   {
    "id": "tools.handoff_attest",
    "path": "tools/handoff_attest.py",
-   "loc": 92
+   "loc": 142
   },
   {
    "id": "tools.handoff_gate",
@@ -841,6 +966,11 @@
    "loc": 137
   },
   {
+   "id": "tools.ops_battery",
+   "path": "tools/ops_battery.py",
+   "loc": 376
+  },
+  {
    "id": "tools.oracle_edit_check",
    "path": "tools/oracle_edit_check.py",
    "loc": 95
@@ -854,6 +984,16 @@
    "id": "tools.profile_check",
    "path": "tools/profile_check.py",
    "loc": 114
+  },
+  {
+   "id": "tools.proposal_pipeline",
+   "path": "tools/proposal_pipeline.py",
+   "loc": 195
+  },
+  {
+   "id": "tools.proposal_pipeline_check",
+   "path": "tools/proposal_pipeline_check.py",
+   "loc": 254
   },
   {
    "id": "tools.receipt",
@@ -871,6 +1011,11 @@
    "loc": 129
   },
   {
+   "id": "tools.scheduled_jobs",
+   "path": "tools/scheduled_jobs.py",
+   "loc": 329
+  },
+  {
    "id": "tools.seam_handoff",
    "path": "tools/seam_handoff.py",
    "loc": 118
@@ -879,6 +1024,11 @@
    "id": "tools.secret_names",
    "path": "tools/secret_names.py",
    "loc": 145
+  },
+  {
+   "id": "tools.secret_posture_check",
+   "path": "tools/secret_posture_check.py",
+   "loc": 195
   },
   {
    "id": "tools.session_heartbeat",
@@ -974,6 +1124,11 @@
    "id": "tools.visual-companion.offer",
    "path": "tools/visual-companion/offer.py",
    "loc": 56
+  },
+  {
+   "id": "tools.watcher_coverage",
+   "path": "tools/watcher_coverage.py",
+   "loc": 285
   },
   {
    "id": "tools.worktree_create_check",
@@ -1522,6 +1677,13 @@
    "deferred": false
   },
   {
+   "from": "tests.test_decision_lanes",
+   "to": "tools.decisions",
+   "kind": "import",
+   "line": 20,
+   "deferred": false
+  },
+  {
    "from": "tests.test_decisions",
    "to": "tools.decisions",
    "kind": "import",
@@ -2061,6 +2223,20 @@
    "deferred": false
   },
   {
+   "from": "tests.test_inc101_handover_gate",
+   "to": "tools.handoff_attest",
+   "kind": "import",
+   "line": 11,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_inc101_handover_gate",
+   "to": "tools.handoff_gate",
+   "kind": "import",
+   "line": 12,
+   "deferred": false
+  },
+  {
    "from": "tests.test_inc200_coverage_channel",
    "to": "tools.verify_coverage",
    "kind": "import",
@@ -2145,6 +2321,132 @@
    "deferred": false
   },
   {
+   "from": "tests.test_inc202_checker",
+   "to": "tools.proposal_pipeline",
+   "kind": "import",
+   "line": 21,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_inc202_checker",
+   "to": "tools.proposal_pipeline_check",
+   "kind": "import",
+   "line": 22,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_inc202_frozen_body",
+   "to": "tools.proposal_pipeline",
+   "kind": "import",
+   "line": 17,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_inc202_frozen_body",
+   "to": "tools.proposal_pipeline_check",
+   "kind": "import",
+   "line": 18,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_inc202_header_grammar",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 14,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_inc202_mover",
+   "to": "tools.proposal_pipeline",
+   "kind": "import",
+   "line": 16,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_inc203_dispatch_workshop",
+   "to": "tools.dispatch_liveness_check",
+   "kind": "import",
+   "line": 19,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_inc204_keys_gate",
+   "to": "tools.handoff_attest",
+   "kind": "import",
+   "line": 14,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_inc204_keys_gate",
+   "to": "tools.handoff_gate",
+   "kind": "import",
+   "line": 15,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_inc204_posture_check",
+   "to": "tools.secret_names",
+   "kind": "import",
+   "line": 148,
+   "deferred": true
+  },
+  {
+   "from": "tests.test_inc204_posture_check",
+   "to": "tools.secret_posture_check",
+   "kind": "import",
+   "line": 23,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_inc207_extract_js",
+   "to": "tools.doc-synthesis.extract_architecture",
+   "kind": "import",
+   "line": 19,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_inc207_extract_js",
+   "to": "tools.doc-synthesis.extract_js",
+   "kind": "import",
+   "line": 20,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_inc207_size_rule",
+   "to": "tools.doc-synthesis.synthesis_diff",
+   "kind": "import",
+   "line": 16,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_inc208_dispatch_check",
+   "to": "tools.dispatch_briefing_check",
+   "kind": "import",
+   "line": 24,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_inc209_decline",
+   "to": "tools.compaction_seed",
+   "kind": "import",
+   "line": 24,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_inc209_seed",
+   "to": "tools.compaction_seed",
+   "kind": "import",
+   "line": 30,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_inc209_surfaces",
+   "to": "tools.compaction_seed",
+   "kind": "import",
+   "line": 25,
+   "deferred": false
+  },
+  {
    "from": "tests.test_lane_open_helper",
    "to": "tools.friday_substrate",
    "kind": "import",
@@ -2159,10 +2461,24 @@
    "deferred": false
   },
   {
+   "from": "tests.test_ops_battery",
+   "to": "tools.ops_battery",
+   "kind": "import",
+   "line": 17,
+   "deferred": false
+  },
+  {
    "from": "tests.test_parked_ledger",
    "to": "tools.parked",
    "kind": "import",
    "line": 34,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_recurrence_register",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 12,
    "deferred": false
   },
   {
@@ -2177,6 +2493,13 @@
    "to": "tools.sanitized_mirror",
    "kind": "import",
    "line": 17,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_scheduled_jobs",
+   "to": "tools.scheduled_jobs",
+   "kind": "import",
+   "line": 15,
    "deferred": false
   },
   {
@@ -2369,6 +2692,13 @@
    "deferred": false
   },
   {
+   "from": "tests.test_watcher_coverage",
+   "to": "tools.watcher_coverage",
+   "kind": "import",
+   "line": 217,
+   "deferred": true
+  },
+  {
    "from": "tools.bug_close_check",
    "to": "tools.trail_check",
    "kind": "import",
@@ -2421,14 +2751,14 @@
    "from": "tools.decisions",
    "to": "tools.friday_substrate",
    "kind": "import",
-   "line": 49,
+   "line": 55,
    "deferred": false
   },
   {
    "from": "tools.decisions",
    "to": "tools.taglines",
    "kind": "import",
-   "line": 50,
+   "line": 56,
    "deferred": false
   },
   {
@@ -2451,6 +2781,13 @@
    "kind": "import",
    "line": 52,
    "deferred": true
+  },
+  {
+   "from": "tools.dispatch_briefing_check",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 52,
+   "deferred": false
   },
   {
    "from": "tools.doc-index.registry",
@@ -2509,17 +2846,24 @@
    "deferred": true
   },
   {
+   "from": "tools.doc-synthesis.extract_architecture",
+   "to": "tools.doc-synthesis.extract_js",
+   "kind": "import",
+   "line": 352,
+   "deferred": true
+  },
+  {
    "from": "tools.doc-synthesis.synthesis_diff",
    "to": "tools.decisions",
    "kind": "import",
-   "line": 169,
+   "line": 224,
    "deferred": true
   },
   {
    "from": "tools.doc-synthesis.synthesis_diff",
    "to": "tools.doc-index.mdparse",
    "kind": "import",
-   "line": 59,
+   "line": 75,
    "deferred": true
   },
   {
@@ -2642,6 +2986,13 @@
    "deferred": false
   },
   {
+   "from": "tools.handoff_attest",
+   "to": "tools.secret_posture_check",
+   "kind": "import",
+   "line": 26,
+   "deferred": false
+  },
+  {
    "from": "tools.handoff_gate",
    "to": "tools.friday_substrate",
    "kind": "import",
@@ -2705,6 +3056,20 @@
    "deferred": false
   },
   {
+   "from": "tools.ops_battery",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 45,
+   "deferred": false
+  },
+  {
+   "from": "tools.ops_battery",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 46,
+   "deferred": false
+  },
+  {
    "from": "tools.oracle_edit_check",
    "to": "tools.decisions",
    "kind": "import",
@@ -2730,6 +3095,20 @@
    "to": "tools.taglines",
    "kind": "import",
    "line": 52,
+   "deferred": false
+  },
+  {
+   "from": "tools.proposal_pipeline",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 34,
+   "deferred": false
+  },
+  {
+   "from": "tools.proposal_pipeline_check",
+   "to": "tools.proposal_pipeline",
+   "kind": "import",
+   "line": 57,
    "deferred": false
   },
   {
@@ -2775,6 +3154,20 @@
    "deferred": false
   },
   {
+   "from": "tools.scheduled_jobs",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 46,
+   "deferred": false
+  },
+  {
+   "from": "tools.scheduled_jobs",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 47,
+   "deferred": false
+  },
+  {
    "from": "tools.seam_handoff",
    "to": "tools.decisions",
    "kind": "import",
@@ -2786,6 +3179,20 @@
    "to": "tools.friday_substrate",
    "kind": "import",
    "line": 30,
+   "deferred": false
+  },
+  {
+   "from": "tools.secret_posture_check",
+   "to": "tools.secret_names",
+   "kind": "import",
+   "line": 48,
+   "deferred": false
+  },
+  {
+   "from": "tools.secret_posture_check",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 49,
    "deferred": false
   },
   {
@@ -3219,5 +3626,5 @@
  ],
  "unparseable": [],
  "generated-by": "/friday:reference (tools/doc-synthesis/extract_architecture.py)",
- "generated-at": "2026-07-29T15:24:15+00:00"
+ "generated-at": "2026-08-03T15:49:45+00:00"
 }

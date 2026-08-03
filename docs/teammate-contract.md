@@ -60,7 +60,7 @@ When a gate requires the PM to read an artifact (the TSOW second-read), the
 PM reads the **actual file**, not the lead's summary — a relayed précis is
 exactly the self-report failure mode the gates exist to prevent.
 
-## One-way-door gates (PROP-039 + PROP-044)
+## One-way-door gates (PROP-039 + PROP-044 + INC-206)
 
 Any decision in a floor category (schema-data, auth-security, external-api,
 friday-claims, spend) — or otherwise expensive to reverse — travels to the PM
@@ -69,6 +69,8 @@ plain terms and the PM confirms understanding before the gate clears. An
 unscaffolded gate decays into a rubber stamp under iteration pressure; a
 gate the PM never sees (an agent deciding unilaterally) is a defect, not a
 convenience.
+
+**Old doors never bar new asks, and decided doors stay decided (INC-206).** A stance recorded at an earlier moment — a spec's out-of-scope item, a `non-goal:` claim line, a past decision — is dated context, never a standing blocker. When a PM ask collides with one, the framing is *"the spec was built around X; this ask implies Y, which is a change to X; here are the pros and cons — your call"* — never *"the spec forbade X."* The original reason for the stance travels as a full-strength con, not a footnote, so a stance that was expensive to retire stays hard to reverse on the merits rather than closed by rule; and the door opens only from the PM's side — friday never proposes reopening a retired stance on its own initiative. A reversal that is a genuine one-way door still gets its one eyes-open teach-back (removing the blocker never removes the conversation); steering around a choice the PM has stated is barred; and once the PM decides, the matter is closed. friday returns to a closed matter only when a genuinely new fact has arrived — never a new argument about the same facts — and the first sentence of that return names the fact; a rehash carrying no new fact is barred outright. This paragraph is the rule's single home; the surfaces that hit the collision name the moment and cite it here, never restate it.
 
 ## Anti-premature codification
 
@@ -120,14 +122,14 @@ dispatch, persist the spawn prompt as the agent's mission layer
 drawer path in the spawn message (contract:
 `docs/contracts/compaction-package.md`).
 
-## Compaction continuity (INC-001; contract: docs/contracts/compaction-package.md)
+## Compaction continuity (INC-001 + INC-205; contract: docs/contracts/compaction-package.md)
 
 Sized to the job — a trivial single-purpose task skips all of this; an agent
-doing real work follows it as a habit, never a gate:
+doing real work follows it as a habit, never a gate.
 
-1. **Plan up front.** Break your task down into a live task list before
-   working; the task list is the source of truth for what remains — the
-   compaction summary points at it, never copies it.
+Rule 1 also binds the **session lead** running a bound lane (`/friday:build`, `/friday:feature`, `/friday:resume`) exactly as it binds a spawned teammate — the lead was the one seat the rule never covered, and the one where the whole build's progress is visible (INC-205 D1/D5; the bound lanes name the step at their fire moment and cite this rule rather than restating it):
+
+1. **Plan up front, and keep it true.** Break your task down into a live task list before working; the task list is the source of truth for what remains — the compaction summary points at it, never copies it. Mark each item finished at the moment it lands, before starting the next, one item in progress at a time — a list that stopped being updated does not merely fail to help, it misinforms: the compaction machinery tells a returning session to trust it (INC-205 D3). What goes on the list is the author's judgment for that piece of work (D2 — the PM's eyes-open call: existence and honesty are mandated, granularity is not). A session with no task-list facility says so once and proceeds — fail-open, never a refusal (D7).
 2. **Note early.** After gathering context, jot a short orientation note
    (`compaction_note.py --layer orientation`) — what you learned that your
    future self needs. Top it up when big learnings land.

@@ -55,9 +55,13 @@ import sys
 
 # Where the roster lives, and which trees count as "live surfaces". Archived
 # and historical material is deliberately out of scope: a pre-rebuild doc
-# describing a deleted role is a record, not a promise.
-ROLE_DIRS = ("agents",)
-SURFACE_DIRS = ("skills", "commands", "agents", "hooks", "tools", "docs/contracts")
+# describing a deleted role is a record, not a promise. The repo-internal
+# workshop (.claude/agents + the .claude/skills callers) is in scope since
+# INC-203 D9 — its two agents were invisible to this exact checker while the
+# record demanded their runs ten times over.
+ROLE_DIRS = ("agents", ".claude/agents")
+SURFACE_DIRS = ("skills", "commands", "agents", "hooks", "tools",
+                "docs/contracts", ".claude/skills", ".claude/agents")
 SURFACE_EXTS = (".md", ".py")
 
 _NAME_RE = re.compile(r"^name:\s*(\S+)\s*$", re.MULTILINE)

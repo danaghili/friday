@@ -45,6 +45,22 @@ import sys
 
 EMPTY_INVENTORY_SENTINEL = "_No components identified._"
 
+# INC-207 FR-207.3 — the size rule. Above the threshold the inventory section
+# may carry this exact sentinel instead of enumerating every module: the
+# oracle then proves the generated inventory exists and still blocks any
+# module the prose names that the code does not contain, but stops demanding
+# a hand-maintained full enumeration (which no model sustains at real
+# front-end size — the predictable end state of demanding it is the checker
+# getting switched off). Below the threshold the sentinel is NOT accepted:
+# today's full-enumeration contract is unchanged, character for character.
+INVENTORY_POINTER_SENTINEL = ("_Inventory: generated — see "
+                              "docs/architecture/generated/"
+                              "architecture-ir.json._")
+DEFAULT_INVENTORY_THRESHOLD = 300
+
+_THRESHOLD_LINE_RE = re.compile(
+    r"^synthesis:\s*inventory-threshold\s*<=\s*(\d+)\s*$", re.M)
+
 _INVENTORY_ITEM_RE = re.compile(r"^\s*[-*]\s+`([^`]+)`")
 _MERMAID_RE = re.compile(r"```mermaid\s*\n(.*?)```", re.S)
 _NODE_DECL_RE = re.compile(r"^\s*([A-Za-z0-9_]+)\[\"([^\"]+)\"\]", re.M)
@@ -103,35 +119,71 @@ def _edge_findings(ir: dict, ir_edges: set, synth_text: str, add) -> None:
                 f"diagram asserts `{a}` → `{b}` which the code does not contain")
 
 
-def diff(ir: dict, synth_text: str, decisions_entries: list | None = None) -> dict:
-    findings: list[dict] = []
-
-    def add(kind: str, severity: str, detail: str) -> None:
-        findings.append({"kind": kind, "severity": severity, "detail": detail})
-
-    ir_modules = {m["id"] for m in ir.get("modules", [])}
-    ir_edges = {(e["from"], e["to"]) for e in ir.get("edges", [])}
-
+def _inventory_findings(ir: dict, ir_modules: set, synth_text: str,
+                        threshold: int, add) -> bool:
+    """The inventory half of the oracle; returns pointer_mode (FR-207.3).
+    The pointer sentinel counts ONLY above the threshold — below it, the full
+    enumeration stays the contract, so a small project can never opt out
+    silently."""
     inv_lines = _inventory_section(synth_text)
     if inv_lines is None:
         add("missing-inventory", "blocking",
             "synthesized doc lacks the pinned '## Component inventory' section "
             "(contract: docs/contracts/synthesis-handoff.md)")
-    else:
-        declared = {m.group(1) for ln in inv_lines
-                    for m in [_INVENTORY_ITEM_RE.match(ln)] if m}
-        is_empty_decl = any(EMPTY_INVENTORY_SENTINEL in ln for ln in inv_lines)
-        if ir.get("generated-empty") and not declared and not is_empty_decl:
-            add("missing-inventory", "blocking",
-                f"zero-module IR requires the '{EMPTY_INVENTORY_SENTINEL}' sentinel")
+        return False
+    declared = {m.group(1) for ln in inv_lines
+                for m in [_INVENTORY_ITEM_RE.match(ln)] if m}
+    is_empty_decl = any(EMPTY_INVENTORY_SENTINEL in ln for ln in inv_lines)
+    pointer_mode = (len(ir_modules) > threshold
+                    and any(INVENTORY_POINTER_SENTINEL in ln
+                            for ln in inv_lines))
+    if ir.get("generated-empty") and not declared and not is_empty_decl:
+        add("missing-inventory", "blocking",
+            f"zero-module IR requires the '{EMPTY_INVENTORY_SENTINEL}' sentinel")
+    if not pointer_mode:
         for missing in sorted(ir_modules - declared):
             add("omitted-module", "blocking",
                 f"code contains `{missing}` but the synthesis inventory omits it")
-        for extra in sorted(declared - ir_modules):
-            add("hallucinated-module", "blocking",
-                f"synthesis inventory names `{extra}` which the code does not contain")
+    for extra in sorted(declared - ir_modules):
+        add("hallucinated-module", "blocking",
+            f"synthesis inventory names `{extra}` which the code does not contain")
+    return pointer_mode
 
-    _edge_findings(ir, ir_edges, synth_text, add)
+
+def load_threshold(root: str) -> int:
+    """The declared per-project inventory threshold (INC-207 D11) — a typed
+    line in docs/standards/coding-standards.md alongside the project's other
+    measured bars. No file / no line → the default (the non-adopter empty
+    case, same doctrine as the maintainability bars)."""
+    p = os.path.join(root, "docs", "standards", "coding-standards.md")
+    try:
+        with open(p, encoding="utf-8") as fh:
+            m = _THRESHOLD_LINE_RE.search(fh.read())
+    except OSError:
+        return DEFAULT_INVENTORY_THRESHOLD
+    return int(m.group(1)) if m else DEFAULT_INVENTORY_THRESHOLD
+
+
+def diff(ir: dict, synth_text: str, decisions_entries: list | None = None,
+         threshold: int | None = None) -> dict:
+    findings: list[dict] = []
+
+    def add(kind: str, severity: str, detail: str) -> None:
+        findings.append({"kind": kind, "severity": severity, "detail": detail})
+
+    if threshold is None:
+        threshold = DEFAULT_INVENTORY_THRESHOLD
+    ir_modules = {m["id"] for m in ir.get("modules", [])}
+    ir_edges = {(e["from"], e["to"]) for e in ir.get("edges", [])}
+
+    pointer_mode = _inventory_findings(ir, ir_modules, synth_text, threshold, add)
+
+    # In pointer mode the diagram is area-level narrative, not a module graph
+    # — diffing its edges against module-id edges would misread every area
+    # node as a hallucination, so the edge diff is skipped (the inventory
+    # hallucination check above still bites on any module the prose invents).
+    if not pointer_mode:
+        _edge_findings(ir, ir_edges, synth_text, add)
 
     if decisions_entries is not None and not decisions_entries and ir_modules:
         add("uncaptured-why", "info",
@@ -153,6 +205,9 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--doc", required=True)
     ap.add_argument("--decisions", default=None,
                     help="optional DECISIONS.md path for the uncaptured-why check")
+    ap.add_argument("--root", default=".",
+                    help="project root for the declared inventory threshold "
+                         "(INC-207 D11; default: cwd)")
     ap.add_argument("--json", action="store_true")
     args = ap.parse_args(argv)
     try:
@@ -169,7 +224,7 @@ def main(argv: list[str] | None = None) -> int:
         import decisions as dec
         parsed = dec.parse_file(args.decisions)
         entries = parsed["entries"] if parsed["ok"] else []
-    res = diff(ir, synth, entries)
+    res = diff(ir, synth, entries, threshold=load_threshold(args.root))
     if args.json:
         print(json.dumps(res))
     else:
