@@ -116,6 +116,20 @@ def test_an_unknown_source_is_refused(tmp_path):
     assert parked.entries(root) == []
 
 
+def test_the_fifth_source_loose_deferral_is_accepted(tmp_path):
+    """INC-107 FR-107.11/§9: a deferral recovered from a project's code names
+    its real producing moment — the deep clean's scan with the PM answering —
+    rather than being mislabelled as the lead's own deferral (D11, D-1070).
+    The set stays closed: the refusal of an unknown value is untouched."""
+    root = _root(tmp_path)
+    entry = parked.append(root, source="loose-deferral",
+                          what="health check omits the DB ping (harvested)",
+                          revisit_when="a real liveness-vs-DB incident")
+    entries = parked.entries(root)
+    assert entries and entries[0]["source"] == "loose-deferral"
+    assert entry["id"].startswith("PARK-")
+
+
 def test_empty_what_or_revisit_is_refused(tmp_path):
     """An entry with no revisit condition is exactly the unre-presentable
     limbo the ledger replaces."""

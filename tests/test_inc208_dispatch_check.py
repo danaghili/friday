@@ -257,3 +257,27 @@ def test_cli_exits_zero_even_with_findings(tmp_path):
     assert res.returncode == 0, res.stderr
     payload = json.loads(res.stdout)
     assert payload["ok"] is False and payload["findings"]
+
+
+def test_a_worktree_checkout_reads_the_shared_substrate(tmp_path):
+    """The journal and the drawers are worktree-SHARED; a checker that
+    hand-builds root/.friday reads an empty journal from a linked worktree
+    and reports nothing (2026-08-05 reconcile, C-8/C-9/C-10). The worktree
+    run must see exactly what the main checkout sees."""
+    import subprocess
+    env = {**os.environ, "GIT_AUTHOR_NAME": "t", "GIT_AUTHOR_EMAIL": "t@t",
+           "GIT_COMMITTER_NAME": "t", "GIT_COMMITTER_EMAIL": "t@t"}
+    main = tmp_path / "main"
+    main.mkdir()
+    subprocess.run(["git", "init", "-q", str(main)], check=True)
+    subprocess.run(["git", "-C", str(main), "commit", "--allow-empty", "-q",
+                    "-m", "seed"], check=True, env=env)
+    wt = tmp_path / "wt"
+    subprocess.run(["git", "-C", str(main), "worktree", "add", "-q", str(wt)],
+                   check=True, env=env)
+    _journal(str(main), [_spawn("r1")])
+    from_main = dbc.check(str(main), session_id=SID)
+    from_wt = dbc.check(str(wt), session_id=SID)
+    assert any(f["kind"] == "unsaved-briefing" and f["role"] == "r1"
+               for f in from_main["findings"])
+    assert from_wt == from_main

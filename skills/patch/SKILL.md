@@ -20,6 +20,12 @@ python3 "${CLAUDE_PLUGIN_ROOT}/tools/lane.py" open --lane patch --id PATCH-NNN \
 
 This writes the `.friday/lane-open` sentinel (contract: `docs/contracts/lane-open.md`). From now, guard #12 blocks any edit outside the declared radius at action time, with a Stop-time backstop warning (guard #12b) — the declaration makes an out-of-radius change provable, not deniable. Mint `PATCH-NNN` from `docs/PATCHES.md` (create with an H1 if absent; growing-log discipline: cap 100, archive the oldest half to `docs/patches/archive-NNN.md`). **Get the PM's single confirm before making the change.**
 
+### 1a. Turn the question around — who depends on what this touches?
+
+**This step runs before the step-1 confirm goes out — its person-question rides inside that same confirm message, no new moment, no second ask (INC-104).** The declared radius above stays the confining direction; the enumerating question is its mirror, and the ask's whole body — the sources enumerated at once, the process-level class, the person's plain sentence and its exact wording, the *nothing that I know of* rule, the never-blocks rule — lives at `docs/contracts/reckoning-record.md` § The ask (D8; cited, never restated). Mechanical sources: `python3 "${CLAUDE_PLUGIN_ROOT}/tools/consumer_scan.py" --root . --name <the changed thing's own name> [--path <its file path>] --json`.
+
+Every enumerated consumer gets one typed answer and the run's coverage statement lands beside them, both under this change's id: `python3 "${CLAUDE_PLUGIN_ROOT}/tools/reckoning.py" --root . record --change PATCH-NNN …` and `… searched --change PATCH-NNN …` (grammar, answer set, clearance rule: `docs/contracts/reckoning-record.md`). The trail's Proof (step 3) quotes that record's real output as one of its lines.
+
 ### 2. Make the change, prove it landed
 
 Make exactly the declared change. Prove it: the build still passes, the affected surface is checked, real output quoted — an executable, fail-loud check, never prose self-report.
@@ -35,5 +41,7 @@ Write `docs/trails/PATCH-NNN.md` in the change-trail grammar (`docs/contracts/ch
 The moment the "text tweak" turns out to feed the entitlement check — or touch a behavior contract, or anything a TSOW ID covers — **stop**. Clear the patch lane (`python3 "${CLAUDE_PLUGIN_ROOT}/tools/lane.py" clear --by lead` — your own honest re-route, recorded as exactly that, never a PM escalation) and route honestly to `/friday:bug` (it's broken) or `/friday:feature` (it's new scope). A patch never quietly grows into a slice.
 
 ### Close
+
+**The change-time ask rides this close (INC-107).** Put it in the same message that asks the PM's word on the commit — no new moment; the question's wording, the capture command, and the source rule live at `docs/contracts/parked-ledger.md` § The change-time ask (cited, never restated). A yes lands in the ledger there and then with the PM's own revisit condition; a no costs one sentence.
 
 The lane's guards disarm on a passing close (the trail present and valid); a blocked close names what's missing. Then flip the record dirty — the change landed on a project whose record still claims it was verified: `python3 "${CLAUDE_PLUGIN_ROOT}/tools/state_record.py" --mark stale --root .` (quiet no-op unless the project is closed; `last-verified:` untouched by design, and only a clean `/friday:reconcile` clears it — D-0106, contract: `docs/contracts/state-record.md`). Commit on the PM's word; never push unless they say so.

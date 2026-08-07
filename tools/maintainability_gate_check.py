@@ -46,6 +46,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import maintainability_measure as mm  # noqa: E402
 import maintainability_envelope_check as ec  # noqa: E402
+import verify_claims  # noqa: E402
 
 
 def _rel_location(loc: str, root_abs: str) -> str:
@@ -157,24 +158,50 @@ def check(*, root: str, standards: str | None, envelope: str | None,
 
     Fail-CLOSED here is deliberate for the LOGIC (an un-dispositioned breach is a
     valid-fail); fail-OPEN lives one layer up, in the hook — a broken checker
-    yields no-verdict and the hook allows (a false block is worse than a miss)."""
-    bars = {}
+    yields no-verdict and the hook allows (a false block is worse than a miss).
+
+    The verdict also carries the bar META the enforcement hook needs — arm,
+    bars_declared, malformed_bars, fatal — so the hook consumes one JSON
+    instead of importing the logic core in-process (the layering rule the
+    2026-08-05 reconcile convicted; D-1084 follow-on)."""
+    cs_text = None
     if standards:
         try:
             with open(standards, encoding="utf-8") as fh:
-                bars = mm.load_bars(fh.read())
+                cs_text = fh.read()
         except OSError:
-            bars = {}
+            cs_text = None
+    meta = {"arm": "warn", "bars_declared": 0, "malformed_bars": [],
+            "fatal": None}
+    bars = {}
+    if cs_text is not None:
+        bars = mm.load_bars(cs_text)
+        vc_bars = verify_claims.maintainability_bars(cs_text) or []
+        meta["arm"] = verify_claims.maintainability_arm(cs_text)
+        meta["bars_declared"] = len(vc_bars)
+        meta["malformed_bars"] = [b["raw"] for b in vc_bars
+                                  if b.get("metric") is None]
+        if vc_bars and len(meta["malformed_bars"]) == len(vc_bars):
+            meta["fatal"] = (
+                "Maintainability: every declared bar is malformed — NOTHING is "
+                "being enforced.\nMALFORMED bar line(s) NOT being enforced (fix "
+                "the typo in docs/standards/coding-standards.md):\n  "
+                + "\n  ".join(meta["malformed_bars"]))
+            return {**meta, "verdict": "valid-pass", "undispositioned": [],
+                    "breach_count": 0,
+                    "summary": "every declared bar is malformed — nothing enforceable"}
     # No declared bars -> the non-adopter invariant: nothing to enforce.
     if not bars:
-        return {"verdict": "valid-pass", "undispositioned": [], "breach_count": 0,
+        return {**meta, "verdict": "valid-pass", "undispositioned": [],
+                "breach_count": 0,
                 "summary": "no maintainability bars declared — nothing to enforce"}
 
     file_list = files if files is not None else mm._walk_py(os.path.abspath(root))
     measured = mm.measure_paths(file_list, min_tokens=min_tokens)
     breaches = mm.breaches(measured, bars)
     if not breaches:
-        return {"verdict": "valid-pass", "undispositioned": [], "breach_count": 0,
+        return {**meta, "verdict": "valid-pass", "undispositioned": [],
+                "breach_count": 0,
                 "summary": "code is within every declared bar"}
 
     # There ARE breaches — they must all be dispositioned by the judge envelope.
@@ -187,7 +214,7 @@ def check(*, root: str, standards: str | None, envelope: str | None,
         except OSError:
             env_res = {"verdict": "valid-fail", "findings": []}
         if env_res.get("verdict") != "valid-pass":
-            return {"verdict": "valid-fail", "breach_count": len(breaches),
+            return {**meta, "verdict": "valid-fail", "breach_count": len(breaches),
                     "undispositioned": [f"{b['metric']} @ {b['location']}" for b in breaches],
                     "summary": (f"{len(breaches)} breach(es) but the judge envelope is "
                                 "missing or malformed — nothing is dispositioned")}
@@ -197,12 +224,13 @@ def check(*, root: str, standards: str | None, envelope: str | None,
     root_abs = os.path.abspath(root)
     listed = _undispositioned(breaches, exact, loose, root_abs)
     if listed:
-        return {"verdict": "valid-fail", "breach_count": len(breaches),
+        return {**meta, "verdict": "valid-fail", "breach_count": len(breaches),
                 "undispositioned": listed,
                 "summary": (f"{len(listed)} un-dispositioned breach(es): each must be "
                             "justified-and-recorded or fixed-and-re-measured-clean — "
                             + listed[0])}
-    return {"verdict": "valid-pass", "undispositioned": [], "breach_count": len(breaches),
+    return {**meta, "verdict": "valid-pass", "undispositioned": [],
+            "breach_count": len(breaches),
             "summary": f"all {len(breaches)} breach(es) dispositioned (justified & recorded)"}
 
 

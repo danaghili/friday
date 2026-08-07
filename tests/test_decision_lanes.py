@@ -1,16 +1,17 @@
 """Decision-id lane enforcement (D-0152, mechanism added 2026-07-30).
 
-The lane rule predates this module: this clone mints below D-1000, the second
-machine from D-1000 up. Pre-merge that held "by construction" because each
-machine's log only contained its own entries and allocation is highest-seen +
-1. The 2026-07-29 lab-line merge put both lanes into ONE shared log, so the
-construction silently died: the first post-merge mint on this machine came out
-D-1007 — the other machine's lane — and the substrate counter was poisoned to
-1007 with it. These tests pin the repaired contract: allocation counts only
-ids inside THIS clone's lane (git config friday.decision-id-base; unset = the
-low lane), an empty lane starts at its base (the D-0113 shape), an exhausted
-lane fails loudly writing nothing, and the monotonic counter still guards —
-but only within its own lane.
+The lane rule predates this module: one development clone mints below
+D-1000, the other from D-1000 up. Pre-merge that held "by construction"
+because each machine's log only contained its own entries and allocation is
+highest-seen + 1. The 2026-07-29 lab-line merge put both lanes into ONE
+shared log, so the construction silently died: the first post-merge mint ran
+on the low-lane clone and came out D-1007 — inside the other clone's
+lane — and the substrate counter was poisoned to 1007 with it. These tests
+pin the repaired contract: allocation counts only ids inside the lane
+`git config friday.decision-id-base` selects (unset = the low lane), an
+empty lane starts at its base (the D-0113 shape), an exhausted lane fails
+loudly writing nothing, and the monotonic counter still guards — but only
+within its own lane.
 """
 import os
 import subprocess
@@ -60,8 +61,8 @@ def _write_counter(repo, value: int) -> None:
 
 def test_low_lane_machine_ignores_high_lane_entries_and_poisoned_counter(merged_repo):
     """The live incident: merged log holds D-0152 and D-1006, the counter says
-    1007, and this machine (no configured base = the low lane) must still mint
-    D-0153 — never continue the other machine's sequence."""
+    1007, and a machine with no configured base (= the low lane) must still
+    mint D-0153 — never continue the high lane's sequence."""
     _write_counter(merged_repo, 1007)
     id1, _ = decisions.append_entry(str(merged_repo), title="t", decision="d",
                                     why="w", rejected="r")
@@ -69,7 +70,7 @@ def test_low_lane_machine_ignores_high_lane_entries_and_poisoned_counter(merged_
 
 
 def test_high_lane_machine_continues_its_own_lane(merged_repo):
-    """The second machine (base 1000) sees the same merged log and mints
+    """A machine configured with base 1000 sees the same merged log and mints
     D-1007 — its lane's next id, blind to the low lane's D-0152."""
     _set_base(merged_repo, 1000)
     id1, _ = decisions.append_entry(str(merged_repo), title="t", decision="d",

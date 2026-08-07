@@ -35,6 +35,8 @@ For genuinely independent bugs in DISJOINT subsystems only (no shared state): on
 
 Relay to the PM: reproduction, root cause, proposed fix, blast radius — plus the two drafted one-word calls (*how bad*, as a concrete consequence; *when*, fix now / next lane). **No source line changes until the PM confirms.** The turn ends here with the gate in the PM's hands — no lane is armed yet, so the pause is free. Three failed fix attempts after confirmation trips the circuit breaker: stop, hand the PM the audit trail and raw symptoms, withhold the pet theory so fresh eyes start clean.
 
+**This relay also carries the turned-around question (INC-104).** The blast radius above stays the confining direction; the enumerating question is its mirror and rides this same gate, no new moment, and the ask's whole body — the sources enumerated at once, the process-level class, the person's plain sentence and its exact wording, the *nothing that I know of* rule, the never-blocks rule — lives at `docs/contracts/reckoning-record.md` § The ask (D8; cited, never restated). Mechanical sources before relaying: `python3 "${CLAUDE_PLUGIN_ROOT}/tools/consumer_scan.py" --root . --name <the changed thing's own name> [--path <its file path>] --json`. At the fix (Phase 4 on), every enumerated consumer gets one typed answer via `python3 "${CLAUDE_PLUGIN_ROOT}/tools/reckoning.py" --root . record --change BUG-NNN …` plus the run's `… searched --change BUG-NNN …` line (grammar, answer set, clearance rule: `docs/contracts/reckoning-record.md`); the trail's Proof quotes that record's real output.
+
 ### Phase 4: Arm the lane, then fix under build law
 
 The PM's confirmation starts the fix — arm the lane NOW, with the exact paths the intake entry declared:

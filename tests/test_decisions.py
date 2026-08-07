@@ -171,3 +171,42 @@ def test_archive_discipline(repo):
     assert archives, "cap exceeded must MOVE oldest entries to an archive file"
     arch = decisions.parse(archives[0].read_text(encoding="utf-8"))
     assert arch["ok"] and arch["entries"], "archived entries stay schema-valid"
+
+
+# --- override-grant lines survive the round trip (the rotation-strip bug) ------
+#
+# Found live: the archiver re-renders every entry it touches through the
+# parser, and the parser never carried the typed `override-grant:` line — so
+# the rotation that trims the log also silently destroyed every structured
+# authorization in it, live file and archive both. The grant is the one line
+# the frozen-artifact guards trust; a record type whose maintenance pass
+# strips authorizations is worse than no maintenance pass.
+
+def test_parse_carries_the_override_grant_line():
+    granted = decisions.format_entry(
+        id_num=7, title="grant carrier", when="2026-08-04T10:00:00Z",
+        channel="pm-ratified", weight="two-way", floor="none", back_filled=False,
+        decision="d", why="w", rejected="r",
+        override_grant="docs/contracts/parked-ledger.md (test reason)")
+    [e] = decisions.parse("# Decisions — x\n\n" + granted)["entries"]
+    assert e["override_grant"] == "docs/contracts/parked-ledger.md (test reason)"
+
+
+def test_rotation_preserves_override_grants_in_live_and_archive(repo):
+    """cap=10, 12 appends → the oldest half rotates out. A grant on an entry
+    that gets ARCHIVED must survive in the archive; a grant on an entry that
+    stays LIVE must survive the live file's re-render. Both were stripped."""
+    for i in range(12):
+        grant = None
+        if i == 1:
+            grant = "docs/contracts/archived-target.md (rotates out)"
+        if i == 8:
+            grant = "docs/contracts/live-target.md (stays live)"
+        decisions.append_entry(str(repo), title=f"t{i}", decision="d", why="w",
+                               rejected="r", cap=10, override_grant=grant)
+    live = (repo / "docs" / "DECISIONS.md").read_text(encoding="utf-8")
+    assert decisions.has_override_grant(live, "docs/contracts/live-target.md")
+    [archive] = (repo / "docs" / "decisions").glob("archive-*.md")
+    arch = archive.read_text(encoding="utf-8")
+    assert "override-grant: docs/contracts/archived-target.md (rotates out)" in arch
+    assert decisions.parse(arch)["ok"], "archive stays schema-valid with grants"

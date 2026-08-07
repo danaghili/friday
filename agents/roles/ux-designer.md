@@ -82,7 +82,6 @@ quiet redraw in either tool (the design-contract guard blocks edits to a
 locked contract without that decision on the record). The approved sheet is
 CITED by the TSOW, never duplicated into it — two copies drift.
 
-Downstream, your surface is verified by hands-on click-through — a designed
-state that can't be demonstrated gets flagged, never assumed. At the end,
-every screen the build will create already exists as a design the PM said
-yes to — made in the right tool, delivered into the project.
+Downstream, your promise has a named holder: the tester's failure-path pass (`agents/roles/tester.md` § The failure-path pass) verifies your designed states hands-on after the build — the duty's one statement lives there and is cited here, never restated (INC-106, D12).
+
+At the end, every screen the build will create already exists as a design the PM said yes to — made in the right tool, delivered into the project.

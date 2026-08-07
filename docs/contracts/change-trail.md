@@ -6,8 +6,12 @@ session decision). Producers: the bug, patch, and feature lanes — the feature
 lane's trail is emitted by spine surfaces under build law; this contract
 closes over it without editing any spine surface. Consumers:
 `tools/trail_check.py`, guard #6 (lane close without its trail), guard #11
-(bug closure), AC-23's trail-closure bar. Both sides cite THIS file; neither
-invents its own shape.
+(bug closure), AC-23's trail-closure bar, and the due signal's event-arm
+counter (`tools/state_advisory_check.py --mode due`, INC-109), which reads
+each trail's first tag line — lane and date only, never the body — to count
+mutating closes since the record was last verified (bar and scope:
+`docs/contracts/state-record.md`, cited never restated). Both sides cite THIS
+file; neither invents its own shape.
 
 ## The shape
 
@@ -41,6 +45,7 @@ changelog: <one line — exactly one in the document>
   tested form (FR-65) — the sentinel and references never coexist.
 - **Proof has no empty case — proof is the point.** At least one `proof:`
   tag line quoting real output. Prose alone is not proof.
+- A change that ran INC-104's enumerating ask quotes its consumer-reckoning output as one of its `proof:` lines — the seam is named from the record's side at `docs/contracts/reckoning-record.md` § Where it lives relative to the lane's trail; the grammar above is unchanged (any real output is already a legal proof line, so `tools/trail_check.py` needs no new rule).
 - Exactly one `changelog:` line per trail.
 - A doc refresh where behavior changed rides the lane's own close (FR-62);
   it is verified by the doc-truth pass, not by this grammar.

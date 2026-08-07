@@ -13,14 +13,14 @@ A "start here" summary plus a supporting folder. Required members:
 
 | File | What it holds |
 | --- | --- |
-| `README.md` | the "start here" summary: what you own, how to run it, what it costs, who to call, and where the rest is |
+| `README.md` | the "start here" summary: what you own — including, when the project's sensitivity declaration names stores, the plain statement that the owner now holds that data (INC-108 FR-108.11; floor, treatments, record: `docs/contracts/sensitivity-declaration.md`, cited never restated) — how to run it, what it costs, who to call, and where the rest is |
 | `what-it-is-and-why.md` | the system in plain words + the decision log's "why", rewritten for a non-technical owner |
 | `user-guide.md` | everyday use, post-login (the guide the owner personally reads) |
 | `admin-guide.md` | accounts, permissions, the more technical operations (the guide handed to a hired developer) |
 | `operations-runbook.md` | deploy, backups, monitoring, "when X breaks", the maintenance schedule (what / cadence / owner / last-done) and each operations-battery row's verdict and date (INC-102 FR-102.8; row set and verdict grammar: `docs/contracts/ops-battery.md`, cited never restated; nothing here gates on them — INC-102 D4) |
 | `ownership-and-keys.md` | the key/account inventory — one row per item: name, plain-language purpose, owning account, current holder, target owner (NEVER a value) — plus the transfer runbook |
 | `running-cost.md` | the plain monthly upkeep figure |
-| `honest-state.md` | what's solid, what's known-fragile, what was deferred |
+| `honest-state.md` | what's solid, what's known-fragile, what was deferred — and, when the project's sensitivity declaration names stores, what protects each, how long its copies live and what deletion reaches, in the owner's terms (INC-108 FR-108.11; `docs/contracts/sensitivity-declaration.md`, cited never restated) |
 | `promised-and-proven.md` | what was promised (the requirements) and how to re-run the checks/tests to prove it works |
 | `warranty.md` | the bug-fix warranty note (default 30-day, in-scope only, operator-adjustable) |
 

@@ -53,7 +53,7 @@
   {
    "id": "hooks.decision_capture",
    "path": "hooks/decision_capture.py",
-   "loc": 189
+   "loc": 186
   },
   {
    "id": "hooks.design_contract_guard",
@@ -93,7 +93,7 @@
   {
    "id": "hooks.maintainability_gate",
    "path": "hooks/maintainability_gate.py",
-   "loc": 250
+   "loc": 261
   },
   {
    "id": "hooks.open_risks_guard",
@@ -118,7 +118,7 @@
   {
    "id": "hooks.review_format_sentinel",
    "path": "hooks/review_format_sentinel.py",
-   "loc": 144
+   "loc": 146
   },
   {
    "id": "hooks.review_format_stop_gate",
@@ -241,6 +241,11 @@
    "loc": 152
   },
   {
+   "id": "tests.test_capture_ask_mode",
+   "path": "tests/test_capture_ask_mode.py",
+   "loc": 70
+  },
+  {
    "id": "tests.test_capture_integrity",
    "path": "tests/test_capture_integrity.py",
    "loc": 125
@@ -266,14 +271,39 @@
    "loc": 107
   },
   {
+   "id": "tests.test_conformance_baseline",
+   "path": "tests/test_conformance_baseline.py",
+   "loc": 111
+  },
+  {
+   "id": "tests.test_conformance_checks",
+   "path": "tests/test_conformance_checks.py",
+   "loc": 229
+  },
+  {
+   "id": "tests.test_conformance_envelope_check",
+   "path": "tests/test_conformance_envelope_check.py",
+   "loc": 114
+  },
+  {
+   "id": "tests.test_conformance_sweep",
+   "path": "tests/test_conformance_sweep.py",
+   "loc": 279
+  },
+  {
+   "id": "tests.test_consumer_scan",
+   "path": "tests/test_consumer_scan.py",
+   "loc": 155
+  },
+  {
    "id": "tests.test_decision_lanes",
    "path": "tests/test_decision_lanes.py",
-   "loc": 115
+   "loc": 116
   },
   {
    "id": "tests.test_decisions",
    "path": "tests/test_decisions.py",
-   "loc": 174
+   "loc": 213
   },
   {
    "id": "tests.test_doc_gate",
@@ -283,7 +313,12 @@
   {
    "id": "tests.test_doc_synthesis",
    "path": "tests/test_doc_synthesis.py",
-   "loc": 334
+   "loc": 362
+  },
+  {
+   "id": "tests.test_due_event_arm",
+   "path": "tests/test_due_event_arm.py",
+   "loc": 279
   },
   {
    "id": "tests.test_due_signals",
@@ -293,7 +328,7 @@
   {
    "id": "tests.test_findings_brief_check",
    "path": "tests/test_findings_brief_check.py",
-   "loc": 205
+   "loc": 206
   },
   {
    "id": "tests.test_gen_command_index_skills",
@@ -466,6 +501,11 @@
    "loc": 108
   },
   {
+   "id": "tests.test_import_cycles",
+   "path": "tests/test_import_cycles.py",
+   "loc": 104
+  },
+  {
    "id": "tests.test_inc008_deviations",
    "path": "tests/test_inc008_deviations.py",
    "loc": 113
@@ -478,7 +518,7 @@
   {
    "id": "tests.test_inc008_gate",
    "path": "tests/test_inc008_gate.py",
-   "loc": 235
+   "loc": 285
   },
   {
    "id": "tests.test_inc008_maintainability_claim",
@@ -518,7 +558,7 @@
   {
    "id": "tests.test_inc200_experiment_request",
    "path": "tests/test_inc200_experiment_request.py",
-   "loc": 289
+   "loc": 310
   },
   {
    "id": "tests.test_inc200_state_advisory",
@@ -588,7 +628,7 @@
   {
    "id": "tests.test_inc208_dispatch_check",
    "path": "tests/test_inc208_dispatch_check.py",
-   "loc": 260
+   "loc": 284
   },
   {
    "id": "tests.test_inc209_decline",
@@ -621,6 +661,21 @@
    "loc": 164
   },
   {
+   "id": "tests.test_loose_deferral_envelope",
+   "path": "tests/test_loose_deferral_envelope.py",
+   "loc": 144
+  },
+  {
+   "id": "tests.test_loose_deferral_scan",
+   "path": "tests/test_loose_deferral_scan.py",
+   "loc": 167
+  },
+  {
+   "id": "tests.test_loose_deferrals",
+   "path": "tests/test_loose_deferrals.py",
+   "loc": 249
+  },
+  {
    "id": "tests.test_mdparse",
    "path": "tests/test_mdparse.py",
    "loc": 39
@@ -633,7 +688,17 @@
   {
    "id": "tests.test_parked_ledger",
    "path": "tests/test_parked_ledger.py",
-   "loc": 213
+   "loc": 227
+  },
+  {
+   "id": "tests.test_reckoning",
+   "path": "tests/test_reckoning.py",
+   "loc": 351
+  },
+  {
+   "id": "tests.test_reckoning_sweep",
+   "path": "tests/test_reckoning_sweep.py",
+   "loc": 177
   },
   {
    "id": "tests.test_recurrence_register",
@@ -648,7 +713,7 @@
   {
    "id": "tests.test_review_format_interim",
    "path": "tests/test_review_format_interim.py",
-   "loc": 83
+   "loc": 110
   },
   {
    "id": "tests.test_sanitized_mirror",
@@ -669,6 +734,21 @@
    "id": "tests.test_secret_names",
    "path": "tests/test_secret_names.py",
    "loc": 93
+  },
+  {
+   "id": "tests.test_sensitive_store_scan",
+   "path": "tests/test_sensitive_store_scan.py",
+   "loc": 168
+  },
+  {
+   "id": "tests.test_sensitivity_declaration",
+   "path": "tests/test_sensitivity_declaration.py",
+   "loc": 297
+  },
+  {
+   "id": "tests.test_sensitivity_requirements",
+   "path": "tests/test_sensitivity_requirements.py",
+   "loc": 94
   },
   {
    "id": "tests.test_server",
@@ -699,6 +779,11 @@
    "id": "tests.test_spec_id_strip_bundled",
    "path": "tests/test_spec_id_strip_bundled.py",
    "loc": 84
+  },
+  {
+   "id": "tests.test_standards_deviations",
+   "path": "tests/test_standards_deviations.py",
+   "loc": 145
   },
   {
    "id": "tests.test_state_record_dirty_bit",
@@ -806,14 +891,34 @@
    "loc": 618
   },
   {
+   "id": "tools.conformance_checks",
+   "path": "tools/conformance_checks.py",
+   "loc": 327
+  },
+  {
+   "id": "tools.conformance_envelope_check",
+   "path": "tools/conformance_envelope_check.py",
+   "loc": 195
+  },
+  {
+   "id": "tools.conformance_sweep",
+   "path": "tools/conformance_sweep.py",
+   "loc": 395
+  },
+  {
+   "id": "tools.consumer_scan",
+   "path": "tools/consumer_scan.py",
+   "loc": 193
+  },
+  {
    "id": "tools.decisions",
    "path": "tools/decisions.py",
-   "loc": 402
+   "loc": 416
   },
   {
    "id": "tools.decisions_append",
    "path": "tools/decisions_append.py",
-   "loc": 136
+   "loc": 198
   },
   {
    "id": "tools.design_contract_check",
@@ -823,7 +928,7 @@
   {
    "id": "tools.dispatch_briefing_check",
    "path": "tools/dispatch_briefing_check.py",
-   "loc": 238
+   "loc": 239
   },
   {
    "id": "tools.dispatch_liveness_check",
@@ -848,7 +953,7 @@
   {
    "id": "tools.doc-synthesis.extract_architecture",
    "path": "tools/doc-synthesis/extract_architecture.py",
-   "loc": 501
+   "loc": 524
   },
   {
    "id": "tools.doc-synthesis.extract_js",
@@ -873,7 +978,7 @@
   {
    "id": "tools.experiment_request",
    "path": "tools/experiment_request.py",
-   "loc": 328
+   "loc": 329
   },
   {
    "id": "tools.experiment_run",
@@ -903,7 +1008,7 @@
   {
    "id": "tools.friday_substrate",
    "path": "tools/friday_substrate.py",
-   "loc": 540
+   "loc": 557
   },
   {
    "id": "tools.gen_command_index",
@@ -941,9 +1046,29 @@
    "loc": 138
   },
   {
+   "id": "tools.import_cycles",
+   "path": "tools/import_cycles.py",
+   "loc": 166
+  },
+  {
    "id": "tools.lane",
    "path": "tools/lane.py",
    "loc": 83
+  },
+  {
+   "id": "tools.loose_deferral_envelope_check",
+   "path": "tools/loose_deferral_envelope_check.py",
+   "loc": 256
+  },
+  {
+   "id": "tools.loose_deferral_scan",
+   "path": "tools/loose_deferral_scan.py",
+   "loc": 280
+  },
+  {
+   "id": "tools.loose_deferrals",
+   "path": "tools/loose_deferrals.py",
+   "loc": 257
   },
   {
    "id": "tools.maintainability_envelope_check",
@@ -953,7 +1078,7 @@
   {
    "id": "tools.maintainability_gate_check",
    "path": "tools/maintainability_gate_check.py",
-   "loc": 225
+   "loc": 253
   },
   {
    "id": "tools.maintainability_measure",
@@ -978,7 +1103,7 @@
   {
    "id": "tools.parked",
    "path": "tools/parked.py",
-   "loc": 250
+   "loc": 255
   },
   {
    "id": "tools.profile_check",
@@ -999,6 +1124,16 @@
    "id": "tools.receipt",
    "path": "tools/receipt.py",
    "loc": 169
+  },
+  {
+   "id": "tools.reckoning",
+   "path": "tools/reckoning.py",
+   "loc": 555
+  },
+  {
+   "id": "tools.reckoning_sweep",
+   "path": "tools/reckoning_sweep.py",
+   "loc": 172
   },
   {
    "id": "tools.research_orphan_check",
@@ -1031,6 +1166,16 @@
    "loc": 195
   },
   {
+   "id": "tools.sensitive_store_scan",
+   "path": "tools/sensitive_store_scan.py",
+   "loc": 168
+  },
+  {
+   "id": "tools.sensitivity_declaration",
+   "path": "tools/sensitivity_declaration.py",
+   "loc": 470
+  },
+  {
    "id": "tools.session_heartbeat",
    "path": "tools/session_heartbeat.py",
    "loc": 95
@@ -1058,12 +1203,12 @@
   {
    "id": "tools.standards_deviations",
    "path": "tools/standards_deviations.py",
-   "loc": 311
+   "loc": 388
   },
   {
    "id": "tools.state_advisory_check",
    "path": "tools/state_advisory_check.py",
-   "loc": 407
+   "loc": 505
   },
   {
    "id": "tools.state_record",
@@ -1232,15 +1377,8 @@
    "from": "hooks.decision_capture",
    "to": "hooks._hookutil",
    "kind": "import",
-   "line": 37,
+   "line": 38,
    "deferred": false
-  },
-  {
-   "from": "hooks.decision_capture",
-   "to": "tools.decisions",
-   "kind": "import",
-   "line": 167,
-   "deferred": true
   },
   {
    "from": "hooks.design_contract_guard",
@@ -1348,20 +1486,6 @@
    "deferred": false
   },
   {
-   "from": "hooks.maintainability_gate",
-   "to": "tools.maintainability_measure",
-   "kind": "import",
-   "line": 91,
-   "deferred": true
-  },
-  {
-   "from": "hooks.maintainability_gate",
-   "to": "tools.verify_claims",
-   "kind": "import",
-   "line": 151,
-   "deferred": true
-  },
-  {
    "from": "hooks.open_risks_guard",
    "to": "hooks._guard",
    "kind": "import",
@@ -1421,7 +1545,7 @@
    "from": "hooks.review_format_sentinel",
    "to": "hooks._hookutil",
    "kind": "import",
-   "line": 31,
+   "line": 33,
    "deferred": false
   },
   {
@@ -1621,6 +1745,13 @@
    "deferred": false
   },
   {
+   "from": "tests.test_capture_ask_mode",
+   "to": "tools.decisions",
+   "kind": "import",
+   "line": 12,
+   "deferred": false
+  },
+  {
    "from": "tests.test_capture_integrity",
    "to": "tools.capture_integrity",
    "kind": "import",
@@ -1677,10 +1808,52 @@
    "deferred": false
   },
   {
+   "from": "tests.test_conformance_baseline",
+   "to": "tools.conformance_sweep",
+   "kind": "import",
+   "line": 19,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_conformance_checks",
+   "to": "tools.conformance_checks",
+   "kind": "import",
+   "line": 19,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_conformance_envelope_check",
+   "to": "tools.conformance_envelope_check",
+   "kind": "import",
+   "line": 16,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_conformance_sweep",
+   "to": "tools.conformance_sweep",
+   "kind": "import",
+   "line": 17,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_consumer_scan",
+   "to": "tools.consumer_scan",
+   "kind": "import",
+   "line": 16,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_consumer_scan",
+   "to": "tools.reckoning",
+   "kind": "import",
+   "line": 17,
+   "deferred": false
+  },
+  {
    "from": "tests.test_decision_lanes",
    "to": "tools.decisions",
    "kind": "import",
-   "line": 20,
+   "line": 21,
    "deferred": false
   },
   {
@@ -1719,6 +1892,13 @@
    "deferred": false
   },
   {
+   "from": "tests.test_due_event_arm",
+   "to": "tools.state_advisory_check",
+   "kind": "import",
+   "line": 39,
+   "deferred": false
+  },
+  {
    "from": "tests.test_due_signals",
    "to": "tools.state_advisory_check",
    "kind": "import",
@@ -1729,14 +1909,14 @@
    "from": "tests.test_findings_brief_check",
    "to": "hooks._guard",
    "kind": "import",
-   "line": 27,
+   "line": 28,
    "deferred": false
   },
   {
    "from": "tests.test_findings_brief_check",
    "to": "tools.findings_brief_check",
    "kind": "import",
-   "line": 26,
+   "line": 27,
    "deferred": false
   },
   {
@@ -2174,6 +2354,13 @@
    "deferred": false
   },
   {
+   "from": "tests.test_import_cycles",
+   "to": "tools.import_cycles",
+   "kind": "import",
+   "line": 18,
+   "deferred": false
+  },
+  {
    "from": "tests.test_inc008_deviations",
    "to": "tools.standards_deviations",
    "kind": "import",
@@ -2454,6 +2641,27 @@
    "deferred": false
   },
   {
+   "from": "tests.test_loose_deferral_envelope",
+   "to": "tools.loose_deferral_envelope_check",
+   "kind": "import",
+   "line": 29,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_loose_deferral_scan",
+   "to": "tools.loose_deferral_scan",
+   "kind": "import",
+   "line": 18,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_loose_deferrals",
+   "to": "tools.loose_deferrals",
+   "kind": "import",
+   "line": 34,
+   "deferred": false
+  },
+  {
    "from": "tests.test_mdparse",
    "to": "tools.doc-index.mdparse",
    "kind": "import",
@@ -2472,6 +2680,27 @@
    "to": "tools.parked",
    "kind": "import",
    "line": 34,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_reckoning",
+   "to": "tools.reckoning",
+   "kind": "import",
+   "line": 17,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_reckoning_sweep",
+   "to": "tools.reckoning",
+   "kind": "import",
+   "line": 18,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_reckoning_sweep",
+   "to": "tools.reckoning_sweep",
+   "kind": "import",
+   "line": 19,
    "deferred": false
   },
   {
@@ -2531,6 +2760,34 @@
    "deferred": false
   },
   {
+   "from": "tests.test_sensitive_store_scan",
+   "to": "tools.sensitive_store_scan",
+   "kind": "import",
+   "line": 20,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_sensitive_store_scan",
+   "to": "tools.sensitivity_declaration",
+   "kind": "import",
+   "line": 21,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_sensitivity_declaration",
+   "to": "tools.sensitivity_declaration",
+   "kind": "import",
+   "line": 36,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_sensitivity_requirements",
+   "to": "tools.sensitivity_declaration",
+   "kind": "import",
+   "line": 17,
+   "deferred": false
+  },
+  {
    "from": "tests.test_session_heartbeat",
    "to": "tools.friday_substrate",
    "kind": "import",
@@ -2570,6 +2827,13 @@
    "to": "tools.spec_id_strip_check",
    "kind": "import",
    "line": 13,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_standards_deviations",
+   "to": "tools.standards_deviations",
+   "kind": "import",
+   "line": 18,
    "deferred": false
   },
   {
@@ -2748,17 +3012,80 @@
    "deferred": false
   },
   {
+   "from": "tools.conformance_checks",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 51,
+   "deferred": false
+  },
+  {
+   "from": "tools.conformance_checks",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 52,
+   "deferred": false
+  },
+  {
+   "from": "tools.conformance_envelope_check",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 40,
+   "deferred": false
+  },
+  {
+   "from": "tools.conformance_envelope_check",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 41,
+   "deferred": false
+  },
+  {
+   "from": "tools.conformance_sweep",
+   "to": "tools.conformance_checks",
+   "kind": "import",
+   "line": 52,
+   "deferred": false
+  },
+  {
+   "from": "tools.conformance_sweep",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 53,
+   "deferred": false
+  },
+  {
+   "from": "tools.conformance_sweep",
+   "to": "tools.import_cycles",
+   "kind": "import",
+   "line": 54,
+   "deferred": false
+  },
+  {
+   "from": "tools.conformance_sweep",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 55,
+   "deferred": false
+  },
+  {
+   "from": "tools.consumer_scan",
+   "to": "tools.reckoning",
+   "kind": "import",
+   "line": 46,
+   "deferred": false
+  },
+  {
    "from": "tools.decisions",
    "to": "tools.friday_substrate",
    "kind": "import",
-   "line": 55,
+   "line": 56,
    "deferred": false
   },
   {
    "from": "tools.decisions",
    "to": "tools.taglines",
    "kind": "import",
-   "line": 56,
+   "line": 57,
    "deferred": false
   },
   {
@@ -2784,9 +3111,16 @@
   },
   {
    "from": "tools.dispatch_briefing_check",
-   "to": "tools.taglines",
+   "to": "tools.friday_substrate",
    "kind": "import",
    "line": 52,
+   "deferred": false
+  },
+  {
+   "from": "tools.dispatch_briefing_check",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 53,
    "deferred": false
   },
   {
@@ -2849,7 +3183,7 @@
    "from": "tools.doc-synthesis.extract_architecture",
    "to": "tools.doc-synthesis.extract_js",
    "kind": "import",
-   "line": 352,
+   "line": 374,
    "deferred": true
   },
   {
@@ -2882,9 +3216,16 @@
   },
   {
    "from": "tools.experiment_request",
-   "to": "tools.taglines",
+   "to": "tools.friday_substrate",
    "kind": "import",
    "line": 51,
+   "deferred": false
+  },
+  {
+   "from": "tools.experiment_request",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 52,
    "deferred": false
   },
   {
@@ -3000,10 +3341,45 @@
    "deferred": false
   },
   {
+   "from": "tools.import_cycles",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 32,
+   "deferred": false
+  },
+  {
    "from": "tools.lane",
    "to": "tools.friday_substrate",
    "kind": "import",
    "line": 29,
+   "deferred": false
+  },
+  {
+   "from": "tools.loose_deferral_envelope_check",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 229,
+   "deferred": true
+  },
+  {
+   "from": "tools.loose_deferral_envelope_check",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 48,
+   "deferred": false
+  },
+  {
+   "from": "tools.loose_deferrals",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 50,
+   "deferred": false
+  },
+  {
+   "from": "tools.loose_deferrals",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 51,
    "deferred": false
   },
   {
@@ -3032,6 +3408,13 @@
    "to": "tools.maintainability_measure",
    "kind": "import",
    "line": 47,
+   "deferred": false
+  },
+  {
+   "from": "tools.maintainability_gate_check",
+   "to": "tools.verify_claims",
+   "kind": "import",
+   "line": 49,
    "deferred": false
   },
   {
@@ -3147,6 +3530,41 @@
    "deferred": true
   },
   {
+   "from": "tools.reckoning",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 61,
+   "deferred": false
+  },
+  {
+   "from": "tools.reckoning",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 62,
+   "deferred": false
+  },
+  {
+   "from": "tools.reckoning_sweep",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 40,
+   "deferred": false
+  },
+  {
+   "from": "tools.reckoning_sweep",
+   "to": "tools.reckoning",
+   "kind": "import",
+   "line": 41,
+   "deferred": false
+  },
+  {
+   "from": "tools.reckoning_sweep",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 42,
+   "deferred": false
+  },
+  {
    "from": "tools.research_orphan_check",
    "to": "tools.taglines",
    "kind": "import",
@@ -3196,6 +3614,27 @@
    "deferred": false
   },
   {
+   "from": "tools.sensitive_store_scan",
+   "to": "tools.sensitivity_declaration",
+   "kind": "import",
+   "line": 134,
+   "deferred": true
+  },
+  {
+   "from": "tools.sensitivity_declaration",
+   "to": "tools.friday_substrate",
+   "kind": "import",
+   "line": 53,
+   "deferred": false
+  },
+  {
+   "from": "tools.sensitivity_declaration",
+   "to": "tools.taglines",
+   "kind": "import",
+   "line": 54,
+   "deferred": false
+  },
+  {
    "from": "tools.session_heartbeat",
    "to": "tools.friday_substrate",
    "kind": "import",
@@ -3213,7 +3652,7 @@
    "from": "tools.standards_deviations",
    "to": "tools.friday_substrate",
    "kind": "import",
-   "line": 40,
+   "line": 42,
    "deferred": false
   },
   {
@@ -3422,7 +3861,7 @@
    "name": "FRIDAY_GUARD_TIMEOUT_S",
    "kind": "env",
    "module": "hooks.maintainability_gate",
-   "line": 227
+   "line": 235
   },
   {
    "name": "FRIDAY_GUARD_TIMEOUT_S",
@@ -3626,5 +4065,5 @@
  ],
  "unparseable": [],
  "generated-by": "/friday:reference (tools/doc-synthesis/extract_architecture.py)",
- "generated-at": "2026-08-03T15:49:45+00:00"
+ "generated-at": "2026-08-07T12:46:21+00:00"
 }

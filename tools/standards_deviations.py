@@ -8,8 +8,10 @@ eroding maintainability" the ecosystem lacks. A SIBLING of the decision log
 advisory `fcntl` lock, monotonic SD-NNNN ids from a shared-substrate counter,
 two capture channels, growing-log cap + archive-on-overflow, and a byte-exact
 tested empty form — but its OWN schema and file, so a trickle of small breaches
-never buries the load-bearing design decisions (D4). This is the ONLY home for a
-*measured* breach; a *taste* departure goes to an ADR (KH-7 — two clean homes).
+never buries the load-bearing design decisions (D4). This is the ONLY home for an
+*anchored* breach — measured, or rule-shaped since INC-105 §9's amendment; a
+*taste* departure goes to an ADR (KH-7 — two clean homes, the amended line's
+single home: docs/contracts/standards-deviation.md).
 
 It reuses `friday_substrate` (the shared lock / worktree-root / time primitives)
 and deliberately does NOT touch `tools/decisions.py` (out of blast radius, D10).
@@ -48,6 +50,11 @@ DEFAULT_CAP = 100
 _H1_RE = re.compile(r"^# Standards Deviations\b")
 _ENTRY_RE = re.compile(r"^## (SD-(\d{4,})) — (.+?)\s*$")
 _TITLE_RE = re.compile(r"^([a-z-]+)\s+(\d+%?)\s+>\s+(\d+%?)\s+@\s+(.+)$")
+# INC-105 FR-105.10: the rule-shaped acceptance beside the number-shaped one —
+# one ledger, one list; the line the §9 amendment moves is measured-versus-taste
+# to ANCHORED-versus-taste, and a conformance entry is anchored to the written
+# rule its Standard bullet quotes (seam: docs/contracts/conformance-envelope.md).
+_RULE_TITLE_RE = re.compile(r"^conformance\s+([a-z][a-z0-9-]*)\s+@\s+(.+)$")
 _META_KEY_RE = re.compile(r"\*\*([A-Za-z-]+):\*\*\s*(.+?)\s*$")
 _BULLET_RE = re.compile(r"^- \*\*(Justification|Standard):\*\*\s*(.*)$")
 
@@ -71,6 +78,21 @@ def format_entry(*, id_num: int, metric: str, measured: str, bar: str, location:
                  justification: str, standard: str, when: str, channel: str,
                  floor: str) -> str:
     title = f"{metric} {measured} > {bar} @ {location}"
+    return _format_titled(id_num, title, when, channel, floor,
+                          justification, standard)
+
+
+def format_rule_entry(*, id_num: int, check_id: str, location: str,
+                      justification: str, standard: str, when: str,
+                      channel: str, floor: str) -> str:
+    """FR-105.10's rule-shaped entry — same meta line, same bullets, a title
+    that parses back to `conformance <check-id> @ <location>`."""
+    return _format_titled(id_num, f"conformance {check_id} @ {location}",
+                          when, channel, floor, justification, standard)
+
+
+def _format_titled(id_num: int, title: str, when: str, channel: str,
+                   floor: str, justification: str, standard: str) -> str:
     return (f"## SD-{id_num:04d} — {title}\n"
             f"**When:** {when} · **Channel:** {channel} · **Floor:** {floor}\n"
             f"- **Justification:** {justification}\n"
@@ -106,11 +128,17 @@ def parse(text: str) -> dict:
         if entry is None:
             return
         tm = _TITLE_RE.match(entry.get("title", ""))
+        rm = _RULE_TITLE_RE.match(entry.get("title", ""))
         if tm:
+            entry["shape"] = "number"
             entry["metric"], entry["measured"], entry["bar"], entry["location"] = tm.groups()
+        elif rm:
+            entry["shape"] = "rule"
+            entry["check"], entry["location"] = rm.groups()
         else:
             errors.append(f"{entry['id_str']}: title does not parse as "
-                          "`<metric> <measured> > <bar> @ <location>`")
+                          "`<metric> <measured> > <bar> @ <location>` or "
+                          "`conformance <check-id> @ <location>`")
         for field in ("when", "channel", "floor"):
             if field not in entry:
                 errors.append(f"{entry['id_str']}: missing **{field.capitalize()}:** on the meta line")
@@ -200,6 +228,35 @@ def append_entry(root: str, *, metric: str, measured: str, bar: str, location: s
     ValueError on invalid fields (nothing written). The file written is the
     CHECKOUT's copy; the id counter is the SHARED substrate's — worktrees isolate
     code but share the counter, so ids never collide (Appendix B)."""
+    def build(next_id: int) -> str:
+        return format_entry(id_num=next_id, metric=metric, measured=measured,
+                            bar=bar, location=location, justification=justification,
+                            standard=standard, when=when or fs.now_iso(),
+                            channel=channel, floor=floor)
+    return _append_built(root, build, channel=channel, floor=floor,
+                         path=path, cap=cap, project=project)
+
+
+def append_rule_entry(root: str, *, check_id: str, location: str,
+                      justification: str, standard: str,
+                      channel: str = "model-autonomous", floor: str = "none",
+                      when: str | None = None, path: str = DEFAULT_PATH,
+                      cap: int = DEFAULT_CAP,
+                      project: str | None = None) -> tuple[str, str]:
+    """Append one rule-shaped acceptance (INC-105 FR-105.10) — an `accepted`
+    answer from the conformance envelope landing in the ONE ledger, beside
+    the number-shaped entries. Same lock, same counter, same cap."""
+    def build(next_id: int) -> str:
+        return format_rule_entry(id_num=next_id, check_id=check_id,
+                                 location=location, justification=justification,
+                                 standard=standard, when=when or fs.now_iso(),
+                                 channel=channel, floor=floor)
+    return _append_built(root, build, channel=channel, floor=floor,
+                         path=path, cap=cap, project=project)
+
+
+def _append_built(root: str, build, *, channel: str, floor: str, path: str,
+                  cap: int, project: str | None) -> tuple[str, str]:
     errs = validate_fields(channel, floor)
     if errs:
         raise ValueError("; ".join(errs))
@@ -219,10 +276,7 @@ def append_entry(root: str, *, metric: str, measured: str, bar: str, location: s
             local_max = max((e["id"] for e in parsed["entries"]), default=0)
             next_id = max(_read_counter(root), local_max) + 1
 
-            entry = format_entry(id_num=next_id, metric=metric, measured=measured,
-                                 bar=bar, location=location, justification=justification,
-                                 standard=standard, when=when or fs.now_iso(),
-                                 channel=channel, floor=floor)
+            entry = build(next_id)
             if parsed["empty"]:
                 text = "\n".join(ln for ln in text.splitlines()
                                  if ln.strip() != EMPTY_SENTINEL).rstrip() + "\n"
@@ -236,6 +290,14 @@ def append_entry(root: str, *, metric: str, measured: str, bar: str, location: s
 
 
 def _reformat(e: dict) -> str:
+    if e.get("shape") == "rule":
+        return format_rule_entry(id_num=e["id"], check_id=e.get("check", "?"),
+                                 location=e.get("location", "?"),
+                                 justification=e.get("justification", "?"),
+                                 standard=e.get("standard", "?"),
+                                 when=e.get("when", "?"),
+                                 channel=e.get("channel", "model-autonomous"),
+                                 floor=e.get("floor", "none"))
     return format_entry(id_num=e["id"], metric=e.get("metric", "?"),
                         measured=e.get("measured", "?"), bar=e.get("bar", "?"),
                         location=e.get("location", "?"),
@@ -275,6 +337,9 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--project", default=None)
     ap.add_argument("--metric"); ap.add_argument("--measured"); ap.add_argument("--bar")
     ap.add_argument("--location"); ap.add_argument("--justification"); ap.add_argument("--standard")
+    ap.add_argument("--check", default=None,
+                    help="rule-shaped acceptance (INC-105 FR-105.10): the "
+                         "conformance check id — replaces --metric/--measured/--bar")
     ap.add_argument("--channel", default="model-autonomous", choices=CHANNELS)
     ap.add_argument("--floor", default="none", choices=FLOORS)
     ap.add_argument("--when", default=None)
@@ -287,18 +352,30 @@ def main(argv: list[str] | None = None) -> int:
             _atomic_write(p, empty_form(args.project or os.path.basename(wroot)))
         print(p)
         return 0
-    required = (args.metric, args.measured, args.bar, args.location,
-                args.justification, args.standard)
-    if not all(required):
+    if args.check:
+        if not all((args.location, args.justification, args.standard)):
+            print("standards_deviations: --check needs --location "
+                  "--justification --standard", file=sys.stderr)
+            return 2
+    elif not all((args.metric, args.measured, args.bar, args.location,
+                  args.justification, args.standard)):
         print("standards_deviations: --metric --measured --bar --location "
               "--justification --standard are all required to append", file=sys.stderr)
         return 2
     try:
-        idn, _ = append_entry(args.root, metric=args.metric, measured=args.measured,
-                              bar=args.bar, location=args.location,
-                              justification=args.justification, standard=args.standard,
-                              channel=args.channel, floor=args.floor, when=args.when,
-                              project=args.project)
+        if args.check:
+            idn, _ = append_rule_entry(args.root, check_id=args.check,
+                                       location=args.location,
+                                       justification=args.justification,
+                                       standard=args.standard,
+                                       channel=args.channel, floor=args.floor,
+                                       when=args.when, project=args.project)
+        else:
+            idn, _ = append_entry(args.root, metric=args.metric, measured=args.measured,
+                                  bar=args.bar, location=args.location,
+                                  justification=args.justification, standard=args.standard,
+                                  channel=args.channel, floor=args.floor, when=args.when,
+                                  project=args.project)
     except ValueError as exc:
         print(f"standards_deviations: {exc}", file=sys.stderr)
         return 2

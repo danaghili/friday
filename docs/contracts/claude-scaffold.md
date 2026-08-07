@@ -15,7 +15,7 @@ of these rules (single-homing, D-0083).
 | `.claude/settings.json` | the confirmed stack + friday's project env needs | committed project settings: an `env` block (the home for any project-level env friday introduces, and the home of the compaction guardrail — § The compaction guardrail below) and a `permissions.allow` list derived from the confirmed stack |
 | `.claude/rules/*.md` | the confirmed stack + the Profiler's coding preferences — the same sources `docs/standards/*` draws from | path-scoped conventions: each rule carries a `paths:` frontmatter glob and the **actual convention text**, so the harness auto-loads it when Claude reads a matching file |
 
-Nothing else is seeded into `.claude/`. Seeds outside `.claude/` live in their own sections below (§ The delivery-configuration seed; § The dependency-update seeds). `settings.local.json` is the PM's personal file — friday never writes it.
+Nothing else is seeded into `.claude/`. Seeds outside `.claude/` live in their own sections below (§ The authoring-rule seed; § The delivery-configuration seed; § The dependency-update seeds). `settings.local.json` is the PM's personal file — friday never writes it.
 
 ## The compaction guardrail (INC-209 — this contract owns the values)
 
@@ -26,6 +26,18 @@ Nothing else is seeded into `.claude/`. Seeds outside `.claude/` live in their o
 **The block explains itself where it lives.** The settings format carries no comment syntax, so the explanation rides in a `$comment` key beside the block — the convention friday's own settings file already uses for exactly this purpose — naming what the pair does and that it is the project's to change from the moment it is written. A collaborator opening the file learns why it is there without leaving the file (INC-209 FR-209.3).
 
 **It is a shared default, not a personal preference.** The pair goes into the committed project settings because what it protects — the cost and quality of that project's sessions — is a property of the project rather than of the person. An individual may override it in their own `settings.local.json`, which friday never writes (INC-209 D6, S-209.2).
+
+## The authoring-rule seed (INC-110)
+
+**When:** `/friday:init` Stage 4, inside the strategist's own `CLAUDE.md` write — a fresh write on a project friday builds, so § Never-clobber's file-level guard never meets this seed and no content-level exception is taken or needed. **Ownership:** this section owns the seeded sentence, the same ownership shape as the compaction guardrail above — the producing surface cites it and restates nothing.
+
+**Every project friday scaffolds gets the reader-relative authoring rule in its `CLAUDE.md` conventions section** — the surface that project's authors read at the moment of writing (OQ-110.4 — D-0161's test applied, the resolution recorded at D-1066; a path-scoped rule loads only when a matching file is read, and records are written everywhere). It is stated operatively here, and the rule's home — friday's own `CLAUDE.md` § Conventions (INC-110 D1) — wins on wording where they differ (D10, the D-0162 shape).
+
+The seeded sentence:
+
+> A committed sentence never lets a reader-relative referent (`this machine`, `this clone`, `this checkout`, `the other machine` — any phrase that rebinds to whoever opens the file) carry a machine fact of any shape (a value, an assignment, an event): name the machine by its committed anchor or name the setting the tools actually read, because such a sentence is true on the machine that wrote it and false everywhere else, and no check that reads prose against code can see it. A backticked or quoted mention that defines, quotes or forbids the family asserts no machine fact, and an append-only record keeps what it was written with.
+
+**The check half already reaches every managed project** — the `reader-relative-referent` baseline invariant ships in friday's catalog (`docs/conformance-baseline.md`, `when: always`), so the conformance sweep flags the family wherever it runs; this seed is the author-facing half, the rule read while writing rather than the finding read afterwards. **The producer set is deliberately the init write side alone:** INC-110 D4 reaches projects friday builds, so the adopt/backfill doors do not carry this seed — extending it to adopted projects is its own decision, unmade and named here so the gap stays a choice rather than an oversight.
 
 ## Ownership: seeded once, project-owned
 

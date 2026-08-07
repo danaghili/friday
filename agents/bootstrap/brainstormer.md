@@ -138,7 +138,7 @@ Probe (context first):
 | Reliability / availability | how bad is an hour of downtime? what data loss is tolerable? |
 | Usability / accessibility | who must be able to use this? any accessibility requirements? |
 | Maintainability | who maintains it after v1 — the PM, a team, a client's contractor? |
-| Compliance | regulatory or contractual constraints (GDPR, PCI, sector rules)? |
+| Compliance | regulatory or contractual constraints (GDPR, PCI, sector rules)? Then the store-level ask, per store the design will hold: inside the sensitivity floor or not — and every store inside it answers the closed treatment set, each posture answer becoming a numbered requirement in the oracle being authored, never advice (floor, treatment set, declaration shape: `docs/contracts/sensitivity-declaration.md`, cited never restated — INC-108 's design-time and feature-door moments both ride this same interrogation). |
 
 Security is deliberately absent from this table — the Strategist captures it via the exposure profile (PROP-036); don't re-ask it here.
 

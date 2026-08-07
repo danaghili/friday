@@ -1,16 +1,16 @@
 ---
 name: brainstorm
-description: run when the PM has a rough idea to develop into a build-ready spec — the grilling door
+description: run when the PM has a rough idea to develop into a build-ready spec — the interrogation door
 friday-lane: true
 ---
 
-**Offer first (model-invoked entry).** If you entered this lane by matching the conversation — not a typed `/friday:brainstorm` — offer it before any work: “This sounds like an idea worth developing into a spec — run `/friday:brainstorm` to grill it into a build-ready TSOW?” Wait for an explicit yes; a declined offer does nothing and spends nothing.
+**Offer first (model-invoked entry).** If you entered this lane by matching the conversation — not a typed `/friday:brainstorm` — offer it before any work: “This sounds like an idea worth developing into a spec — run `/friday:brainstorm` to interrogate it into a build-ready TSOW?” Wait for an explicit yes; a declined offer does nothing and spends nothing.
 
-You are the lead running `/friday:brainstorm` — heavy-front discovery: interrogate the PM's idea via the grilling protocol and author the TSOW (the crown jewel).
+You are the lead running `/friday:brainstorm` — heavy-front discovery: interrogate the PM's idea via the interrogation protocol and author the TSOW (the crown jewel).
 
 Spawn the Brainstormer (`friday-brainstormer`, model: **opus** — decision-density → expensive role; name the model explicitly, never inherit) and relay between it and the PM. Its spawn message carries the rest of the skeleton composed from the briefing template (`${CLAUDE_PLUGIN_ROOT}/docs/dispatch-briefing-template.md` — composed from the file, never from memory: a reassembled briefing drops pieces silently, and every briefing on disk before INC-208 was missing one), saved at dispatch with `--prompt-file` and the explicit Read list (project `CLAUDE.md` reaches ZERO subagents). Emit telemetry at dispatch/first-response/completion via the single primitive: `python3 "${CLAUDE_PLUGIN_ROOT}/tools/spawn_telemetry.py" --emit spawn|accept|done --agent friday-brainstormer --phase brainstorm:discovery`.
 
-### The grilling protocol (binding on the Brainstormer)
+### The interrogation protocol (binding on the Brainstormer)
 
 - **Dependency-ordered design tree:** questions proceed root-first (what/why → shape → stack → risks); never ask a leaf before its parent is settled.
 - **One question at a time, with a recommended answer** and its real-world consequence (consequence-forward phrasing: "if two people edit at once, the second one's changes silently win" — never bare jargon).

@@ -22,6 +22,7 @@ since: <ISO-8601Z of the last transition>
 last-verified: <date> (close)          # closed only — PROP-028 dirty bit; the annotation names the writer-moment: (close) = closer, (adopt) = adoption close, bare date = reconcile (D-0141)
 record-status: verified | stale        # closed only — PROP-028 dirty bit
 reconcile-due: <N>d                    # closed only, OPTIONAL — D-0111 due-signal bar
+reconcile-due-closes: <N>              # closed only, OPTIONAL — INC-109 event-arm bar
 <!-- FRIDAY-STATE:END -->
 ```
 
@@ -31,6 +32,8 @@ reconcile-due: <N>d                    # closed only, OPTIONAL — D-0111 due-si
 it, and when no handover package exists at `docs/handoff/README.md`. A malformed
 bar is surfaced, never silently replaced by the default. Consumer:
 `tools/state_advisory_check.py --mode due`.
+
+`reconcile-due-closes:` is the same signal's second arm (INC-109 D3 — its own line, its own tested empty case): the count of mutating closes since `last-verified:`, taken from the project's own committed change trails' first lines (grammar and lane set: `docs/contracts/change-trail.md`, cited never restated; a trail counts only when its date is strictly later — D11), fires the same one assembled message when it passes the bar, whichever arm trips first. Default when absent: ten (D2; the built default's one home is `DEFAULT_DUE_CLOSES` in `tools/state_advisory_check.py`). The malformed rule applies per arm: a bar that does not parse is surfaced in words and skips only its own arm, never the sibling's, and is never silently defaulted (D9). A count that could not be taken is reported as itself and never as zero (S-109.2). Same consumer, same scope, same warn-only tier.
 
 The state vocabulary is CLOSED (K4) — queue/status state is a known string or
 file-presence, never an invented value.

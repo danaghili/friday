@@ -39,9 +39,44 @@ import decisions  # noqa: E402
 import friday_substrate as fs  # noqa: E402
 
 
-def main(argv: list[str] | None = None) -> int:
+def capture_ask(root: str, payload: dict) -> dict:
+    """One decision-shaped AskUserQuestion → one pm-ratified entry, on the
+    record owner's side of the subprocess boundary (the decision_capture hook
+    shells out here instead of importing decisions in-process — D-1084
+    follow-on to the layering rule the 2026-08-05 reconcile convicted).
+
+    payload: {"question": <ask text>, "answer": <chosen>, "options": [labels]}.
+    A question that is not the [FRIDAY-DECISION] ask shape returns
+    {"captured": false} and writes nothing — ordinary dialogs never flood the
+    log."""
+    ask = decisions.parse_decision_ask(payload.get("question") or "")
+    if ask is None:
+        return {"captured": False, "id": None}
+    answer = payload.get("answer") or ""
+    options = [o for o in (payload.get("options") or []) if o]
+    not_chosen = [o for o in options if o not in answer]
+    rejected = ask["rejected"] or "-"
+    if not_chosen:
+        rejected += " · options not chosen: " + "; ".join(not_chosen)
+    weight = ask["weight"]
+    if ask["floor"] != "none":
+        weight = "one-way"  # PROP-044 categorical override, enforced here too
+    id_str, _ = decisions.append_entry(
+        root, title=ask["title"],
+        decision=f"{answer}" + (f" — {ask['decision']}" if ask["decision"] else ""),
+        why=ask["why"] or "(why not stated in the ask)",
+        rejected=rejected, channel="pm-ratified", weight=weight,
+        floor=ask["floor"])
+    return {"captured": True, "id": id_str}
+
+
+def _parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(description="Append one entry to docs/DECISIONS.md")
     ap.add_argument("--init", action="store_true", help="write the A.2 empty form and exit")
+    ap.add_argument("--capture-ask", action="store_true",
+                    help="read one {question, answer, options} JSON object on "
+                         "stdin; capture it as a pm-ratified entry iff it is "
+                         "the [FRIDAY-DECISION] ask shape")
     ap.add_argument("--project", default=None, help="project name for the H1 (init only)")
     ap.add_argument("--title")
     ap.add_argument("--decision")
@@ -59,43 +94,70 @@ def main(argv: list[str] | None = None) -> int:
                     help="record a guard override-grant for this target path/element "
                          "(FR-55: the structured authorization guards #3/#5/#7/#10 require)")
     ap.add_argument("--json", action="store_true")
-    args = ap.parse_args(argv)
+    return ap
+
+
+def _capture_ask_cli(root: str) -> int:
+    """The --capture-ask mode: one JSON object on stdin, one JSON answer out."""
+    try:
+        payload = json.loads(sys.stdin.read())
+    except ValueError as exc:
+        print(f"decisions_append: --capture-ask needs one JSON object on "
+              f"stdin: {exc}", file=sys.stderr)
+        return 2
+    try:
+        print(json.dumps(capture_ask(root, payload)))
+    except Exception as exc:
+        print(f"decisions_append: capture failed: {exc}", file=sys.stderr)
+        return 1
+    return 0
+
+
+def _init_cli(args, wroot: str, path: str) -> int:
+    """The --init mode: seed the empty form, and always ensure the substrate
+    gitignore rule (D-0007, live incident in the loop-gate drill): a project
+    without a `.friday/` rule lets any `git add -A` commit the runtime
+    substrate, and a later worktree checkout then materializes a STALE COPY
+    that shadows the shared one (preserve-list §4.5)."""
+    gi_path = os.path.join(wroot, ".gitignore")
+    try:
+        with open(gi_path, encoding="utf-8") as fh:
+            gi = fh.read()
+    except OSError:
+        gi = ""
+    if ".friday/" not in gi and ".friday" not in gi.split():
+        with open(gi_path, "a", encoding="utf-8") as fh:
+            if gi and not gi.endswith("\n"):
+                fh.write("\n")
+            fh.write("# friday runtime substrate — regenerable but load-bearing; NEVER commit\n"
+                     ".friday/\n")
+        print(f"decisions_append: added .friday/ to {gi_path}")
+    if os.path.isfile(path):
+        print(f"decisions_append: {path} already exists — leaving it untouched")
+        return 0
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as fh:
+        fh.write(decisions.empty_form(args.project or os.path.basename(wroot), args.cap))
+    print(f"decisions_append: initialized empty decision log at {path}")
+    return 0
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = _parser().parse_args(argv)
 
     root = os.path.abspath(args.root)
     if not os.path.isdir(root):
         print(f"decisions_append: --root is not a directory: {root}", file=sys.stderr)
         return 2
 
+    if args.capture_ask:
+        return _capture_ask_cli(root)
+
     wroot = fs.resolve_worktree_root(root)
     path = os.path.join(wroot, decisions.DEFAULT_PATH)
 
     if args.init:
-        # Substrate-hygiene guard (D-0007, live incident in the loop-gate
-        # drill): a project without a `.friday/` gitignore rule lets any
-        # `git add -A` commit the runtime substrate, and a later worktree
-        # checkout then materializes a STALE COPY that shadows the shared
-        # one (preserve-list §4.5). Init therefore always ensures the rule.
-        gi_path = os.path.join(wroot, ".gitignore")
-        try:
-            with open(gi_path, encoding="utf-8") as fh:
-                gi = fh.read()
-        except OSError:
-            gi = ""
-        if ".friday/" not in gi and ".friday" not in gi.split():
-            with open(gi_path, "a", encoding="utf-8") as fh:
-                if gi and not gi.endswith("\n"):
-                    fh.write("\n")
-                fh.write("# friday runtime substrate — regenerable but load-bearing; NEVER commit\n"
-                         ".friday/\n")
-            print(f"decisions_append: added .friday/ to {gi_path}")
-        if os.path.isfile(path):
-            print(f"decisions_append: {path} already exists — leaving it untouched")
-            return 0
-        os.makedirs(os.path.dirname(path), exist_ok=True)
-        with open(path, "w", encoding="utf-8") as fh:
-            fh.write(decisions.empty_form(args.project or os.path.basename(wroot), args.cap))
-        print(f"decisions_append: initialized empty decision log at {path}")
-        return 0
+        return _init_cli(args, wroot, path)
 
     missing = [f for f in ("title", "decision", "why", "rejected")
                if not getattr(args, f)]

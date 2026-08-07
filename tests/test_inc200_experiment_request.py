@@ -286,3 +286,24 @@ def test_credential_disposition_is_explicit_on_every_call(tmp_path):
                    live_root=str(tmp_path / "live"))
     assert [c["credential"] for c in plan["calls"]] == [
         "as-issued", "replayed", "none"]
+
+
+def test_write_protection_guards_the_shared_substrate_from_a_worktree(tmp_path):
+    """In a linked worktree the real substrate lives at the MAIN repo; a
+    boundary built from the worktree's own root guards a path that does not
+    exist and lets the real journal through (2026-08-05 reconcile, C-11)."""
+    import subprocess
+    env = {**os.environ, "GIT_AUTHOR_NAME": "t", "GIT_AUTHOR_EMAIL": "t@t",
+           "GIT_COMMITTER_NAME": "t", "GIT_COMMITTER_EMAIL": "t@t"}
+    main = tmp_path / "main"
+    main.mkdir()
+    subprocess.run(["git", "init", "-q", str(main)], check=True)
+    subprocess.run(["git", "-C", str(main), "commit", "--allow-empty", "-q",
+                    "-m", "seed"], check=True, env=env)
+    wt = tmp_path / "wt"
+    subprocess.run(["git", "-C", str(main), "worktree", "add", "-q", str(wt)],
+                   check=True, env=env)
+    shared = main / ".friday"
+    shared.mkdir()
+    assert not er.write_allowed(str(shared / "journal.jsonl"), str(wt))
+    assert er.write_allowed(str(wt / "docs" / "exp-1.md"), str(wt))

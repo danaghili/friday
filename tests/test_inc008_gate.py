@@ -232,3 +232,53 @@ def test_a_file_level_breach_keeps_matching_by_path(tmp_path):
                  "floor: none\n")
     assert gate.check(root=str(tmp_path), standards=cs, envelope=env,
                       files=[src])["verdict"] == "valid-pass"
+
+
+# --- the verdict carries the bar meta the hook used to derive in-process ------
+# (2026-08-06, D-1084 follow-on: hooks shell out, so arm / malformed / fatal
+#  travel IN the checker's own JSON instead of a hook-side verify_claims import)
+
+def test_verdict_carries_arm_and_bar_meta(tmp_path):
+    cs = _write(tmp_path, "cs.md",
+                "# s\n<!-- FRIDAY-MAINTAINABILITY:BEGIN -->\n"
+                "maintainability: param-count <= 4\narm: block\n"
+                "<!-- FRIDAY-MAINTAINABILITY:END -->\n")
+    _write(tmp_path, "app.py", _SRC_FIXED)
+    res = gate.check(root=str(tmp_path), standards=cs, envelope=None)
+    assert res["arm"] == "block"
+    assert res["bars_declared"] == 1
+    assert res["malformed_bars"] == []
+    assert res["fatal"] is None
+
+
+def test_mixed_malformed_bar_rides_the_meta_and_valid_bars_still_enforce(tmp_path):
+    cs = _write(tmp_path, "cs.md",
+                "# s\n<!-- FRIDAY-MAINTAINABILITY:BEGIN -->\n"
+                "maintainability: param-count <= 4\n"
+                "maintainability: file-length at most 300\n"
+                "<!-- FRIDAY-MAINTAINABILITY:END -->\n")
+    _write(tmp_path, "app.py", _SRC_BREACH)
+    res = gate.check(root=str(tmp_path), standards=cs, envelope=None)
+    assert res["verdict"] == "valid-fail"
+    assert res["malformed_bars"] == ["maintainability: file-length at most 300"]
+    assert res["fatal"] is None
+
+
+def test_all_malformed_bars_is_a_fatal_meta_never_a_silent_pass(tmp_path):
+    cs = _write(tmp_path, "cs.md",
+                "# s\n<!-- FRIDAY-MAINTAINABILITY:BEGIN -->\n"
+                "maintainability: param-count at most 4\n"
+                "<!-- FRIDAY-MAINTAINABILITY:END -->\n")
+    _write(tmp_path, "app.py", _SRC_BREACH)
+    res = gate.check(root=str(tmp_path), standards=cs, envelope=None)
+    assert res["fatal"] and "malformed" in res["fatal"].lower()
+    assert "param-count at most 4" in res["fatal"]
+    assert res["verdict"] == "valid-pass"
+
+
+def test_no_block_meta_says_zero_bars(tmp_path):
+    cs = _write(tmp_path, "cs.md", "# s\nno block here\n")
+    _write(tmp_path, "app.py", _SRC_FIXED)
+    res = gate.check(root=str(tmp_path), standards=cs, envelope=None)
+    assert res["bars_declared"] == 0
+    assert res["arm"] == "warn"

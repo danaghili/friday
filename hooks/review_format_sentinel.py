@@ -4,12 +4,14 @@
 Engages ONLY for a review-shaped write (a .md under docs/reviews/, never
 _archive/) and runs tools/verify_review_format.py against just that file.
 
-Interim carve-out (DF-021 / D-0009 / D-0021): `interim-*.md` files under
-docs/reviews/ are interim findings-brief artifacts — the seam plan mandates
-both the path and the grammar — so they are validated by
-tools/findings_brief_check.py instead of the FRIDAY-REVIEW envelope. A
-malformed brief still BOUNCES (writer fixes it in-context) but never arms
-the Stop-gate sentinel: an interim report's consumer is the disposition
+Brief carve-outs — two names, one class. `interim-*.md` (DF-021 / D-0009 /
+D-0021): interim findings-brief artifacts, the seam plan mandates both the
+path and the grammar. `findings-*.md` (INC-106 S-106.1 / D-1061): the
+failure-path pass's landing name under the consumption rule
+(docs/contracts/findings-brief.md), which mandates the same pair. Both are
+validated by tools/findings_brief_check.py instead of the FRIDAY-REVIEW
+envelope. A malformed brief still BOUNCES (writer fixes it in-context) but
+never arms the Stop-gate sentinel: a brief's consumer is the disposition
 step, not the session close.
 Unlike the state sentinel it also BOUNCES: on failure it emits
 {"decision":"block","reason": line-precise failures} so the Reviewer that
@@ -57,7 +59,7 @@ def main() -> int:
         if not os.path.isfile(abs_path):
             return 0
 
-        if os.path.basename(abs_path).startswith("interim-"):
+        if os.path.basename(abs_path).startswith(("interim-", "findings-")):
             checker = os.path.join(plugin_root, "tools", "findings_brief_check.py")
             if not os.path.isfile(checker):
                 return 0
@@ -83,7 +85,7 @@ def main() -> int:
             elif verdict.get("verdict") == "valid-fail":
                 errs = "\n".join(f"  x {e}" for e in verdict.get("errors") or [])
                 print(json.dumps({"decision": "block", "reason": (
-                    f"The interim report you just wrote ({rel_path}) does not "
+                    f"The brief you just wrote ({rel_path}) does not "
                     "parse as a findings brief — fix it before reporting DONE "
                     "(contract: docs/contracts/findings-brief.md):\n" + errs)}))
             return 0

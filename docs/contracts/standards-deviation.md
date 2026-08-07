@@ -1,8 +1,10 @@
 # Contract: the standards-deviation ledger
 
 The producer/consumer contract for `docs/STANDARDS-DEVIATIONS.md` (INC-008
-FR-8.6). **Producer / single writer:** `tools/standards_deviations.py` (the
-agent judge routes a *justified* measured breach here). **Consumers:**
+FR-8.6; widened by INC-105 FR-105.10). **Producer / single writer:**
+`tools/standards_deviations.py` (the agent judge routes a *justified* measured
+breach here, and an `accepted` conformance answer as the rule-shaped entry —
+seam: `docs/contracts/conformance-envelope.md`). **Consumers:**
 `/friday:reconcile`'s cross-check of the `model-autonomous` channel, and the
 PM or auditor reading the ledger. The enforcement gate
 (`tools/maintainability_gate_check.py`) reads disposition from the judge
@@ -20,9 +22,7 @@ machinery — a single writer under an advisory lock, monotonic `SD-NNNN` ids fr
 the shared substrate counter, two channels, growing-log cap + archive, and a
 byte-exact tested empty form — never a channel of `DECISIONS.md`.
 
-**Two clean homes (KH-7):** a *measured* breach lands here; a *taste* departure
-lands in an ADR (`docs/architecture/decisions/`). The judge routes by kind; the
-two never cross.
+**Two clean homes (KH-7, line amended by INC-105 §9 as of 2026-08-02):** an *anchored* breach lands here — measured against a declared bar, or a conformance breach against a written rule the entry quotes; a *taste* departure lands in an ADR (`docs/architecture/decisions/`). The judge routes by kind; the two never cross. Taste stays out of the ledger exactly as INC-008 pinned; the amendment's own reasoning is era-stamped in `docs/increments/INC-105.md` §9, not restated here.
 
 ## The shape
 
@@ -37,6 +37,11 @@ _No standards deviations recorded yet._            ← the empty form's sentinel
 **When:** <ISO-8601Z> · **Channel:** pm-ratified|model-autonomous · **Floor:** none|auth-security|schema-data
 - **Justification:** <plain words: why this breach is accepted>
 - **Standard:** <the cited coding-standards.md line / §section the judge reasoned against>
+
+## SD-0002 — conformance <check-id> @ <location>
+**When:** … · **Channel:** … · **Floor:** …                ← same meta line, same bullets
+- **Justification:** <plain words: why this breach is accepted>
+- **Standard:** <the written rule the check enforces — quoted, the anchor>
 ```
 
 - The pinned H1 `# Standards Deviations …` is line 1.
@@ -55,6 +60,7 @@ _No standards deviations recorded yet._            ← the empty form's sentinel
   state (S-8.3) — the field is the durable evidence of that.
 - The title `<metric> <measured> > <bar> @ <location>` parses back to its parts
   (a malformed title is a schema error, never silently kept).
+- **The rule-shaped title alternative (INC-105 FR-105.10):** `conformance <check-id> @ <location>` — an `accepted` answer from the conformance envelope landing in this ONE ledger beside the number-shaped entries, because a project's accepted deviations are one question with one answer (INC-105 D8). It parses back to check-id and location under the same malformed-title rule; the `Standard` bullet quotes the written rule, which is what keeps the entry anchored. Producer doors: `append_rule_entry` in the module, `--check` on the CLI. The envelope side of the seam: `docs/contracts/conformance-envelope.md` § The accepted breach and the ledger.
 - Growing-log discipline: at the entry cap (default 100) the oldest half MOVES to
   `docs/deviations/archive-NNN.md` — ids preserved, schema-valid; completion is a
   move, not a flag.

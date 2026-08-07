@@ -222,7 +222,7 @@ Plain definitions of every term and code you'll meet.
   worktrees automatically; you don't have to think about it.
 - **Behavior paragraph** — the approved plain-English description of what a
   command does. These paragraphs are the source this manual is built from.
-- **Grilling / interrogation** — friday's questioning style during discovery:
+- **Interrogation** — friday's questioning style during discovery:
   it presses on an idea (the way a good engineer would) until the plan is
   genuinely clear, rather than taking a vague brief at face value.
 

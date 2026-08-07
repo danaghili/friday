@@ -1,10 +1,19 @@
-"""The interim carve-out in review_format_sentinel (DF-021 / D-0009):
-`docs/reviews/interim-*.md` files are interim findings-brief artifacts — the
-seam plan mandates both the path and the grammar — so the sentinel validates
-them with tools/findings_brief_check.py instead of the FRIDAY-REVIEW
-envelope, bounces on a malformed brief, and NEVER arms the Stop-gate
-sentinel for them (their consumer is the disposition step, not the session
-close). Non-interim review files keep the envelope check unchanged.
+"""The brief carve-outs in review_format_sentinel.
+
+Interim (DF-021 / D-0009): `docs/reviews/interim-*.md` files are interim
+findings-brief artifacts — the seam plan mandates both the path and the
+grammar — so the sentinel validates them with tools/findings_brief_check.py
+instead of the FRIDAY-REVIEW envelope, bounces on a malformed brief, and
+NEVER arms the Stop-gate sentinel for them (their consumer is the
+disposition step, not the session close).
+
+Failure-path (INC-106 S-106.1 / D-1061): `docs/reviews/findings-*.md` is the
+failure-path pass's contract-mandated landing name (the consumption rule,
+docs/contracts/findings-brief.md), and before the carve-out a fresh Write of
+it bounced off the envelope check with decision:block — a hook standing
+exactly where S-106.1 promises none. Same class, same treatment as interim.
+
+Non-brief review files keep the envelope check unchanged.
 """
 import json
 import os
@@ -70,6 +79,24 @@ def test_interim_pass_disarms_a_stale_arming_for_the_same_file(tmp_path):
     (proj / ".friday" / "review-format-invalid").write_text(
         "docs/reviews/interim-u1-gate.md\nstrict\nstale arming\n", encoding="utf-8")
     _run(proj, _write_event(proj, "docs/reviews/interim-u1-gate.md", VALID_BRIEF))
+    assert not (proj / ".friday" / "review-format-invalid").exists()
+
+
+def test_valid_failure_path_brief_passes_silently_and_never_arms(tmp_path):
+    proj = _proj(tmp_path)
+    brief = VALID_BRIEF.replace("source=harden", "source=failure-path")
+    p = _run(proj, _write_event(proj, "docs/reviews/findings-failure-path.md", brief))
+    assert p.stdout.strip() == ""
+    assert not (proj / ".friday" / "review-format-invalid").exists()
+
+
+def test_malformed_failure_path_brief_bounces_but_never_arms(tmp_path):
+    proj = _proj(tmp_path)
+    p = _run(proj, _write_event(proj, "docs/reviews/findings-failure-path.md",
+                                "just some prose, no header\n"))
+    out = json.loads(p.stdout)
+    assert out["decision"] == "block"
+    assert "findings-brief" in out["reason"]
     assert not (proj / ".friday" / "review-format-invalid").exists()
 
 

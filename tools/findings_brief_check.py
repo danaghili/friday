@@ -3,10 +3,10 @@
 the FR-42 structural PoC cap via the §7 pin "PoC-or-informational discipline").
 
 Contract: docs/contracts/findings-brief.md — harden / security / redteam /
-adopt emit the brief, this checker + the document gate (guard #9) consume it.
-The shape:
+adopt / the tester's failure-path pass emit the brief, this checker + the
+document gate (guard #9) consume it. The shape:
 
-    findings-brief: source=harden|security|redteam|adopt count=N
+    findings-brief: source=harden|security|redteam|adopt|failure-path count=N
 
     ## F-n — <title> (severity: act-now|before-growth|track|informational)
     evidence: <file:line or PoC pointer; `none — <reason>` ONLY at informational>
@@ -39,7 +39,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import taglines  # noqa: E402
 
-SOURCES = ("harden", "security", "redteam", "adopt")
+SOURCES = ("harden", "security", "redteam", "adopt", "failure-path")
 SEVERITIES = ("act-now", "before-growth", "track", "informational")
 FIELDS = ("evidence", "explained", "fixed-when")
 

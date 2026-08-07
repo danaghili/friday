@@ -31,6 +31,7 @@ from __future__ import annotations
 
 import json
 import os
+import subprocess
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -131,24 +132,23 @@ def _answer_for(tool_response: object, question: str, header: str | None,
     return _extract_answer(tool_response) if single else None
 
 
-def _capture_one(cwd: str, decisions, ask: dict, answer: str,
-                 options: list[str]) -> str:
-    """Compose and append ONE pm-ratified entry for one decision-shaped
-    question; returns the allocated D-NNNN id."""
-    not_chosen = [o for o in options if o and o not in answer]
-    rejected = ask["rejected"] or "-"
-    if not_chosen:
-        rejected += " · options not chosen: " + "; ".join(not_chosen)
-    weight = ask["weight"]
-    if ask["floor"] != "none":
-        weight = "one-way"  # PROP-044 categorical override, enforced here too
-    id_str, _ = decisions.append_entry(
-        cwd, title=ask["title"],
-        decision=f"{answer}" + (f" — {ask['decision']}" if ask["decision"] else ""),
-        why=ask["why"] or "(why not stated in the ask)",
-        rejected=rejected, channel="pm-ratified", weight=weight,
-        floor=ask["floor"])
-    return id_str
+def _capture_one(plugin_root: str, cwd: str, question: str, answer: str,
+                 options: list[str]) -> str | None:
+    """Hand ONE question to the record owner's own CLI — parse, compose and
+    append all happen on the tool side of the subprocess boundary (hooks
+    shell out to the logic core, never import it — D-1084). Returns the
+    allocated D-NNNN id, or None for a question that is not the decision-ask
+    shape (ordinary dialogs never flood the log)."""
+    tool = os.path.join(plugin_root, "tools", "decisions_append.py")
+    proc = subprocess.run(
+        [sys.executable, tool, "--capture-ask", "--root", cwd],
+        input=json.dumps({"question": question, "answer": answer,
+                          "options": options}),
+        capture_output=True, text=True, timeout=30)
+    if proc.returncode != 0:
+        raise RuntimeError(proc.stderr.strip() or "capture-ask failed")
+    out = json.loads(proc.stdout)
+    return out["id"] if out.get("captured") else None
 
 
 def main() -> int:
@@ -164,17 +164,14 @@ def main() -> int:
         questions = _questions(event.get("tool_input"))
         if not questions:
             return 0
-        import decisions
         single = len(questions) == 1
         wrote: list[str] = []
         for question, header, options in questions:
-            ask = decisions.parse_decision_ask(question)
-            if ask is None:
-                continue  # not the decision-ask shape — never capture ordinary dialogs
-
             answer = _answer_for(event.get("tool_response"), question, header,
                                  single) or FALLBACK
-            wrote.append(_capture_one(cwd, decisions, ask, answer, options))
+            got = _capture_one(plugin_root, cwd, question, answer, options)
+            if got:
+                wrote.append(got)
         if wrote:
             print(f"decision_capture: wrote {', '.join(wrote)} (pm-ratified)",
                   file=sys.stderr)

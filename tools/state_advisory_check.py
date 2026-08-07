@@ -302,8 +302,15 @@ def _changed_files(root: str, *args: str) -> list[str] | None:
 # --- mode: due (the D-0111 standing-care signals) ------------------------------------------
 
 DEFAULT_DUE_DAYS = 30
+DEFAULT_DUE_CLOSES = 10  # INC-109 D2 — the one home of the event bar's default
 _DUE_RE = re.compile(r"^(\d{1,4})d$")
+_CLOSES_RE = re.compile(r"^(\d{1,4})$")
 _DATE_RE = re.compile(r"^(\d{4}-\d{2}-\d{2})")
+# The change trail's first line (grammar: docs/contracts/change-trail.md,
+# cited never restated). The counter reads this line and NOTHING further —
+# trail bodies quote real terminal output (S-109.3).
+_TRAIL_LINE_RE = re.compile(r"^trail:\s+lane=(\S+)\s+id=(\S+)\s+date=(\S+)\s*$")
+_MUTATING_LANES = ("bug", "patch", "feature")
 
 
 def check_due(root: str, *, today: str | None = None) -> dict:
@@ -370,9 +377,100 @@ def check_due(root: str, *, today: str | None = None) -> dict:
                     f"this project's {threshold}-day bar. A clean "
                     f"/friday:reconcile re-dates it (D-0141)")
 
+    # Signal 3 — the event arm (INC-109 D1): mutating closes counted from the
+    # project's own COMMITTED change trails, never the per-checkout journal —
+    # a fresh clone must take the same count (KH-1/KH-2). Malformed bar rules
+    # mirror the time arm's, applied per arm (D9): a broken setting skips its
+    # own arm only and is never silently defaulted.
+    problems.extend(_event_arm_problems(wroot, block, today=today))
+
     if not problems:
         return _result("valid-pass", "standing care is current")
     return _result("valid-fail", "; and ".join(problems))
+
+
+def _event_arm_problems(wroot: str, block: dict, *, today: str | None) -> list[str]:
+    import datetime as _dt
+    problems: list[str] = []
+    bar = DEFAULT_DUE_CLOSES
+    closes_raw = (block.get("reconcile-due-closes") or [""])[0]
+    if closes_raw:
+        m = _CLOSES_RE.match(closes_raw.strip())
+        if not m:
+            return [f"the record's own event bar does not parse — "
+                    f"`reconcile-due-closes: {closes_raw}` (expected a plain "
+                    f"count of closes, e.g. 10); fix the line rather than "
+                    f"trusting a default it did not set"]
+        bar = int(m.group(1))
+    last_raw = (block.get("last-verified") or [""])[0]
+    m = _DATE_RE.match(last_raw.strip()) if last_raw else None
+    if not m:
+        return []  # absent is K5's breach, unparseable is the time arm's line
+    since = _dt.date.fromisoformat(m.group(1))
+    counted, named, dead = _count_closes(wroot, since)
+    if dead:
+        return [dead]
+    problems.extend(named)
+    total = sum(counted.values())
+    if total > bar:
+        breakdown = ", ".join(f"{counted[l]} {l}" for l in _MUTATING_LANES
+                              if counted[l])
+        problems.append(
+            f"{total} finished changes have landed since the record was last "
+            f"verified ({breakdown}) — past this project's {bar}-close bar. "
+            f"A clean /friday:reconcile re-dates the record and resets the "
+            f"count (D-0141)")
+    return problems
+
+
+def _count_closes(wroot: str, since) -> tuple[dict, list[str], str | None]:
+    """First lines of docs/trails/*.md against the record's date, strictly
+    later (D11 — the boundary day is not counted; the arm may be late by one
+    close, never early). A trail the counter cannot read is NAMED, and a
+    directory it cannot list is a could-not-count — never a zero (S-109.2)."""
+    import datetime as _dt
+    counted = {lane: 0 for lane in _MUTATING_LANES}
+    named: list[str] = []
+    tdir = os.path.join(wroot, "docs", "trails")
+    if not os.path.isdir(tdir):
+        return counted, named, None  # the empty case is silence (FR-109.5)
+    try:
+        entries = sorted(n for n in os.listdir(tdir) if n.endswith(".md"))
+    except OSError as e:
+        return counted, named, (f"could not count finished changes — "
+                                f"docs/trails is unreadable ({e.strerror or e}); "
+                                f"an untakeable count is never a zero")
+    for name in entries:
+        rel = f"docs/trails/{name}"
+        try:
+            with open(os.path.join(tdir, name), encoding="utf-8",
+                      errors="replace") as fh:
+                first = fh.readline().strip()
+        except OSError:
+            named.append(f"{rel} could not be read — it is excluded from the "
+                         f"count and the count is not clean")
+            continue
+        m = _TRAIL_LINE_RE.match(first)
+        if not m:
+            named.append(f"{rel} does not open with the trail tag line "
+                         f"(docs/contracts/change-trail.md) — excluded from "
+                         f"the count and the count is not clean")
+            continue
+        lane, _id, date_raw = m.group(1), m.group(2), m.group(3)
+        if lane not in _MUTATING_LANES:
+            named.append(f"{rel} carries unrecognised lane '{lane}' — "
+                         f"excluded from the count and the count is not clean")
+            continue
+        try:
+            when = _dt.date.fromisoformat(date_raw)
+        except ValueError:
+            named.append(f"{rel} carries date '{date_raw}' which will not "
+                         f"parse — excluded from the count and the count is "
+                         f"not clean")
+            continue
+        if when > since:
+            counted[lane] += 1
+    return counted, named, None
 
 
 # --- CLI --------------------------------------------------------------------------------

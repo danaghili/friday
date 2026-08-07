@@ -48,6 +48,34 @@ def test_ir_extraction(tmp_path):
     assert ir["unparseable"] == []
 
 
+def test_gitignored_paths_are_outside_the_architecture_record(tmp_path):
+    """Found live at the INC-107 close: a readable-but-untracked scratch
+    directory the project's own rules bar from every commit was extracted
+    into the IR, and the synthesis oracle then demanded the committed record
+    document files that will never land. A gitignored path is the project
+    declaring 'not part of me' — the extractor honors that declaration.
+    A tree with no git at all skips nothing (the fallback is the old walk)."""
+    import subprocess
+    root = _seed_pkg(tmp_path)
+    scratch = root / "app" / "scratch"
+    scratch.mkdir()
+    (scratch / "probe.py").write_text("import state\n", encoding="utf-8")
+    (scratch / "probe.js").write_text("export const x = 1\n", encoding="utf-8")
+    # no git → the scratch modules extract like anything else
+    ir = xa.extract(str(root), src_dirs=["app"])
+    ids = {m["id"] for m in ir["modules"]}
+    assert "app.scratch.probe" in ids
+    assert any("scratch/probe.js" in m["id"] for m in ir["modules"])
+    # a git repo ignoring the scratch → both leave the record (py and js walks)
+    subprocess.run(["git", "init", "-q", str(root)], check=True)
+    (root / ".gitignore").write_text("app/scratch/\n", encoding="utf-8")
+    ir2 = xa.extract(str(root), src_dirs=["app"])
+    ids2 = {m["id"] for m in ir2["modules"]}
+    assert "app.scratch.probe" not in ids2
+    assert not any("scratch/probe.js" in i for i in ids2)
+    assert {"app.state", "app.web", "app.util"} <= ids2
+
+
 def test_zero_module_empty_case(tmp_path):
     (tmp_path / "empty").mkdir()
     ir = xa.extract(str(tmp_path), src_dirs=["empty"])

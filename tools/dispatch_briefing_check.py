@@ -49,6 +49,7 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import friday_substrate as fs  # noqa: E402
 import taglines  # noqa: E402
 
 DISPATCH_TAG = "dispatch"
@@ -89,7 +90,7 @@ def briefing_line(text: str) -> dict | None:
 def _dispatched_roles(root: str) -> list[str]:
     """Agent slugs the journal records a spawn for, in first-seen order.
     Unreadable or absent journal → empty list: unsure ALLOWS (S-208.1)."""
-    path = os.path.join(root, ".friday", "journal.jsonl")
+    path = os.path.join(fs.friday_dir(root), "journal.jsonl")
     roles: list[str] = []
     try:
         with open(path, encoding="utf-8") as fh:
@@ -124,7 +125,7 @@ def _briefing_path(root: str, role: str, session_id: str | None) -> str | None:
     every one of them a false alarm. A briefing found in any drawer is a
     briefing that was saved; a role briefed in none is still the real defect
     and is still reported."""
-    base = os.path.join(root, ".friday", "compaction")
+    base = os.path.join(fs.friday_dir(root), "compaction")
     ordered = ([session_id] if session_id else []) + [
         s for s in _sessions(base) if s != session_id]
     for sid in ordered:
@@ -205,7 +206,7 @@ def check(root: str, *, session_id: str | None = None) -> dict:
 
 def _newest_session(root: str) -> str | None:
     """The newest drawer session id, when the caller named none."""
-    base = os.path.join(root, ".friday", "compaction")
+    base = os.path.join(fs.friday_dir(root), "compaction")
     try:
         entries = [(os.path.getmtime(os.path.join(base, d)), d)
                    for d in os.listdir(base)

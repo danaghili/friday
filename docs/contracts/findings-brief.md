@@ -1,17 +1,14 @@
 # Contract: the findings brief
 
-The producer/consumer contract for findings briefs (TECHNICAL_SOW_REBUILD
-US-12: FR-63, FR-65; AC-16; the FR-42 proof rule made structural via the §7
-pin "PoC-or-informational discipline"; thirteenth session decision).
-Producers: harden's find pass, security, redteam, adopt. Consumers:
-`tools/findings_brief_check.py`, the document gate (guard #9), harden's fix
-loop, PM dispositions. Both sides cite THIS file; neither invents its own
-shape.
+The producer/consumer contract for findings briefs (TECHNICAL_SOW_REBUILD US-12: FR-63, FR-65; AC-16; the FR-42 proof rule made structural via the §7 pin "PoC-or-informational discipline"; thirteenth session decision).
+Producers: harden's find pass, security, redteam, adopt, and the tester's failure-path pass (`agents/roles/tester.md` § The failure-path pass — INC-106 FR-106.9).
+Consumers: `tools/findings_brief_check.py`, the document gate (guard #9), harden's fix loop, the feature lane's slice close (the failure-path brief — INC-106 D13), PM dispositions.
+Both sides cite THIS file; neither invents its own shape.
 
 ## The shape
 
 ```
-findings-brief: source=harden|security|redteam|adopt count=N
+findings-brief: source=harden|security|redteam|adopt|failure-path count=N
 
 ## F-n — <title> (severity: act-now|before-growth|track|informational)
 evidence: <exact file:line, or a PoC pointer>
@@ -47,6 +44,8 @@ by `hooks/_guard.py`). A missing/unreadable brief FILE is `valid-fail`: the
 gate fires at consumption time, and consuming an absent document is the
 failure. Exit codes: 0 pass · 1 fail · 2 bad invocation.
 
-Tests: `tests/test_findings_brief_check.py` (all four sources, the count=0
+**The consumption rule (the lanes' persist-and-validate — single home).** A consuming lane persists every brief it consumes (`docs/reviews/findings-*.md`, or `docs/hardening/` for working notes) and runs this checker on it BEFORE dispositioning, so the structural gate binds whether the brief arrived as a file or a teammate message — the delivery channel never decides whether it is validated.
+
+Tests: `tests/test_findings_brief_check.py` (every source, the count=0
 empty case, seeded-malformed refusals, the PoC cap both ways, skeleton
 integration).

@@ -20,7 +20,7 @@
 - `FRIDAY_GUARD_TIMEOUT_S` — read in `hooks.foundation_gate:40`
 - `FRIDAY_GUARD_TIMEOUT_S` — read in `hooks.graph_freshness_guard:33`
 - `FRIDAY_GUARD_TIMEOUT_S` — read in `hooks.lane_close_gate:73`
-- `FRIDAY_GUARD_TIMEOUT_S` — read in `hooks.maintainability_gate:227`
+- `FRIDAY_GUARD_TIMEOUT_S` — read in `hooks.maintainability_gate:235`
 - `FRIDAY_GUARD_TIMEOUT_S` — read in `hooks.open_risks_guard:39`
 - `FRIDAY_GUARD_TIMEOUT_S` — read in `hooks.oracle_edit_guard:44`
 - `FRIDAY_GUARD_TIMEOUT_S` — read in `hooks.profile_guard:44`

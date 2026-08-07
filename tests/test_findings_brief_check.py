@@ -3,11 +3,12 @@ FR-63, FR-65; AC-16; the FR-42 structural PoC cap via the §7 pin
 "PoC-or-informational discipline").
 
 Contract: docs/contracts/findings-brief.md (cited on both sides — harden /
-security / redteam / adopt emit it; tools/findings_brief_check.py + the
-document gate consume it).
+security / redteam / adopt / the tester's failure-path pass emit it;
+tools/findings_brief_check.py + the document gate consume it).
 
 The grammar in one breath: header tag
-`findings-brief: source=harden|security|redteam|adopt count=N`; each finding
+`findings-brief: source=harden|security|redteam|adopt|failure-path count=N`;
+each finding
 `## F-n — <title> (severity: act-now|before-growth|track|informational)`
 with non-empty `evidence:` / `explained:` / `fixed-when:` lines; count must
 equal the number of findings; the empty case (count=0) requires a non-empty
@@ -50,7 +51,7 @@ def make_brief(*, source="security", findings=None, checked=None) -> str:
 # --- valid shapes ---------------------------------------------------------------
 
 def test_valid_brief_passes_every_source():
-    for source in ("harden", "security", "redteam", "adopt"):
+    for source in ("harden", "security", "redteam", "adopt", "failure-path"):
         res = findings_brief_check.check_text(make_brief(source=source))
         assert res["verdict"] == "valid-pass", (source, res)
         assert res["source"] == source

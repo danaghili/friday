@@ -53,7 +53,12 @@ import taglines  # noqa: E402
 
 BLOCK = "FRIDAY-PARKED"
 SENTINEL = "_Nothing parked._"
-SOURCES = ("feedback", "redteam", "discovery", "lead")
+# The closed source vocabulary; widened by one at INC-107 §9 (D11, D-1070):
+# loose-deferral names a deferral recovered from the project's own code by
+# the deep-clean scan, answered by the PM — writing it as the lead's own
+# deferral would put false provenance into the one record whose whole value
+# is provenance. Unknown values are still refused.
+SOURCES = ("feedback", "redteam", "discovery", "lead", "loose-deferral")
 _SEP = " · revisit-when: "
 _HEAD_RE = re.compile(r"^PARK-(\d{3,}) (\d{4}-\d{2}-\d{2}) from:(\S+) — (.*)$",
                       re.DOTALL)

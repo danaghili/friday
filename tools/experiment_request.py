@@ -48,6 +48,7 @@ import sys
 from urllib.parse import urlsplit
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import friday_substrate as fs  # noqa: E402
 import taglines  # noqa: E402
 
 BLOCK = "FRIDAY-EXPERIMENT"
@@ -217,7 +218,7 @@ def write_allowed(path: str, root: str) -> bool:
     and decision ids must not fragment), so the runner's read-only relationship
     to it is enforced here rather than inherited from the worktree boundary.
     """
-    substrate = os.path.abspath(os.path.join(root, ".friday"))
+    substrate = os.path.abspath(fs.friday_dir(root))
     target = os.path.abspath(path)
     return not (target == substrate or target.startswith(substrate + os.sep))
 

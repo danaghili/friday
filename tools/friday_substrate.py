@@ -127,6 +127,23 @@ def envelope_path(cwd: str = ".") -> str:
     return os.path.join(friday_dir(cwd), "maintainability-envelope.md")
 
 
+def conformance_envelope_path(cwd: str = ".") -> str:
+    """The ONE authority for where the conformance envelope lives (INC-105
+    FR-105.7 — the D-0148 pattern applied to the sibling envelope). The judge
+    writes through `conformance_envelope_check.py --write`, which resolves
+    HERE; the enforcement gate is deliberately not a consumer (D6, D8)."""
+    return os.path.join(friday_dir(cwd), "conformance-envelope.md")
+
+
+def loose_deferral_envelope_path(cwd: str = ".") -> str:
+    """The ONE authority for where the loose-deferral envelope lives (INC-107
+    FR-107.10 — the D-0148 pattern, third application). The deep clean's run
+    writes through `loose_deferral_envelope_check.py --write`; the envelope is
+    the per-run presentation, machine-local by design — the DURABLE record is
+    the committed answered set (`tools/loose_deferrals.py`), not this file."""
+    return os.path.join(friday_dir(cwd), "loose-deferral-envelope.md")
+
+
 # --- engagement guard -----------------------------------------------------------
 
 def is_friday_project(cwd: str = ".") -> bool:

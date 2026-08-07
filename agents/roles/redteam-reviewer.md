@@ -115,6 +115,7 @@ confirmed findings route to operations to fix and own; you demonstrate the
 break, they make it hold. Security L6 verifies the same posture read-only:
 three lanes, one seam each — attack (you), verify (security), own and fill
 (operations).
+One more seam, mirrored on both sides (INC-106): when your operational adversary and the tester's failure-path pass surface the same what-a-person-sees event — the spinner that never ends, the player that dies silently — the person-facing finding lands once, in that pass's brief (`agents/roles/tester.md` § The failure-path pass); yours stays the undeclared door behind it.
 
 At the end the PM knows where the system bends when someone leans on it who
 never read the spec — and the spec gets smarter every time.

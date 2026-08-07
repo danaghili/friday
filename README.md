@@ -40,7 +40,7 @@ are and what to run next.**
 | --- | --- |
 | `/friday:adopt` | bring a codebase that has never known friday under management, honestly |
 | `/friday:backfill` | migrate a project built by an older friday onto the current substrate |
-| `/friday:brainstorm` | run when the PM has a rough idea to develop into a build-ready spec — the grilling door |
+| `/friday:brainstorm` | run when the PM has a rough idea to develop into a build-ready spec — the interrogation d… |
 | `/friday:bug` | run when the PM reports something known to be broken — diagnosis first, fix on their word |
 | `/friday:build` | run when the PM says build the approved spec — the whole-TSOW free-run, not ad-hoc coding |
 | `/friday:design-system` | run when the PM wants the interface settled — once, coherently, before any building |

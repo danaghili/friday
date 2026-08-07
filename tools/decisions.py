@@ -31,12 +31,13 @@ Monotonic D-NNNN (A.5 #7, Appendix B.2): allocated under an advisory
 the SHARED substrate root, so concurrent writers — including writers in
 different worktrees, whose docs/DECISIONS.md checkouts differ — can never
 collide or reuse an id. The counter is regenerable: next id is
-max(counter, max id in the local file) + 1 — counting ONLY ids inside this
-clone's lane (D-0152; `git config friday.decision-id-base`, unset = the low
+max(counter, max id in the local file) + 1 — counting ONLY ids inside the
+lane `git config friday.decision-id-base` selects (D-0152; unset = the low
 lane [1, 1000)). Pre-merge the lanes held by construction because each log
 held one machine's entries; the 2026-07-29 merged log broke that silently
-(first post-merge mint came out D-1007, in the other machine's lane), so the
-lane is now enforced here: `_lane_bounds()`.
+(the first post-merge mint ran on the low-lane clone and came out D-1007,
+inside the other clone's lane), so the lane is now enforced here:
+`_lane_bounds()`.
 
 Growing-log discipline (PROP-023, hard-won lesson #9): entry cap (default
 100) with archive-on-overflow — the oldest half MOVES to
@@ -142,6 +143,32 @@ def validate_fields(channel: str, weight: str, floor: str) -> list[str]:
 
 # --- parser --------------------------------------------------------------------------
 
+def _parse_entry_line(current: dict, ln: str) -> None:
+    """Fold one body line into the open entry: a Decision/Why/Rejected bullet,
+    the typed override-grant line (the structured authorization the guards
+    trust — an entry that loses it on a re-render loses its power to
+    authorize; the archiver strips what the parser cannot carry), or the
+    **When:** meta line's key/value pairs."""
+    bm = _BULLET_RE.match(ln)
+    if bm:
+        current[bm.group(1).lower()] = bm.group(2)
+        return
+    tl = taglines.parse_typed_line(ln)
+    if tl and tl[0] == "override-grant":
+        current["override_grant"] = tl[1]
+        return
+    if ln.startswith("**When:**"):
+        for part in ln.split(" · "):
+            km = _META_KEY_RE.search(part)
+            if not km:
+                continue
+            key, val = km.group(1).lower(), km.group(2)
+            if key == "back-filled":
+                current["back_filled"] = val.strip().lower() == "true"
+            else:
+                current[key] = val
+
+
 def parse(text: str) -> dict:
     """{ok, empty, entries[], errors[]}. Precision-first: unknown prose between
     entries is tolerated; structural violations of the pinned grammar are not."""
@@ -174,23 +201,8 @@ def parse(text: str) -> dict:
             close(current)
             current = {"id_str": m.group(1), "id": int(m.group(2)),
                        "title": m.group(3), "back_filled": False}
-            continue
-        if current is None:
-            continue
-        bm = _BULLET_RE.match(ln)
-        if bm:
-            current[bm.group(1).lower()] = bm.group(2)
-            continue
-        if ln.startswith("**When:**"):
-            for part in ln.split(" · "):
-                km = _META_KEY_RE.search(part)
-                if not km:
-                    continue
-                key, val = km.group(1).lower(), km.group(2)
-                if key == "back-filled":
-                    current["back_filled"] = val.strip().lower() == "true"
-                else:
-                    current[key] = val
+        elif current is not None:
+            _parse_entry_line(current, ln)
     close(current)
 
     if entries and has_sentinel:
@@ -253,14 +265,15 @@ def _locked(root: str):
 
 
 def _lane_bounds(root: str) -> tuple[int, int]:
-    """This clone's decision-id lane [lo, hi) — D-0152's rule, enforced.
+    """The decision-id lane [lo, hi) that `git config friday.decision-id-base`
+    selects — D-0152's rule, enforced.
 
     `git config friday.decision-id-base`: unset/invalid = 0 → the low lane
     [1, 1000); a machine configured with base N mints only inside
     [N, N+1000) — the same 'next = highest inside my range + 1, or the base
     when empty' shape as INC/PROP allocation (D-0113). Enforcement exists
     because the merged log killed the by-construction guarantee: allocation
-    is highest-seen + 1, and post-merge 'seen' includes the other machine's
+    is highest-seen + 1, and post-merge 'seen' includes both lanes'
     entries."""
     base = 0
     try:
@@ -398,4 +411,5 @@ def _reformat(e: dict) -> str:
                         weight=e.get("weight", "two-way"), floor=e.get("floor", "none"),
                         back_filled=e.get("back_filled", False),
                         decision=e.get("decision", "?"), why=e.get("why", "?"),
-                        rejected=e.get("rejected", "?"))
+                        rejected=e.get("rejected", "?"),
+                        override_grant=e.get("override_grant"))

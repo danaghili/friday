@@ -21,4 +21,4 @@ is uncaptured the sections say so rather than inventing one. Sections
 first `/friday:reference` run over a real deployment history — writing them
 now would be template-filling, exactly what the grounding discipline forbids.
 
-**Last-verified:** 2026-07-31 (INC-209 close: the compaction-seed tool and its four test modules into the inventory; synthesis_diff clean) · **Record-status:** verified
+**Last-verified:** 2026-08-05 (reference run on the INC-109 base: the interrogation rename applied to solution strategy; IR regenerated; synthesis_diff clean) · **Record-status:** verified

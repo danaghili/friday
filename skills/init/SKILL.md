@@ -46,7 +46,7 @@ Spawn `friday-profiler` (model: **haiku** — pinned, matching `skills/profile/S
 
 ### Stage 2: Brainstormer → the TSOW (skip if docs/TECHNICAL_SOW.md present)
 
-Spawn `friday-brainstormer` (model: **opus** — decision-density, matching every other dispatch site of this role). Spawn message carries: the CLIENT INTAKE BRIEF + any `/friday:research` findings. Relay the grilling-protocol dialog faithfully. The hard non-proceed gate, the one-way-door teach-backs, and the post-write second-PM-read are the Brainstormer's own contract — your job is faithful relay, **including having the PM read the actual written file** (not your summary) before accepting DONE. On acceptance, stamp `state: tsow-approved` into the FRIDAY-STATE block (stub `CLAUDE.md` with only that block if none exists yet — contract: `docs/contracts/state-record.md`, D-0105) so a crash before Stage 4's substrate seeding stays classifiable.
+Spawn `friday-brainstormer` (model: **opus** — decision-density, matching every other dispatch site of this role). Spawn message carries: the CLIENT INTAKE BRIEF + any `/friday:research` findings. Relay the interrogation-protocol dialog faithfully. The hard non-proceed gate, the one-way-door teach-backs, and the post-write second-PM-read are the Brainstormer's own contract — your job is faithful relay, **including having the PM read the actual written file** (not your summary) before accepting DONE. On acceptance, stamp `state: tsow-approved` into the FRIDAY-STATE block (stub `CLAUDE.md` with only that block if none exists yet — contract: `docs/contracts/state-record.md`, D-0105) so a crash before Stage 4's substrate seeding stays classifiable.
 
 ### Stage 3: Front-loaded UX — the fork (skip if artifacts present, or n/a for headless projects)
 

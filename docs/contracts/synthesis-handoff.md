@@ -56,10 +56,11 @@ small project can never opt out silently. The rule is language-blind (D10).
 
 ## Prose rules binding the synthesis (INC-203 FR-203.2)
 
-A regenerated document cannot read an authoring convention, so the two record-authoring rules bind here, at the contract the producer already reads. Their single home is the project `CLAUDE.md` § Conventions (D-0161); this section is the producer-side binding, not a second home — where wording differs, the home wins.
+A regenerated document cannot read an authoring convention, so the record-authoring rules bind here, at the contract the producer already reads. Their single home is the project `CLAUDE.md` § Conventions (D-0161); this section is the producer-side binding, not a second home — where wording differs, the home wins.
 
 1. **No derivable figure in prose** — a number, count, or list that the IR or a tool owns is written as "every …" or as a pointer to its generated source, never as the figure.
 2. **No restated single-homed rule** — a rule that has a home is pointed at, never re-worded into the synthesis.
+3. **No reader-relative referent carrying a machine fact** — a regenerated sentence names the machine's committed anchor or the setting the tools read, never a phrase that rebinds to whoever opens the file (INC-110 D10).
 
 `skills/reference/SKILL.md` Phase 2 cites this section from the producer side (D-0162).
 

@@ -40,6 +40,7 @@ import argparse
 import ast
 import json
 import os
+import subprocess
 import sys
 from datetime import datetime, timezone
 
@@ -65,7 +66,28 @@ def _files_by_suffix(root: str, src_dirs: list[str] | None,
             for fn in sorted(filenames):
                 if fn.endswith(suffixes):
                     out.append(os.path.join(dirpath, fn))
-    return sorted(set(out))
+    return sorted(set(out) - _gitignored(root, out))
+
+
+def _gitignored(root: str, paths: list[str]) -> set[str]:
+    """The subset of `paths` the project's own .gitignore excludes. A
+    gitignored file is the project declaring 'not part of me', and the
+    architecture record documents the project — a readable scratch directory
+    barred from every commit must not put modules into the IR that the
+    committed synthesis is then required to describe. No git, or git
+    unavailable: nothing is excluded (the plain walk stands)."""
+    if not paths:
+        return set()
+    try:
+        proc = subprocess.run(
+            ["git", "-C", root, "check-ignore", "--stdin", "-z"],
+            input="\0".join(paths) + "\0", capture_output=True, text=True,
+            timeout=30)
+    except (OSError, subprocess.TimeoutExpired):
+        return set()
+    if proc.returncode not in (0, 1):  # 128 = not a repo; anything odd → keep all
+        return set()
+    return {p for p in proc.stdout.split("\0") if p}
 
 
 def _py_files(root: str, src_dirs: list[str] | None) -> list[str]:
@@ -351,6 +373,7 @@ def extract(root: str, src_dirs: list[str] | None = None) -> dict:
     # a Python-only project's IR stays byte-identical to today's (AC-207.7).
     import extract_js
     js_paths = extract_js.js_files(root, src_dirs)
+    js_paths = sorted(set(js_paths) - _gitignored(root, js_paths))
     if js_paths:
         js = extract_js.extract_js(root, js_paths)
         ir["modules"].extend(js["modules"])

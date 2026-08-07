@@ -82,21 +82,30 @@ def _block_reason(summary: str, *, checker: str, standards: str, root: str) -> s
 
 _STAMP_NAME = "maintainability-scan.stamp"
 
+# The signature's own walk skips only the universal heavy-derived dirs — a
+# strict SUBSET of the measurer's exclusion set, so the signature always sees
+# a SUPERSET of the measured files. Drift between the two sets can then only
+# invalidate the stamp and cost an extra scan, never silence a real change.
+# (Local because the hook layer shells out to the logic core and never
+# imports it — the 2026-08-05 reconcile's layering conviction, D-1084.)
+_SIG_SKIP = {".git", ".friday", "node_modules", "__pycache__", ".venv", "venv"}
+
 
 def _tree_signature(root: str, standards: str, envelope: str) -> tuple[int, float]:
     """(py-file count, newest mtime across py files + standards + envelope).
-    Stat-only — the whole point is that this costs nothing next to the scan.
-    Requires tools/ on sys.path (load_substrate does that in the hook; tests
-    add it themselves)."""
-    import maintainability_measure as mm
-    files = mm._walk_py(os.path.abspath(root))
+    Stat-only — the whole point is that this costs nothing next to the scan:
+    no file reads, no subprocess, so the stamp fast path stays free."""
     latest, count = 0.0, 0
-    for path in files:
-        try:
-            latest = max(latest, os.stat(path).st_mtime)
-            count += 1
-        except OSError:
-            continue
+    for dirpath, dirnames, filenames in os.walk(os.path.abspath(root)):
+        dirnames[:] = [d for d in dirnames if d not in _SIG_SKIP]
+        for fn in filenames:
+            if not fn.endswith(".py"):
+                continue
+            try:
+                latest = max(latest, os.stat(os.path.join(dirpath, fn)).st_mtime)
+                count += 1
+            except OSError:
+                continue
     for path in (standards, envelope):
         try:
             latest = max(latest, os.stat(path).st_mtime)
@@ -133,34 +142,36 @@ def _write_stamp(fs, root: str, sig: tuple[int, float]) -> None:
         pass
 
 
-def _bars_or_none(root: str):
-    """The adopter gate: (bars, malformed_note, fatal_warn, standards_path), or
-    None when this project declared nothing and the hook owes zero behavior.
-
-    A malformed bar means the PM THINKS something is enforced when nothing is —
-    surfaced, never silently dropped (the parser tags these for exactly this
-    caller). `fatal_warn` is the every-bar-is-malformed case: the whole block
-    reads as enforced and none of it is, which is its own warning and the end
-    of the run.
-    """
+def _standards_or_none(root: str) -> str | None:
+    """The adopter fast gate: the standards path when the project carries a
+    FRIDAY-MAINTAINABILITY block, else None (a non-adopter owes zero behavior
+    and never spawns the checker). Marker-presence only — the bar GRAMMAR
+    lives in the logic core and comes back in the checker's own verdict
+    (arm / bars_declared / malformed_bars / fatal), because this hook shells
+    out and never imports it (D-1084)."""
     standards = os.path.join(root, "docs", "standards", "coding-standards.md")
     if not os.path.isfile(standards):
         return None  # no coding-standards file — a non-adopter; zero new behavior
-    with open(standards, encoding="utf-8") as fh:
-        cs_text = fh.read()
-    import verify_claims  # tools/ is on sys.path via load_substrate
-    bars = verify_claims.maintainability_bars(cs_text)
-    if not bars:
-        return None  # no block, or an empty one — non-adopter invariant
-    malformed = [b["raw"] for b in bars if b.get("metric") is None]
+    try:
+        with open(standards, encoding="utf-8") as fh:
+            if "<!-- FRIDAY-MAINTAINABILITY:BEGIN -->" not in fh.read():
+                return None  # no block — non-adopter invariant
+    except OSError:
+        return None
+    return standards
+
+
+def _verdict_meta(verdict: dict) -> tuple[str | None, str, str]:
+    """(fatal, malformed-note, arm) from the checker's verdict JSON — the bar
+    meta the logic core computed so this hook never parses bars itself
+    (D-1085)."""
+    malformed = verdict.get("malformed_bars") or []
     note = ""
     if malformed:
         note = ("\nMALFORMED bar line(s) NOT being enforced (fix the typo in "
-                "docs/standards/coding-standards.md):\n  " + "\n  ".join(malformed))
-    fatal = ("Maintainability: every declared bar is malformed — NOTHING is "
-             "being enforced." + note) if len(malformed) == len(bars) else None
-    return {"cs_text": cs_text, "standards": standards,
-            "malformed": bool(malformed), "note": note, "fatal": fatal}
+                "docs/standards/coding-standards.md):\n  "
+                + "\n  ".join(malformed))
+    return verdict.get("fatal"), note, verdict.get("arm", "warn")
 
 
 def _emit(action, *, summary: str, checker: str, standards: str, root: str) -> bool:
@@ -197,17 +208,15 @@ def main() -> int:
         # the worktree root, like every sibling Stop gate (raw cwd silently
         # no-ops the whole capability from a subdir).
         root = fs.resolve_worktree_root(cwd)
-        declared = _bars_or_none(root)
-        if declared is None:
-            return 0
-        if declared["fatal"]:
-            print(json.dumps(_guard.emit_warn(declared["fatal"])))
+        standards = _standards_or_none(root)
+        if standards is None:
             return 0
 
         # The cheap self-gate: signature taken BEFORE the scan, so an edit that
         # lands mid-scan raises the mtime past what gets stamped and the next
         # Stop re-scans — the race resolves toward scanning, never skipping.
-        standards = declared["standards"]
+        # An all-malformed block never earns a stamp, so its warn re-fires
+        # every Stop exactly as it did when the hook parsed bars itself.
         # One path authority (D-0148): the substrate names where the envelope
         # lives; the judge writes there through the checker's --write mode.
         # Hand-joining here is how producer and consumer silently split.
@@ -223,19 +232,21 @@ def main() -> int:
         if os.path.isfile(envelope):
             argv += ["--envelope", envelope]
 
-        import verify_claims
         timeout_s = float(os.environ.get("FRIDAY_GUARD_TIMEOUT_S", "60"))
         verdict = _guard.run_checker(argv, timeout_s=timeout_s)
-        arm = verify_claims.maintainability_arm(declared["cs_text"])
+        fatal, note, arm = _verdict_meta(verdict)
+        if fatal:
+            print(json.dumps(_guard.emit_warn(fatal)))
+            return 0
         action = _guard.decide(verdict, "block" if arm == "block" else "warn",
                                reason="")
         summary = (verdict.get("summary", "maintainability breaches are un-dispositioned")
-                   + declared["note"])
+                   + note)
 
         emitted = _emit(action, summary=summary, checker=checker,
                         standards=standards, root=root)
         if not emitted and verdict.get("verdict") == "valid-pass" \
-                and not declared["malformed"]:
+                and not note:
             # Clean, and every declared bar parsed — the only outcome that
             # earns the skip-cache. A malformed bar keeps the scan live so a
             # future fix to the surfacing logic is never suppressed by a stamp.
