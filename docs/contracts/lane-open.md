@@ -16,7 +16,7 @@ share it, per Appendix B):
 ```json
 {"lane": "bug|patch|feature", "id": "<the change's id>",
  "trail": "<worktree-root-relative path the lane committed to>",
- "regression-test": "<tests/*.py path — REQUIRED when lane=bug>",
+ "regression-test": "<existing test-shaped path, the project's own convention — REQUIRED when lane=bug>",
  "blast-radius": ["<repo-relative path prefix or glob>", "..."]}
 ```
 
@@ -24,8 +24,13 @@ share it, per Appendix B):
   the guard never guesses where trails live.
 - **`regression-test`** (REQUIRED when `lane=bug`, consumer:
   `hooks/bug_close_gate.py` + `tools/bug_close_check.py`, guard #11, S-1): a
-  worktree-root-relative `tests/*.py` path naming the committed regression
-  test the bug fix must carry — no bug closes without one. The bug door arms
+  worktree-root-relative path naming the committed regression test the bug
+  fix must carry — no bug closes without one. The path uses the project's
+  own test convention; the guard requires the file to exist and its
+  filename to be test-shaped — it carries "test" or "spec", any case, any
+  directory (`test_*.py`, `*.test.ts`, `*.spec.ts`, `*_test.go`, ...). The
+  old `tests/*.py` pin was a Python-project assumption that blocked every
+  honest close on a TS/Vitest project (BUG-010, D-0185). The bug door arms
   at fix-start, after the PM confirms the diagnosis (D-0069); its trail and
   regression-test paths are declared in the `docs/BUGS.md` entry at intake
   and consumed verbatim here (diagnosis runs lane-free, so the guard never

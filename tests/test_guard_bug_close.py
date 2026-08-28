@@ -86,8 +86,12 @@ def test_missing_regression_test_field_is_valid_fail(tmp_path):
     assert res["verdict"] == "valid-fail"
 
 
-def test_regression_test_not_tests_py_path_is_valid_fail(tmp_path):
-    proj = _proj(tmp_path, regression_test="src/test_bug1.py")
+def test_regression_test_not_test_shaped_is_valid_fail(tmp_path):
+    # BUG-010 (D-0185): the old rule pinned here was "must be tests/*.py" —
+    # a Python-project assumption. The rule now: the filename must be
+    # test-shaped ("test"/"spec", any case, any directory), so the rejection
+    # case is a path that no stack's convention would call a test.
+    proj = _proj(tmp_path, regression_test="src/helpers.py")
     res = bcc.check(str(proj), _sentinel_path(proj))
     assert res["verdict"] == "valid-fail"
 

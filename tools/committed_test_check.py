@@ -12,8 +12,14 @@ means (the same doctrine that keeps the TSOW un-editable).
 
 The definition that survived the probe fixtures:
 
-1. Repo-relative path not `tests/*.py` → valid-pass (this project declares
-   its tests there — CLAUDE.md; files elsewhere are invisible by design).
+1. Repo-relative path outside the watch scope → valid-pass. The scope is
+   `tests/*.py` (this project declares its tests there — CLAUDE.md) plus
+   the dotted test-file family: a basename carrying `.test.` or `.spec.`,
+   any case, any directory (the JS/TS convention — BUG-011, D-0186; the
+   old tests/*.py-only scope left every committed .test.ts unwatched on
+   TS/Vitest projects). Deliberately narrower than guard #11's loose rule:
+   this guard fires unprompted on every edit, and a false block is worse
+   than a miss.
 2. Build epoch: CLAUDE.md FRIDAY-STATE `since:` when `state:
    build-in-progress` (checkout copy, tag-line grammar); else the newest
    `state-transition` line in the shared journal (substrate root via
@@ -44,6 +50,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -121,8 +128,13 @@ def check(path: str, repo: str | None = None) -> dict:
         if rel.startswith(".."):
             return v("no-verdict", "the file escapes the repository root")
 
-        if not (rel.startswith(TEST_PREFIX) and rel.endswith(TEST_SUFFIX)):
-            return v("valid-pass", f"{rel} is not a tests/*.py file — not watched")
+        watched = ((rel.startswith(TEST_PREFIX) and rel.endswith(TEST_SUFFIX))
+                   or re.search(r"\.(test|spec)\.", os.path.basename(rel),
+                                re.IGNORECASE))
+        if not watched:
+            return v("valid-pass",
+                     f"{rel} is not a watched test path (tests/*.py or a "
+                     "dotted *.test.* / *.spec.* name) — not watched")
 
         epoch = _epoch_from_state(root) or _epoch_from_journal(root)
         if epoch is None:

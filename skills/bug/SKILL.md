@@ -15,7 +15,7 @@ You are the lead running `/friday:bug` — the lane for something known to be br
 - **Capture the environment while it's fresh**: branch + commit, OS/runtime versions, the data state that matters, exact reproduction steps as reported.
 - **Duplicates and past rulings BEFORE any re-derivation**: grep `docs/BUGS.md` and `docs/feedback-log.md`; a match is cited and this report becomes `duplicate-of` (or reopens the old number on new evidence).
 - Mint `BUG-NNN` (next number from `docs/BUGS.md`; create the file with an H1 if absent — growing-log discipline: cap 100, archive the oldest half to `docs/bugs/archive-NNN.md`).
-- **Declare the close artifacts in the entry:** the minted record names its trail and regression-test paths (`**Trail:** docs/trails/BUG-NNN.md · **Regression test (declared):** tests/test_bug_NNN_<slug>.py`), declared in the `docs/BUGS.md` entry at intake. This is the declaration-before-action beat — the paths are elicited once, here, and consumed verbatim when the lane arms at fix-start; a later deviation is provable, not deniable.
+- **Declare the close artifacts in the entry:** the minted record names its trail and regression-test paths (`**Trail:** docs/trails/BUG-NNN.md · **Regression test (declared):** <declared-test-path>`), declared in the `docs/BUGS.md` entry at intake. The declared path is written in the project's own test convention and named for the bug; the close guard's bar for it is the `regression-test` field in `docs/contracts/lane-open.md` — a path outside the project's real convention is a declaration that reads wrong to every stranger. This is the declaration-before-action beat — the paths are elicited once, here, and consumed verbatim when the lane arms at fix-start; a later deviation is provable, not deniable.
 
 ### Phase 2: Diagnose (spawn or in-context)
 
@@ -44,7 +44,7 @@ The PM's confirmation starts the fix — arm the lane NOW, with the exact paths 
 ```
 python3 "${CLAUDE_PLUGIN_ROOT}/tools/lane.py" open --lane bug --id BUG-NNN \
   --trail docs/trails/BUG-NNN.md \
-  --regression-test tests/test_bug_NNN_<slug>.py
+  --regression-test <declared-test-path>
 ```
 
 This writes the `.friday/lane-open` sentinel (contract: `docs/contracts/lane-open.md`). From this moment the bug-close guard holds the door: the session cannot conclude until the named regression test exists AND the trail at `docs/trails/BUG-NNN.md` passes the change-trail grammar (`docs/contracts/change-trail.md`).

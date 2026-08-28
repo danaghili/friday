@@ -241,6 +241,16 @@
    "loc": 152
   },
   {
+   "id": "tests.test_bug_010_close_gate_stack_assumption",
+   "path": "tests/test_bug_010_close_gate_stack_assumption.py",
+   "loc": 99
+  },
+  {
+   "id": "tests.test_bug_011_committed_test_scope_stack",
+   "path": "tests/test_bug_011_committed_test_scope_stack.py",
+   "loc": 110
+  },
+  {
    "id": "tests.test_capture_ask_mode",
    "path": "tests/test_capture_ask_mode.py",
    "loc": 70
@@ -363,7 +373,7 @@
   {
    "id": "tests.test_guard_bug_close",
    "path": "tests/test_guard_bug_close.py",
-   "loc": 197
+   "loc": 201
   },
   {
    "id": "tests.test_guard_committed_test",
@@ -668,7 +678,7 @@
   {
    "id": "tests.test_loose_deferral_scan",
    "path": "tests/test_loose_deferral_scan.py",
-   "loc": 167
+   "loc": 170
   },
   {
    "id": "tests.test_loose_deferrals",
@@ -863,7 +873,7 @@
   {
    "id": "tools.bug_close_check",
    "path": "tools/bug_close_check.py",
-   "loc": 144
+   "loc": 151
   },
   {
    "id": "tools.capture_integrity",
@@ -878,7 +888,7 @@
   {
    "id": "tools.committed_test_check",
    "path": "tools/committed_test_check.py",
-   "loc": 194
+   "loc": 206
   },
   {
    "id": "tools.compaction_note",
@@ -1742,6 +1752,27 @@
    "to": "tests.guardkit",
    "kind": "import",
    "line": 45,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_bug_010_close_gate_stack_assumption",
+   "to": "tests.guardkit",
+   "kind": "import",
+   "line": 14,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_bug_010_close_gate_stack_assumption",
+   "to": "tools.bug_close_check",
+   "kind": "import",
+   "line": 17,
+   "deferred": false
+  },
+  {
+   "from": "tests.test_bug_011_committed_test_scope_stack",
+   "to": "tools.committed_test_check",
+   "kind": "import",
+   "line": 18,
    "deferred": false
   },
   {
@@ -2966,7 +2997,7 @@
    "from": "tools.bug_close_check",
    "to": "tools.trail_check",
    "kind": "import",
-   "line": 40,
+   "line": 44,
    "deferred": false
   },
   {
@@ -2987,21 +3018,21 @@
    "from": "tools.committed_test_check",
    "to": "tools.decisions",
    "kind": "import",
-   "line": 166,
+   "line": 178,
    "deferred": true
   },
   {
    "from": "tools.committed_test_check",
    "to": "tools.friday_substrate",
    "kind": "import",
-   "line": 89,
+   "line": 96,
    "deferred": true
   },
   {
    "from": "tools.committed_test_check",
    "to": "tools.taglines",
    "kind": "import",
-   "line": 52,
+   "line": 59,
    "deferred": false
   },
   {
@@ -4065,5 +4096,5 @@
  ],
  "unparseable": [],
  "generated-by": "/friday:reference (tools/doc-synthesis/extract_architecture.py)",
- "generated-at": "2026-08-07T12:46:21+00:00"
+ "generated-at": "2026-08-28T08:46:41+00:00"
 }

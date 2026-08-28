@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.7.2 — stack-agnostic guards: the bug close and the committed-test watch stop assuming Python
+
+Two fixes from friday's first TS/Vitest projects, each pinned red-first and
+closed through the bug lane.
+
+- **Guard #11 accepts any existing, test-shaped regression test (BUG-010):** the declared path must exist and carry "test" or "spec" in its filename — the project's own convention — replacing the tests/*.py pin that blocked every honest TS/Vitest bug close (D-0185).
+- **Guard #7 watches the dotted test-file family (BUG-011):** `*.test.*` / `*.spec.*` in any directory are protected beside tests/*.py, so committed TS/Vitest tests get the same mid-build edit protection as Python ones (D-0186).
+
 ## 0.7.1 — the audit batch completes: turned-around questions, counted rules, failure paths, loose deferrals, sensitive data, event-armed staleness
 
 The rest of the external-audit batch, plus the hardening the release's own

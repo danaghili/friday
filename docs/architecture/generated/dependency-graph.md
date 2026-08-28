@@ -2,7 +2,7 @@
 
 # Dependency graph (generated)
 
-Intra-tree import graph — **256 modules, 358 import edges**. Every edge is a literal `import` statement in the source; the C4 Component level, correct-by-construction.
+Intra-tree import graph — **258 modules, 361 import edges**. Every edge is a literal `import` statement in the source; the C4 Component level, correct-by-construction.
 
 ```mermaid
 graph LR
@@ -54,6 +54,8 @@ graph LR
     tests_test_bug_003_check_readme_sync["tests.test_bug_003_check_readme_sync"]
     tests_test_bug_004_decision_capture_multiquestion["tests.test_bug_004_decision_capture_multiquestion"]
     tests_test_bug_005_increment_gate_authoring["tests.test_bug_005_increment_gate_authoring"]
+    tests_test_bug_010_close_gate_stack_assumption["tests.test_bug_010_close_gate_stack_assumption"]
+    tests_test_bug_011_committed_test_scope_stack["tests.test_bug_011_committed_test_scope_stack"]
     tests_test_capture_ask_mode["tests.test_capture_ask_mode"]
     tests_test_capture_integrity["tests.test_capture_integrity"]
     tests_test_committed_test_check["tests.test_committed_test_check"]
@@ -329,6 +331,9 @@ graph LR
     tests_test_bug_003_check_readme_sync --> tools_gen_command_index
     tests_test_bug_004_decision_capture_multiquestion --> tools_decisions
     tests_test_bug_005_increment_gate_authoring --> tests_guardkit
+    tests_test_bug_010_close_gate_stack_assumption --> tests_guardkit
+    tests_test_bug_010_close_gate_stack_assumption --> tools_bug_close_check
+    tests_test_bug_011_committed_test_scope_stack --> tools_committed_test_check
     tests_test_capture_ask_mode --> tools_decisions
     tests_test_capture_integrity --> tools_capture_integrity
     tests_test_capture_integrity --> tools_decisions
@@ -667,7 +672,7 @@ graph LR
 | `hooks.worktree_remove_warn` | 2 | 0 |
 | `hooks.worktree_substrate_warn` | 2 | 0 |
 | `tests.conftest` | 0 | 0 |
-| `tests.guardkit` | 0 | 30 |
+| `tests.guardkit` | 0 | 31 |
 | `tests.test_adopt_parity` | 0 | 0 |
 | `tests.test_batch_edit` | 1 | 0 |
 | `tests.test_bug_001_verify_claims_stack` | 1 | 0 |
@@ -675,6 +680,8 @@ graph LR
 | `tests.test_bug_003_check_readme_sync` | 1 | 0 |
 | `tests.test_bug_004_decision_capture_multiquestion` | 1 | 0 |
 | `tests.test_bug_005_increment_gate_authoring` | 1 | 0 |
+| `tests.test_bug_010_close_gate_stack_assumption` | 2 | 0 |
+| `tests.test_bug_011_committed_test_scope_stack` | 1 | 0 |
 | `tests.test_capture_ask_mode` | 1 | 0 |
 | `tests.test_capture_integrity` | 2 | 0 |
 | `tests.test_committed_test_check` | 1 | 0 |
@@ -799,10 +806,10 @@ graph LR
 | `tests.test_watcher_coverage` | 1 | 0 |
 | `tools.batch_edit` | 0 | 1 |
 | `tools.blast_radius_check` | 0 | 2 |
-| `tools.bug_close_check` | 1 | 2 |
+| `tools.bug_close_check` | 1 | 3 |
 | `tools.capture_integrity` | 2 | 1 |
 | `tools.codex-adapter.state_stop_gate` | 0 | 0 |
-| `tools.committed_test_check` | 3 | 1 |
+| `tools.committed_test_check` | 3 | 2 |
 | `tools.compaction_note` | 1 | 0 |
 | `tools.compaction_seed` | 0 | 3 |
 | `tools.conformance_checks` | 2 | 2 |

@@ -224,6 +224,8 @@ regeneration (INC-203 D4).
 - `tests.test_inc008_deviations` — the deviation ledger's grammar and its empty case
 - `tests.test_inc008_envelope` — the disposition envelope's grammar and its empty case
 - `tests.test_bug_005_increment_gate_authoring` — the increment gate fires at consumption, not at authoring [why: DECISIONS.md D-0133]
+- `tests.test_bug_010_close_gate_stack_assumption` — guard #11 accepts any existing, test-shaped regression test, not only tests/*.py [why: DECISIONS.md D-0185]
+- `tests.test_bug_011_committed_test_scope_stack` — guard #7 watches the dotted test-file family (*.test.* / *.spec.*) beside tests/*.py [why: DECISIONS.md D-0186]
 - `tests.test_inc008_gate` — gate verdicts over measured breaches and their dispositions
 - `tests.test_inc008_maintainability_claim` — the declared-bar claim vocabulary and its well-formedness
 - `tests.test_inc008_measurer` — the three metrics the measurer really computes
@@ -512,6 +514,8 @@ graph LR
         tests_test_inc008_envelope["tests.test_inc008_envelope"]
         tests_test_inc101_doc_probe_scope["tests.test_inc101_doc_probe_scope"]
         tests_test_bug_005_increment_gate_authoring["tests.test_bug_005_increment_gate_authoring"]
+        tests_test_bug_010_close_gate_stack_assumption["tests.test_bug_010_close_gate_stack_assumption"]
+        tests_test_bug_011_committed_test_scope_stack["tests.test_bug_011_committed_test_scope_stack"]
         tests_test_inc101_handover_gate["tests.test_inc101_handover_gate"]
         tests_test_inc200_state_advisory["tests.test_inc200_state_advisory"]
         tests_test_inc201_consent_record["tests.test_inc201_consent_record"]
@@ -750,6 +754,9 @@ graph LR
     tests_test_inc200_experiment_e2e --> tools_experiment_request
     tests_test_inc200_experiment_e2e --> tools_experiment_run
     tests_test_bug_005_increment_gate_authoring --> tests_guardkit
+    tests_test_bug_010_close_gate_stack_assumption --> tests_guardkit
+    tests_test_bug_010_close_gate_stack_assumption --> tools_bug_close_check
+    tests_test_bug_011_committed_test_scope_stack --> tools_committed_test_check
     tests_test_inc200_experiment_e2e --> tools_friday_consent
     tests_test_inc200_state_advisory --> tools_state_advisory_check
     tests_test_inc200_state_advisory --> tools_state_record

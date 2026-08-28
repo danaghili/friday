@@ -6,7 +6,7 @@ deliberately thin).
 
 Usage:
   python3 tools/lane.py open  --lane bug|patch|feature --id <ID> --trail <path>
-                              [--regression-test <tests/...py>]   (REQUIRED for bug)
+                              [--regression-test <declared-test-path>]   (REQUIRED for bug)
                               [--blast-radius <prefix-or-glob>]...  (REQUIRED for patch)
                               [--root DIR]
   python3 tools/lane.py status [--root DIR]

@@ -6,8 +6,12 @@ docs/contracts/lane-open.md's `regression-test` field (required when
 lane=bug).
 
 Three mechanical requirements, all must hold:
-  1. The sentinel's `regression-test` field names an EXISTING `tests/*.py`
-     file (worktree-root-relative). Existence is what is mechanically
+  1. The sentinel's `regression-test` field names an EXISTING, test-shaped
+     file (worktree-root-relative): the filename carries "test" or "spec",
+     any case, any directory — every stack's convention qualifies
+     (test_*.py, *.test.ts, *.spec.ts, *_test.go, ...). The old tests/*.py
+     pin was a Python-project assumption that made an honest TS/Vitest
+     close impossible (BUG-010, D-0185). Existence is what is mechanically
      checked here; S-1's commit requirement lands in the fix commit itself.
   2. The sentinel's `trail` field, delegated whole to
      tools/trail_check.py's check_text() (one grammar, one home — this
@@ -83,9 +87,12 @@ def check(root: str, sentinel_path: str) -> dict:
         return {"verdict": "valid-fail",
                 "summary": "the lane-open sentinel carries no regression-test "
                            "field — a bug closure requires one (S-1)"}
-    if not (reg_test.startswith("tests/") and reg_test.endswith(".py")):
+    if not re.search(r"test|spec", os.path.basename(reg_test), re.IGNORECASE):
         return {"verdict": "valid-fail",
-                "summary": f"regression-test {reg_test!r} is not a tests/*.py path"}
+                "summary": f"regression-test {reg_test!r} does not name a "
+                           "test-shaped file — its filename carries neither "
+                           "'test' nor 'spec' (any stack's own convention "
+                           "qualifies: test_*.py, *.test.ts, *.spec.ts, ...)"}
     if not os.path.isfile(os.path.join(root, reg_test)):
         return {"verdict": "valid-fail",
                 "summary": f"regression-test names {reg_test!r} but that file "
